@@ -21,11 +21,15 @@
 * Created: 9/1/11 4:34 PM
 * 
 */
-package com.dtolabs.rundeck.plugin.resources.ec2;
+package com.dtolabs.rundeck.plugin.resources.gcp;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.ClientConfiguration;
-import com.amazonaws.auth.BasicAWSCredentials;
+
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+//import com.amazonaws.auth.AWSCredentials;
+//import com.amazonaws.ClientConfiguration;
+//import com.amazonaws.auth.BasicAWSCredentials;
 import com.dtolabs.rundeck.core.common.*;
 import com.dtolabs.rundeck.core.plugins.configuration.ConfigurationException;
 import com.dtolabs.rundeck.core.resources.ResourceModelSource;
@@ -38,20 +42,21 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 /**
- * EC2ResourceModelSource produces nodes by querying the AWS EC2 API to list instances.
+ * GCPResourceModelSource produces nodes by querying the GCP Compute Engine API to list instances.
  * <p/>
  * The RunDeck node definitions are created from the instances on a mapping system to convert properties of the amazon
  * instances to attributes defined on the nodes.
  * <p/>
- * The EC2 requests are performed asynchronously, so the first request to {@link #getNodes()} will return null, and
+ * The Compute Engine requests are performed asynchronously, so the first request to {@link #getNodes()} will return null, and
  * subsequent requests may return the data when it's available.
  *
- * @author Greg Schueler <a href="mailto:greg@dtosolutions.com">greg@dtosolutions.com</a>
+ * @author James Coppens <a href="mailto:jameshcoppens@gmail.com">jameshcoppens@gmail.com</a>
  */
-public class EC2ResourceModelSource implements ResourceModelSource {
-    static Logger logger = Logger.getLogger(EC2ResourceModelSource.class);
+public class GCPResourceModelSource implements ResourceModelSource {
+    static Logger logger = Logger.getLogger(GCPResourceModelSource.class);
     private String accessKey;
     private String secretKey;
+    private String projectId;
     long refreshInterval = 30000;
     long lastRefresh = 0;
     String filterParams;
@@ -68,8 +73,9 @@ public class EC2ResourceModelSource implements ResourceModelSource {
     Future<INodeSet> futureResult = null;
     final Properties mapping = new Properties();
 
-    AWSCredentials credentials;
-    ClientConfiguration clientConfiguration = new ClientConfiguration();;
+    Credential credential;
+    //AWSCredentials credentials;
+    //ClientConfiguration clientConfiguration = new ClientConfiguration();;
     
     INodeSet iNodeSet;
     static final Properties defaultMapping = new Properties();
@@ -103,7 +109,7 @@ public class EC2ResourceModelSource implements ResourceModelSource {
                                + "tags.default=ec2\n";
         try {
 
-            final InputStream resourceAsStream = EC2ResourceModelSource.class.getClassLoader().getResourceAsStream(
+            final InputStream resourceAsStream = GCPResourceModelSource.class.getClassLoader().getResourceAsStream(
                 "defaultMapping.properties");
             if (null != resourceAsStream) {
                 try {
@@ -126,42 +132,43 @@ public class EC2ResourceModelSource implements ResourceModelSource {
         }
     }
 
-    public EC2ResourceModelSource(final Properties configuration) {
-        this.accessKey = configuration.getProperty(EC2ResourceModelSourceFactory.ACCESS_KEY);
-        this.secretKey = configuration.getProperty(EC2ResourceModelSourceFactory.SECRET_KEY);
-        this.endpoint = configuration.getProperty(EC2ResourceModelSourceFactory.ENDPOINT);
-        this.httpProxyHost = configuration.getProperty(EC2ResourceModelSourceFactory.HTTP_PROXY_HOST);
+    public GCPResourceModelSource(final Properties configuration) {
+        //this.accessKey = configuration.getProperty(EC2ResourceModelSourceFactory.ACCESS_KEY);
+        //this.secretKey = configuration.getProperty(EC2ResourceModelSourceFactory.SECRET_KEY);
+        //this.endpoint = configuration.getProperty(EC2ResourceModelSourceFactory.ENDPOINT);
+        //this.httpProxyHost = configuration.getProperty(EC2ResourceModelSourceFactory.HTTP_PROXY_HOST);
+        this.projectId = configuration.getProperty(GCPResourceModelSourceFactory.PROJECT_ID);
         int proxyPort = 80;
         
-        final String proxyPortStr = configuration.getProperty(EC2ResourceModelSourceFactory.HTTP_PROXY_PORT);
+        /*final String proxyPortStr = configuration.getProperty(EC2ResourceModelSourceFactory.HTTP_PROXY_PORT);
         if (null != proxyPortStr && !"".equals(proxyPortStr)) {
             try {
                 proxyPort = Integer.parseInt(proxyPortStr);
             } catch (NumberFormatException e) {
                 logger.warn(EC2ResourceModelSourceFactory.HTTP_PROXY_PORT + " value is not valid: " + proxyPortStr);
             }
-        }
+        }*/
         this.httpProxyPort = proxyPort;
-        this.httpProxyUser = configuration.getProperty(EC2ResourceModelSourceFactory.HTTP_PROXY_USER);
-        this.httpProxyPass = configuration.getProperty(EC2ResourceModelSourceFactory.HTTP_PROXY_PASS);
+        //this.httpProxyUser = configuration.getProperty(EC2ResourceModelSourceFactory.HTTP_PROXY_USER);
+        //this.httpProxyPass = configuration.getProperty(EC2ResourceModelSourceFactory.HTTP_PROXY_PASS);
 
-        this.filterParams = configuration.getProperty(EC2ResourceModelSourceFactory.FILTER_PARAMS);
-        this.mappingParams = configuration.getProperty(EC2ResourceModelSourceFactory.MAPPING_PARAMS);
-        final String mappingFilePath = configuration.getProperty(EC2ResourceModelSourceFactory.MAPPING_FILE);
-        if (null != mappingFilePath) {
+        //this.filterParams = configuration.getProperty(EC2ResourceModelSourceFactory.FILTER_PARAMS);
+        //this.mappingParams = configuration.getProperty(EC2ResourceModelSourceFactory.MAPPING_PARAMS);
+        //final String mappingFilePath = configuration.getProperty(EC2ResourceModelSourceFactory.MAPPING_FILE);
+        /*if (null != mappingFilePath) {
             mappingFile = new File(mappingFilePath);
-        }
+        }*/
         int refreshSecs = 30;
-        final String refreshStr = configuration.getProperty(EC2ResourceModelSourceFactory.REFRESH_INTERVAL);
+        /*final String refreshStr = configuration.getProperty(EC2ResourceModelSourceFactory.REFRESH_INTERVAL);
         if (null != refreshStr && !"".equals(refreshStr)) {
             try {
                 refreshSecs = Integer.parseInt(refreshStr);
             } catch (NumberFormatException e) {
                 logger.warn(EC2ResourceModelSourceFactory.REFRESH_INTERVAL + " value is not valid: " + refreshStr);
             }
-        }
+        }*/
         refreshInterval = refreshSecs * 1000;
-        if (configuration.containsKey(EC2ResourceModelSourceFactory.USE_DEFAULT_MAPPING)) {
+        /*if (configuration.containsKey(EC2ResourceModelSourceFactory.USE_DEFAULT_MAPPING)) {
             useDefaultMapping = Boolean.parseBoolean(configuration.getProperty(
                 EC2ResourceModelSourceFactory.USE_DEFAULT_MAPPING));
         }
@@ -171,13 +178,13 @@ public class EC2ResourceModelSource implements ResourceModelSource {
         }
         if (null != accessKey && null != secretKey) {
             credentials = new BasicAWSCredentials(accessKey.trim(), secretKey.trim());
-        }
+        }*/
         
         if (null != httpProxyHost && !"".equals(httpProxyHost)) {
-            clientConfiguration.setProxyHost(httpProxyHost);
+            /*clientConfiguration.setProxyHost(httpProxyHost);
             clientConfiguration.setProxyPort(httpProxyPort);
             clientConfiguration.setProxyUsername(httpProxyUser);
-            clientConfiguration.setProxyPassword(httpProxyPass);
+            clientConfiguration.setProxyPassword(httpProxyPass);*/
         }
         
         initialize();
@@ -189,10 +196,10 @@ public class EC2ResourceModelSource implements ResourceModelSource {
             Collections.addAll(params, filterParams.split(";"));
         }
         loadMapping();
-        mapper = new InstanceToNodeMapper(credentials, mapping, clientConfiguration);
+        /*mapper = new InstanceToNodeMapper(credentials, mapping, clientConfiguration);
         mapper.setFilterParams(params);
         mapper.setEndpoint(endpoint);
-        mapper.setRunningStateOnly(runningOnly);
+        mapper.setRunningStateOnly(runningOnly);*/
     }
 
 

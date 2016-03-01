@@ -21,7 +21,7 @@
 * Created: 9/1/11 4:27 PM
 * 
 */
-package com.dtolabs.rundeck.plugin.resources.ec2;
+package com.dtolabs.rundeck.plugin.resources.gcp;
 
 
 import com.dtolabs.rundeck.core.common.Framework;
@@ -36,10 +36,10 @@ import java.io.File;
 import java.util.*;
 
 /**
- * EC2ResourceModelSourceFactory is the factory that can create a {@link ResourceModelSource} based on a configuration.
+ * GCPResourceModelSourceFactory is the factory that can create a {@link ResourceModelSource} based on a configuration.
  * <p/>
- * The configuration properties are: <ul> <li>endpoint: the AWS endpoint to use, or blank for the default</li>
- * <li>filter: A set of ";" separated query filters ("filter=value") for the AWS EC2 API, see <a
+ * The configuration properties are: <ul> <li>endpoint: the GCP endpoint to use, or blank for the default</li>
+ * <li>filter: A set of ";" separated query filters ("filter=value") for the GCP GCE API, see <a
  * href="http://docs.amazonwebservices.com/AWSEC2/latest/APIReference/ApiReference-query-DescribeInstances.html">DescribeInstances</a></li>
  * <li>mappingParams: A set of ";" separated mapping entries</li> <li>runningOnly: if "true", automatically filter the
  * instances by "instance-state-name=running"</li> <li>accessKey: API AccessKey value</li> <li>secretKey: API SecretKey
@@ -49,9 +49,9 @@ import java.util.*;
  *
  * @author Greg Schueler <a href="mailto:greg@dtosolutions.com">greg@dtosolutions.com</a>
  */
-@Plugin(name = "aws-ec2", service = "ResourceModelSource")
-public class EC2ResourceModelSourceFactory implements ResourceModelSourceFactory, Describable {
-    public static final String PROVIDER_NAME = "aws-ec2";
+@Plugin(name = "gcp-gce", service = "ResourceModelSource")
+public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory, Describable {
+    public static final String PROVIDER_NAME = "gcp-gce";
     private Framework framework;
 
     public static final String ENDPOINT = "endpoint";
@@ -60,6 +60,7 @@ public class EC2ResourceModelSourceFactory implements ResourceModelSourceFactory
     public static final String RUNNING_ONLY = "runningOnly";
     public static final String ACCESS_KEY = "accessKey";
     public static final String SECRET_KEY = "secretKey";
+    public static final String PROJECT_ID = "projectId";
     public static final String MAPPING_FILE = "mappingFile";
     public static final String REFRESH_INTERVAL = "refreshInterval";
     public static final String USE_DEFAULT_MAPPING = "useDefaultMapping";
@@ -68,21 +69,21 @@ public class EC2ResourceModelSourceFactory implements ResourceModelSourceFactory
     public static final String HTTP_PROXY_USER = "httpProxyUser";
     public static final String HTTP_PROXY_PASS = "httpProxyPass";
 
-    public EC2ResourceModelSourceFactory(final Framework framework) {
+    public GCPResourceModelSourceFactory(final Framework framework) {
         this.framework = framework;
     }
 
     public ResourceModelSource createResourceModelSource(final Properties properties) throws ConfigurationException {
-        final EC2ResourceModelSource ec2ResourceModelSource = new EC2ResourceModelSource(properties);
-        ec2ResourceModelSource.validate();
-        return ec2ResourceModelSource;
+        final GCPResourceModelSource gcpResourceModelSource = new GCPResourceModelSource(properties);
+        gcpResourceModelSource.validate();
+        return gcpResourceModelSource;
     }
 
     static Description DESC = DescriptionBuilder.builder()
             .name(PROVIDER_NAME)
-            .title("AWS EC2 Resources")
-            .description("Produces nodes from AWS EC2")
-
+            .title("GCP GCE Resources")
+            .description("Produces nodes from GCP GCE")
+            .property(PropertyUtil.string(PROJECT_ID, "Project ID", "Project ID", false, null))
             .property(PropertyUtil.string(ACCESS_KEY, "Access Key", "AWS Access Key", false, null))
             .property(
                     PropertyUtil.string(
@@ -97,9 +98,9 @@ public class EC2ResourceModelSourceFactory implements ResourceModelSourceFactory
                     )
             )
             .property(PropertyUtil.integer(REFRESH_INTERVAL, "Refresh Interval",
-                    "Minimum time in seconds between API requests to AWS (default is 30)", false, "30"))
-            .property(PropertyUtil.string(FILTER_PARAMS, "Filter Params", "AWS EC2 filters", false, null))
-            .property(PropertyUtil.string(ENDPOINT, "Endpoint", "AWS EC2 Endpoint, or blank for default", false, null))
+                    "Minimum time in seconds between API requests to GCP (default is 30)", false, "30"))
+            .property(PropertyUtil.string(FILTER_PARAMS, "Filter Params", "GCP GCE filters", false, null))
+            .property(PropertyUtil.string(ENDPOINT, "Endpoint", "GCP GCE Endpoint, or blank for default", false, null))
             .property(PropertyUtil.string(HTTP_PROXY_HOST, "HTTP Proxy Host", "HTTP Proxy Host Name, or blank for default", false, null))
             .property(PropertyUtil.integer(HTTP_PROXY_PORT, "HTTP Proxy Port", "HTTP Proxy Port, or blank for 80", false, "80"))
             .property(PropertyUtil.string(HTTP_PROXY_USER, "HTTP Proxy User", "HTTP Proxy User Name, or blank for default", false, null))
