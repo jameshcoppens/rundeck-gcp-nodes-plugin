@@ -21,15 +21,15 @@
 * Created: Oct 18, 2010 7:03:37 PM
 * 
 */
-package com.dtolabs.rundeck.plugin.resources.ec2;
+package com.dtolabs.rundeck.plugin.resources.gcp;
 
-import com.amazonaws.auth.AWSCredentials;
+/*import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.ec2.AmazonEC2AsyncClient;
 import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.*;
-
+*/
 import com.google.api.client.auth.oauth2.Credential;
 //import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 //import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -71,8 +71,9 @@ import java.util.regex.Pattern;
  */
 class InstanceToNodeMapper {
     static final Logger logger = Logger.getLogger(InstanceToNodeMapper.class);
+    final Credential credential;
     //final AWSCredentials credentials;
-    private ClientConfiguration clientConfiguration;
+    //private ClientConfiguration clientConfiguration;
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
     private ArrayList<String> filterParams;
     private String endpoint;
@@ -82,10 +83,10 @@ class InstanceToNodeMapper {
     /**
      * Create with the credentials and mapping definition
      */
-    InstanceToNodeMapper(/*final AWSCredentials credentials, */final Properties mapping, final ClientConfiguration clientConfiguration) {
-        //this.credentials = credentials;
+    InstanceToNodeMapper(final Credentials credentials, */final Properties mapping/*, final ClientConfiguration clientConfiguration*/) {
+        this.credentials = credentials;
         this.mapping = mapping;
-        this.clientConfiguration = clientConfiguration;
+        //this.clientConfiguration = clientConfiguration;
     }
 
     /**
@@ -104,7 +105,7 @@ class InstanceToNodeMapper {
         if (null != getEndpoint()) {
             ec2.setEndpoint(getEndpoint());
         }*/
-        final ArrayList<Filter> filters = buildFilters();
+        //final ArrayList<Filter> filters = buildFilters();
         //final Set<Instance> instances = query(ec2, new DescribeInstancesRequest().withFilters(filters));
 
 
@@ -118,66 +119,70 @@ class InstanceToNodeMapper {
      */
     public Future<INodeSet> performQueryAsync() {
         
-        final AmazonEC2AsyncClient ec2;
-        if(null!=credentials){
+        //final AmazonEC2AsyncClient ec2;
+        /*if(null!=credentials){
             ec2= new AmazonEC2AsyncClient(credentials, clientConfiguration, executorService);
         } else{
             ec2 = new AmazonEC2AsyncClient(new DefaultAWSCredentialsProviderChain(), clientConfiguration, executorService);
         }
         if (null != getEndpoint()) {
             ec2.setEndpoint(getEndpoint());
-        }
-        final ArrayList<Filter> filters = buildFilters();
+        }*/
+        //final ArrayList<Filter> filters = buildFilters();
 
-        final Future<DescribeInstancesResult> describeInstancesRequest = ec2.describeInstancesAsync(
-            new DescribeInstancesRequest().withFilters(filters));
+        //final Future<DescribeInstancesResult> describeInstancesRequest = ec2.describeInstancesAsync(
+        //    new DescribeInstancesRequest().withFilters(filters));
 
         return new Future<INodeSet>() {
 
             public boolean cancel(boolean b) {
-                return describeInstancesRequest.cancel(b);
+                return true;
+                //return describeInstancesRequest.cancel(b);
             }
 
             public boolean isCancelled() {
-                return describeInstancesRequest.isCancelled();
+                return true;
+                //return describeInstancesRequest.isCancelled();
             }
 
             public boolean isDone() {
-                return describeInstancesRequest.isDone();
+                return true;
+                //return describeInstancesRequest.isDone();
             }
 
             public INodeSet get() throws InterruptedException, ExecutionException {
-                DescribeInstancesResult describeInstancesResult = describeInstancesRequest.get();
+                //DescribeInstancesResult describeInstancesResult = describeInstancesRequest.get();
 
                 final NodeSetImpl nodeSet = new NodeSetImpl();
-                final Set<Instance> instances = examineResult(describeInstancesResult);
+                //final Set<Instance> instances = examineResult(describeInstancesResult);
 
-                mapInstances(nodeSet, instances);
+                //mapInstances(nodeSet, instances);
                 return nodeSet;
             }
 
             public INodeSet get(final long l, final TimeUnit timeUnit) throws InterruptedException, ExecutionException,
                 TimeoutException {
-                DescribeInstancesResult describeInstancesResult = describeInstancesRequest.get(l, timeUnit);
+                //DescribeInstancesResult describeInstancesResult = describeInstancesRequest.get(l, timeUnit);
 
                 final NodeSetImpl nodeSet = new NodeSetImpl();
-                final Set<Instance> instances = examineResult(describeInstancesResult);
+                //final Set<Instance> instances = examineResult(describeInstancesResult);
 
-                mapInstances(nodeSet, instances);
+                //mapInstances(nodeSet, instances);
                 return nodeSet;
             }
         };
     }
 
-    private Set<Instance> query(final AmazonEC2Client ec2, final DescribeInstancesRequest request) {
+    /*private Set<Instance> query(final AmazonEC2Client ec2, final DescribeInstancesRequest request) {
         //create "running" filter
 
-        final DescribeInstancesResult describeInstancesRequest = ec2.describeInstances(request);
+        //final DescribeInstancesResult describeInstancesRequest = ec2.describeInstances(request);
 
-        return examineResult(describeInstancesRequest);
-    }
+        //return examineResult(describeInstancesRequest);
 
-    private Set<Instance> examineResult(DescribeInstancesResult describeInstancesRequest) {
+    }*/
+
+    /*private Set<Instance> examineResult(DescribeInstancesResult describeInstancesRequest) {
         final List<Reservation> reservations = describeInstancesRequest.getReservations();
         final Set<Instance> instances = new HashSet<Instance>();
 
@@ -185,9 +190,9 @@ class InstanceToNodeMapper {
             //instances.addAll(reservation.getInstances());
         }
         return instances;
-    }
+    }*/
 
-    private ArrayList<Filter> buildFilters() {
+    /*private ArrayList<Filter> buildFilters() {
         final ArrayList<Filter> filters = new ArrayList<Filter>();
         if (isRunningStateOnly()) {
             final Filter filter = new Filter("instance-state-name").withValues(InstanceStateName.Running.toString());
@@ -203,9 +208,9 @@ class InstanceToNodeMapper {
             }
         }
         return filters;
-    }
+    }*/
 
-    private void mapInstances(final NodeSetImpl nodeSet, final Set<Instance> instances) {
+    /*private void mapInstances(final NodeSetImpl nodeSet, final Set<Instance> instances) {
         for (final Instance inst : instances) {
             final INodeEntry iNodeEntry;
             try {
@@ -217,24 +222,24 @@ class InstanceToNodeMapper {
                 logger.error(e);
             }
         }
-    }
+    }*/
 
     /**
      * Convert an GCP GCE Instance to a RunDeck INodeEntry based on the mapping input
      */
     @SuppressWarnings("unchecked")
-    static INodeEntry instanceToNode(final Instance inst, final Properties mapping) throws GeneratorException {
+/*    static INodeEntry instanceToNode(final Instance inst, final Properties mapping) throws GeneratorException {
         final NodeEntryImpl node = new NodeEntryImpl();
 
         //evaluate single settings.selector=tags/* mapping
         if ("tags/*".equals(mapping.getProperty("attributes.selector"))) {
             //iterate through instance tags and generate settings
-            /*for (final Tag tag : inst.getTags()) {
+            for (final Tag tag : inst.getTags()) {
                 if (null == node.getAttributes()) {
                     node.setAttributes(new HashMap<String, String>());
                 }
                 node.getAttributes().put(tag.getKey(), tag.getValue());
-            }*/
+            }
         }
         if (null != mapping.getProperty("tags.selector")) {
             final String selector = mapping.getProperty("tags.selector");
@@ -347,16 +352,16 @@ class InstanceToNodeMapper {
         }
 
         return node;
-    }
+    }*/
 
     /**
      * Return the result of the selector applied to the instance, otherwise return the defaultValue. The selector can be
      * a comma-separated list of selectors
      */
-    public static String applySelector(final Instance inst, final String selector, final String defaultValue) throws
+   /* public static String applySelector(final Instance inst, final String selector, final String defaultValue) throws
         GeneratorException {
         return applySelector(inst, selector, defaultValue, false);
-    }
+    }*/
 
     /**
      * Return the result of the selector applied to the instance, otherwise return the defaultValue. The selector can be
@@ -366,6 +371,7 @@ class InstanceToNodeMapper {
      * @param defaultValue a default value to return if there is no result from the selector
      * @param tagMerge if true, allow | separator to merge multiple values
      */
+    /*
     public static String applySelector(final Instance inst, final String selector, final String defaultValue,
                                        final boolean tagMerge) throws
         GeneratorException {
@@ -396,12 +402,13 @@ class InstanceToNodeMapper {
         }
         return defaultValue;
     }
-
+    */
+/*
     private static String applySingleSelector(final Instance inst, final String selector) throws
         GeneratorException {
         if (null != selector && !"".equals(selector) && selector.startsWith("tags/")) {
             final String tag = selector.substring("tags/".length());
-            final List<Tag> tags = inst.getTags();
+            /*final List<Tag> tags = inst.getTags();
             for (final Tag tag1 : tags) {
                 if (tag.equals(tag1.getKey())) {
                     return tag1.getValue();
@@ -420,7 +427,7 @@ class InstanceToNodeMapper {
 
         return null;
     }
-
+*/
     /**
      * Return the list of "filter=value" filters
      */
