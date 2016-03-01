@@ -54,8 +54,8 @@ import java.util.concurrent.Future;
  */
 public class GCPResourceModelSource implements ResourceModelSource {
     static Logger logger = Logger.getLogger(GCPResourceModelSource.class);
-    private String accessKey;
-    private String secretKey;
+    private String clientId;
+    private String clientSecret;
     private String projectId;
     long refreshInterval = 30000;
     long lastRefresh = 0;
@@ -133,8 +133,8 @@ public class GCPResourceModelSource implements ResourceModelSource {
     }
 
     public GCPResourceModelSource(final Properties configuration) {
-        //this.accessKey = configuration.getProperty(EC2ResourceModelSourceFactory.ACCESS_KEY);
-        //this.secretKey = configuration.getProperty(EC2ResourceModelSourceFactory.SECRET_KEY);
+        this.clientId = configuration.getProperty(GCPResourceModelSourceFactory.CLIENT_ID);
+        this.clientSecret = configuration.getProperty(GCPResourceModelSourceFactory.CLIENT_SECRET);
         //this.endpoint = configuration.getProperty(EC2ResourceModelSourceFactory.ENDPOINT);
         //this.httpProxyHost = configuration.getProperty(EC2ResourceModelSourceFactory.HTTP_PROXY_HOST);
         this.projectId = configuration.getProperty(GCPResourceModelSourceFactory.PROJECT_ID);
