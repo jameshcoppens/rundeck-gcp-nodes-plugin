@@ -83,8 +83,8 @@ class InstanceToNodeMapper {
     /**
      * Create with the credentials and mapping definition
      */
-    InstanceToNodeMapper(final Credentials credentials, */final Properties mapping/*, final ClientConfiguration clientConfiguration*/) {
-        this.credentials = credentials;
+    InstanceToNodeMapper(final Credential credential ,final Properties mapping/*, final ClientConfiguration clientConfiguration*/) {
+        this.credential = credential;
         this.mapping = mapping;
         //this.clientConfiguration = clientConfiguration;
     }
@@ -104,9 +104,10 @@ class InstanceToNodeMapper {
         }
         if (null != getEndpoint()) {
             ec2.setEndpoint(getEndpoint());
-        }*/
-        //final ArrayList<Filter> filters = buildFilters();
+        }
+        final ArrayList<Filter> filters = buildFilters();*/
         //final Set<Instance> instances = query(ec2, new DescribeInstancesRequest().withFilters(filters));
+        final Set<Instance> instances = query();
 
 
         //mapInstances(nodeSet, instances);
@@ -173,14 +174,14 @@ class InstanceToNodeMapper {
         };
     }
 
-    /*private Set<Instance> query(final AmazonEC2Client ec2, final DescribeInstancesRequest request) {
+    private Set<Instance> query(/*final AmazonEC2Client ec2, final DescribeInstancesRequest request*/) {
         //create "running" filter
 
         //final DescribeInstancesResult describeInstancesRequest = ec2.describeInstances(request);
 
         //return examineResult(describeInstancesRequest);
 
-    }*/
+    }
 
     /*private Set<Instance> examineResult(DescribeInstancesResult describeInstancesRequest) {
         final List<Reservation> reservations = describeInstancesRequest.getReservations();

@@ -47,7 +47,7 @@ import java.util.*;
  * Time in seconds used as minimum interval between calls to the AWS API.</li> <li>useDefaultMapping: if "true", base
  * all mapping definitions off the default mapping provided. </li> </ul>
  *
- * @author Greg Schueler <a href="mailto:greg@dtosolutions.com">greg@dtosolutions.com</a>
+ * @author James Coppens <a href="mailto:jameshcoppens@gmail.com">jameshcoppens@gmail.com</a>
  */
 @Plugin(name = "gcp-gce", service = "ResourceModelSource")
 public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory, Describable {
@@ -58,8 +58,8 @@ public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory
     public static final String FILTER_PARAMS = "filter";
     public static final String MAPPING_PARAMS = "mappingParams";
     public static final String RUNNING_ONLY = "runningOnly";
-    public static final String ACCESS_KEY = "accessKey";
-    public static final String SECRET_KEY = "secretKey";
+    public static final String CLIENT_ID = "clientId";
+    public static final String CLIENT_SECRET = "clientSecret";
     public static final String PROJECT_ID = "projectId";
     public static final String MAPPING_FILE = "mappingFile";
     public static final String REFRESH_INTERVAL = "refreshInterval";
@@ -84,11 +84,11 @@ public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory
             .title("GCP GCE Resources")
             .description("Produces nodes from GCP GCE")
             .property(PropertyUtil.string(PROJECT_ID, "Project ID", "Project ID", false, null))
-            .property(PropertyUtil.string(ACCESS_KEY, "Access Key", "AWS Access Key", false, null))
+            .property(PropertyUtil.string(CLIENT_ID, "Client ID", "Client ID", false, null))
             .property(
                     PropertyUtil.string(
-                            SECRET_KEY,
-                            "Secret Key",
+                            CLIENT_SECRET,
+                            "Client Secret",
                             "AWS Secret Key, required if Access Key is used. If not used, then the IAM profile will be used",
                             false,
                             null,
