@@ -23,16 +23,7 @@
 */
 package com.dtolabs.rundeck.plugin.resources.gcp;
 
-/*import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.ClientConfiguration;
-import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
-import com.amazonaws.services.ec2.AmazonEC2AsyncClient;
-import com.amazonaws.services.ec2.AmazonEC2Client;
-import com.amazonaws.services.ec2.model.*;
-*/
 import com.google.api.client.auth.oauth2.Credential;
-//import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-//import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -107,7 +98,7 @@ class InstanceToNodeMapper {
         }
         final ArrayList<Filter> filters = buildFilters();*/
         //final Set<Instance> instances = query(ec2, new DescribeInstancesRequest().withFilters(filters));
-        final Set<Instance> instances = query();
+        //final Set<Instance> instances = query();
 
 
         //mapInstances(nodeSet, instances);
@@ -174,14 +165,14 @@ class InstanceToNodeMapper {
         };
     }
 
-    private Set<Instance> query(/*final AmazonEC2Client ec2, final DescribeInstancesRequest request*/) {
+    //private Set<Instance> query(/*final AmazonEC2Client ec2, final DescribeInstancesRequest request*/) {
         //create "running" filter
 
         //final DescribeInstancesResult describeInstancesRequest = ec2.describeInstances(request);
 
         //return examineResult(describeInstancesRequest);
 
-    }
+    //}
 
     /*private Set<Instance> examineResult(DescribeInstancesResult describeInstancesRequest) {
         final List<Reservation> reservations = describeInstancesRequest.getReservations();

@@ -24,12 +24,22 @@
 package com.dtolabs.rundeck.plugin.resources.gcp;
 
 
+
 import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential.Builder;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-//import com.amazonaws.auth.AWSCredentials;
-//import com.amazonaws.ClientConfiguration;
-//import com.amazonaws.auth.BasicAWSCredentials;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.util.store.FileDataStoreFactory;
+import com.google.api.services.compute.Compute;
+import com.google.api.services.compute.ComputeScopes;
+import com.google.api.services.compute.model.Instance;
+import com.google.api.services.compute.model.InstanceList;
+
 import com.dtolabs.rundeck.core.common.*;
 import com.dtolabs.rundeck.core.plugins.configuration.ConfigurationException;
 import com.dtolabs.rundeck.core.resources.ResourceModelSource;
@@ -73,10 +83,27 @@ public class GCPResourceModelSource implements ResourceModelSource {
     Future<INodeSet> futureResult = null;
     final Properties mapping = new Properties();
 
+    /** Directory to store user credentials. */
+    private static final java.io.File DATA_STORE_DIR =
+            new java.io.File(System.getProperty("user.home"), ".store/compute_engine_sample");
+
+    /**
+     * Global instance of the {@link DataStoreFactory}. The best practice is to make it a single
+     * globally shared instance across your application.
+     */
+    private static FileDataStoreFactory dataStoreFactory;
+
+    /** Global instance of the HTTP transport. */
+    private static HttpTransport httpTransport;
+
+    /** Global instance of the JSON factory. */
+    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+
+    /** OAuth 2.0 scopes */
+    private static final List<String> SCOPES = Arrays.asList(ComputeScopes.COMPUTE_READONLY);
+
     Credential credential;
-    //AWSCredentials credentials;
-    //ClientConfiguration clientConfiguration = new ClientConfiguration();;
-    
+
     INodeSet iNodeSet;
     static final Properties defaultMapping = new Properties();
     InstanceToNodeMapper mapper;
@@ -175,10 +202,18 @@ public class GCPResourceModelSource implements ResourceModelSource {
         if (configuration.containsKey(EC2ResourceModelSourceFactory.RUNNING_ONLY)) {
             runningOnly = Boolean.parseBoolean(configuration.getProperty(
                 EC2ResourceModelSourceFactory.RUNNING_ONLY));
-        }
-        if (null != accessKey && null != secretKey) {
-            credentials = new BasicAWSCredentials(accessKey.trim(), secretKey.trim());
         }*/
+        if (null != clientId && null != clientSecret) {
+            try {
+                httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+                dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
+                credential = authorize();
+            } catch  (IOException e) {
+                System.err.println(e.getMessage());
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+        }
         
         if (null != httpProxyHost && !"".equals(httpProxyHost)) {
             /*clientConfiguration.setProxyHost(httpProxyHost);
@@ -190,16 +225,39 @@ public class GCPResourceModelSource implements ResourceModelSource {
         initialize();
     }
 
+    /** Authorizes the installed application to access user's protected data. */
+    private Credential authorize() throws Exception {
+
+        GoogleCredential credential = new GoogleCredential.Builder().setClientSecrets(clientId, clientSecret).build();
+        // initialize client secrets object
+        //GoogleClientSecrets.Details clientSecretsDetails;
+        // load client secrets
+        //clientSecretsDetails = GoogleClientSecrets.setClientId(clientId);
+        /*if (clientSecrets.getDetails().getClientId().startsWith("Enter")
+                || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
+            System.out.println("Enter Client ID and Secret from https://code.google.com/apis/console/ "
+                    + "into compute-engine-cmdline-sample/src/main/resources/client_secrets.json");
+            System.exit(1);
+        }*/
+        // set up authorization code flow
+        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+                httpTransport, JSON_FACTORY, clientId, clientSecret, SCOPES).setDataStoreFactory(dataStoreFactory)
+                .build();
+        // authorize
+        /*return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");*/
+        return credential;
+    }
+
     private void initialize() {
         final ArrayList<String> params = new ArrayList<String>();
         if (null != filterParams) {
             Collections.addAll(params, filterParams.split(";"));
         }
         loadMapping();
-        /*mapper = new InstanceToNodeMapper(credentials, mapping, clientConfiguration);
+        mapper = new InstanceToNodeMapper(credential, mapping);
         mapper.setFilterParams(params);
         mapper.setEndpoint(endpoint);
-        mapper.setRunningStateOnly(runningOnly);*/
+        mapper.setRunningStateOnly(runningOnly);
     }
 
 
@@ -207,7 +265,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
         checkFuture();
         if (!needsRefresh()) {
             if (null != iNodeSet) {
-                logger.info("Returning " + iNodeSet.getNodeNames().size() + " cached nodes from EC2");
+                logger.info("Returning " + iNodeSet.getNodeNames().size() + " cached nodes from GCP");
             }
             return iNodeSet;
         }
@@ -220,7 +278,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
             lastRefresh = System.currentTimeMillis();
         }
         if (null != iNodeSet) {
-            logger.info("Read " + iNodeSet.getNodeNames().size() + " nodes from EC2");
+            logger.info("Read " + iNodeSet.getNodeNames().size() + " nodes from GCP");
         }
         return iNodeSet;
     }
@@ -280,8 +338,8 @@ public class GCPResourceModelSource implements ResourceModelSource {
     }
 
     public void validate() throws ConfigurationException {
-        if (null != accessKey && null == secretKey) {
-            throw new ConfigurationException("secretKey is required for use with accessKey");
+        if (null != clientId && null == clientSecret) {
+            throw new ConfigurationException("clientSecret is required for use with clientID");
         }
 
     }
