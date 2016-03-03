@@ -228,7 +228,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
     /** Authorizes the installed application to access user's protected data. */
     private Credential authorize() throws Exception {
 
-        GoogleCredential credential = new GoogleCredential.Builder().setClientSecrets(clientId, clientSecret).build();
+        //GoogleCredential credential = new GoogleCredential.Builder().setClientSecrets(clientId, clientSecret).build();
         // initialize client secrets object
         //GoogleClientSecrets.Details clientSecretsDetails;
         // load client secrets

@@ -89,7 +89,7 @@ public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory
                     PropertyUtil.string(
                             CLIENT_SECRET,
                             "Client Secret",
-                            "AWS Secret Key, required if Access Key is used. If not used, then the IAM profile will be used",
+                            "Client Secret",
                             false,
                             null,
                             null,
