@@ -39,6 +39,8 @@ import com.google.api.services.compute.Compute;
 import com.google.api.services.compute.ComputeScopes;
 import com.google.api.services.compute.model.Instance;
 import com.google.api.services.compute.model.InstanceList;
+import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
+import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 
 import com.dtolabs.rundeck.core.common.*;
 import com.dtolabs.rundeck.core.plugins.configuration.ConfigurationException;
@@ -163,46 +165,46 @@ public class GCPResourceModelSource implements ResourceModelSource {
         this.clientId = configuration.getProperty(GCPResourceModelSourceFactory.CLIENT_ID);
         this.clientSecret = configuration.getProperty(GCPResourceModelSourceFactory.CLIENT_SECRET);
         //this.endpoint = configuration.getProperty(EC2ResourceModelSourceFactory.ENDPOINT);
-        //this.httpProxyHost = configuration.getProperty(EC2ResourceModelSourceFactory.HTTP_PROXY_HOST);
+        this.httpProxyHost = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_HOST);
         this.projectId = configuration.getProperty(GCPResourceModelSourceFactory.PROJECT_ID);
         int proxyPort = 80;
         
-        /*final String proxyPortStr = configuration.getProperty(EC2ResourceModelSourceFactory.HTTP_PROXY_PORT);
+        final String proxyPortStr = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_PORT);
         if (null != proxyPortStr && !"".equals(proxyPortStr)) {
             try {
                 proxyPort = Integer.parseInt(proxyPortStr);
             } catch (NumberFormatException e) {
-                logger.warn(EC2ResourceModelSourceFactory.HTTP_PROXY_PORT + " value is not valid: " + proxyPortStr);
+                logger.warn(GCPResourceModelSourceFactory.HTTP_PROXY_PORT + " value is not valid: " + proxyPortStr);
             }
-        }*/
+        }
         this.httpProxyPort = proxyPort;
-        //this.httpProxyUser = configuration.getProperty(EC2ResourceModelSourceFactory.HTTP_PROXY_USER);
-        //this.httpProxyPass = configuration.getProperty(EC2ResourceModelSourceFactory.HTTP_PROXY_PASS);
+        this.httpProxyUser = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_USER);
+        this.httpProxyPass = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_PASS);
 
-        //this.filterParams = configuration.getProperty(EC2ResourceModelSourceFactory.FILTER_PARAMS);
-        //this.mappingParams = configuration.getProperty(EC2ResourceModelSourceFactory.MAPPING_PARAMS);
-        //final String mappingFilePath = configuration.getProperty(EC2ResourceModelSourceFactory.MAPPING_FILE);
-        /*if (null != mappingFilePath) {
+        this.filterParams = configuration.getProperty(GCPResourceModelSourceFactory.FILTER_PARAMS);
+        this.mappingParams = configuration.getProperty(GCPResourceModelSourceFactory.MAPPING_PARAMS);
+        final String mappingFilePath = configuration.getProperty(GCPResourceModelSourceFactory.MAPPING_FILE);
+        if (null != mappingFilePath) {
             mappingFile = new File(mappingFilePath);
-        }*/
+        }
         int refreshSecs = 30;
-        /*final String refreshStr = configuration.getProperty(EC2ResourceModelSourceFactory.REFRESH_INTERVAL);
+        final String refreshStr = configuration.getProperty(GCPResourceModelSourceFactory.REFRESH_INTERVAL);
         if (null != refreshStr && !"".equals(refreshStr)) {
             try {
                 refreshSecs = Integer.parseInt(refreshStr);
             } catch (NumberFormatException e) {
-                logger.warn(EC2ResourceModelSourceFactory.REFRESH_INTERVAL + " value is not valid: " + refreshStr);
+                logger.warn(GCPResourceModelSourceFactory.REFRESH_INTERVAL + " value is not valid: " + refreshStr);
             }
-        }*/
-        refreshInterval = refreshSecs * 1000;
-        /*if (configuration.containsKey(EC2ResourceModelSourceFactory.USE_DEFAULT_MAPPING)) {
-            useDefaultMapping = Boolean.parseBoolean(configuration.getProperty(
-                EC2ResourceModelSourceFactory.USE_DEFAULT_MAPPING));
         }
-        if (configuration.containsKey(EC2ResourceModelSourceFactory.RUNNING_ONLY)) {
+        refreshInterval = refreshSecs * 1000;
+        if (configuration.containsKey(GCPResourceModelSourceFactory.USE_DEFAULT_MAPPING)) {
+            useDefaultMapping = Boolean.parseBoolean(configuration.getProperty(
+                GCPResourceModelSourceFactory.USE_DEFAULT_MAPPING));
+        }
+        if (configuration.containsKey(GCPResourceModelSourceFactory.RUNNING_ONLY)) {
             runningOnly = Boolean.parseBoolean(configuration.getProperty(
-                EC2ResourceModelSourceFactory.RUNNING_ONLY));
-        }*/
+                GCPResourceModelSourceFactory.RUNNING_ONLY));
+        }
         if (null != clientId && null != clientSecret) {
             try {
                 httpTransport = GoogleNetHttpTransport.newTrustedTransport();
@@ -227,25 +229,12 @@ public class GCPResourceModelSource implements ResourceModelSource {
 
     /** Authorizes the installed application to access user's protected data. */
     private Credential authorize() throws Exception {
-
-        //GoogleCredential credential = new GoogleCredential.Builder().setClientSecrets(clientId, clientSecret).build();
-        // initialize client secrets object
-        //GoogleClientSecrets.Details clientSecretsDetails;
-        // load client secrets
-        //clientSecretsDetails = GoogleClientSecrets.setClientId(clientId);
-        /*if (clientSecrets.getDetails().getClientId().startsWith("Enter")
-                || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
-            System.out.println("Enter Client ID and Secret from https://code.google.com/apis/console/ "
-                    + "into compute-engine-cmdline-sample/src/main/resources/client_secrets.json");
-            System.exit(1);
-        }*/
         // set up authorization code flow
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 httpTransport, JSON_FACTORY, clientId, clientSecret, SCOPES).setDataStoreFactory(dataStoreFactory)
                 .build();
         // authorize
-        /*return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");*/
-        return credential;
+        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 
     private void initialize() {

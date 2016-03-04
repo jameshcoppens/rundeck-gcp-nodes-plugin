@@ -63,6 +63,8 @@ dependencies {
 
     pluginLibs group: 'com.amazonaws', name: 'aws-java-sdk-ec2', version: '1.9.0'
     pluginLibs group: 'com.google.apis', name:'google-api-services-compute', version: 'beta-rev9-1.21.0'
+    pluginLibs group: 'com.google.api-client', name:'google-api-client-java6', version: '1.21.0'
+    pluginLibs group: 'com.google.oauth-client', name:'google-oauth-client-jetty', version: '1.21.0'
 }
 
 // task to copy plugin libs to output/lib dir
