@@ -165,12 +165,12 @@ public class GCPResourceModelSource implements ResourceModelSource {
         this.clientId = configuration.getProperty(GCPResourceModelSourceFactory.CLIENT_ID);
         this.clientSecret = configuration.getProperty(GCPResourceModelSourceFactory.CLIENT_SECRET);
         //this.endpoint = configuration.getProperty(EC2ResourceModelSourceFactory.ENDPOINT);
-        this.httpProxyHost = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_HOST);
+        //this.httpProxyHost = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_HOST);
         this.projectId = configuration.getProperty(GCPResourceModelSourceFactory.PROJECT_ID);
         int proxyPort = 80;
         
-        final String proxyPortStr = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_PORT);
-        if (null != proxyPortStr && !"".equals(proxyPortStr)) {
+        //final String proxyPortStr = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_PORT);
+        /*if (null != proxyPortStr && !"".equals(proxyPortStr)) {
             try {
                 proxyPort = Integer.parseInt(proxyPortStr);
             } catch (NumberFormatException e) {
@@ -180,7 +180,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
         this.httpProxyPort = proxyPort;
         this.httpProxyUser = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_USER);
         this.httpProxyPass = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_PASS);
-
+        */
         this.filterParams = configuration.getProperty(GCPResourceModelSourceFactory.FILTER_PARAMS);
         this.mappingParams = configuration.getProperty(GCPResourceModelSourceFactory.MAPPING_PARAMS);
         final String mappingFilePath = configuration.getProperty(GCPResourceModelSourceFactory.MAPPING_FILE);
@@ -217,12 +217,12 @@ public class GCPResourceModelSource implements ResourceModelSource {
             }
         }
         
-        if (null != httpProxyHost && !"".equals(httpProxyHost)) {
-            /*clientConfiguration.setProxyHost(httpProxyHost);
+        /*if (null != httpProxyHost && !"".equals(httpProxyHost)) {
+            clientConfiguration.setProxyHost(httpProxyHost);
             clientConfiguration.setProxyPort(httpProxyPort);
             clientConfiguration.setProxyUsername(httpProxyUser);
-            clientConfiguration.setProxyPassword(httpProxyPass);*/
-        }
+            clientConfiguration.setProxyPassword(httpProxyPass);
+        }*/
         
         initialize();
     }

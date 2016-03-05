@@ -64,10 +64,10 @@ public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory
     public static final String MAPPING_FILE = "mappingFile";
     public static final String REFRESH_INTERVAL = "refreshInterval";
     public static final String USE_DEFAULT_MAPPING = "useDefaultMapping";
-    public static final String HTTP_PROXY_HOST = "httpProxyHost";
+    /*public static final String HTTP_PROXY_HOST = "httpProxyHost";
     public static final String HTTP_PROXY_PORT = "httpProxyPort";
     public static final String HTTP_PROXY_USER = "httpProxyUser";
-    public static final String HTTP_PROXY_PASS = "httpProxyPass";
+    public static final String HTTP_PROXY_PASS = "httpProxyPass";*/
 
     public GCPResourceModelSourceFactory(final Framework framework) {
         this.framework = framework;
@@ -101,7 +101,7 @@ public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory
                     "Minimum time in seconds between API requests to GCP (default is 30)", false, "30"))
             .property(PropertyUtil.string(FILTER_PARAMS, "Filter Params", "GCP GCE filters", false, null))
             .property(PropertyUtil.string(ENDPOINT, "Endpoint", "GCP GCE Endpoint, or blank for default", false, null))
-            .property(PropertyUtil.string(HTTP_PROXY_HOST, "HTTP Proxy Host", "HTTP Proxy Host Name, or blank for default", false, null))
+            /*.property(PropertyUtil.string(HTTP_PROXY_HOST, "HTTP Proxy Host", "HTTP Proxy Host Name, or blank for default", false, null))
             .property(PropertyUtil.integer(HTTP_PROXY_PORT, "HTTP Proxy Port", "HTTP Proxy Port, or blank for 80", false, "80"))
             .property(PropertyUtil.string(HTTP_PROXY_USER, "HTTP Proxy User", "HTTP Proxy User Name, or blank for default", false, null))
             .property(
@@ -115,7 +115,7 @@ public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory
                             null,
                             Collections.singletonMap("displayType", (Object) StringRenderingConstants.DisplayType.PASSWORD)
                     )
-            )
+            )*/
             .property(PropertyUtil.string(MAPPING_PARAMS, "Mapping Params",
                     "Property mapping definitions. Specify multiple mappings in the form " +
                             "\"attributeName.selector=selector\" or \"attributeName.default=value\", " +
