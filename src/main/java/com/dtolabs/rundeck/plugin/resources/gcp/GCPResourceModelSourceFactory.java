@@ -58,9 +58,9 @@ public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory
     public static final String FILTER_PARAMS = "filter";
     public static final String MAPPING_PARAMS = "mappingParams";
     public static final String RUNNING_ONLY = "runningOnly";
-    public static final String CLIENT_ID = "clientId";
-    public static final String CLIENT_SECRET = "clientSecret";
-    public static final String PROJECT_ID = "projectId";
+    //public static final String CLIENT_ID = "clientId";
+    //public static final String CLIENT_SECRET = "clientSecret";
+    //public static final String PROJECT_ID = "projectId";
     public static final String MAPPING_FILE = "mappingFile";
     public static final String REFRESH_INTERVAL = "refreshInterval";
     public static final String USE_DEFAULT_MAPPING = "useDefaultMapping";
@@ -83,9 +83,9 @@ public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory
             .name(PROVIDER_NAME)
             .title("GCP GCE Resources")
             .description("Produces nodes from GCP GCE")
-            .property(PropertyUtil.string(PROJECT_ID, "Project ID", "Project ID", false, null))
-            .property(PropertyUtil.string(CLIENT_ID, "Client ID", "Client ID", false, null))
-            .property(
+            //.property(PropertyUtil.string(PROJECT_ID, "Project ID", "Project ID", false, null))
+            //.property(PropertyUtil.string(CLIENT_ID, "Client ID", "Client ID", false, null))
+            /*.property(
                     PropertyUtil.string(
                             CLIENT_SECRET,
                             "Client Secret",
@@ -96,7 +96,7 @@ public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory
                             null,
                             Collections.singletonMap("displayType", (Object) StringRenderingConstants.DisplayType.PASSWORD)
                     )
-            )
+            )*/
             .property(PropertyUtil.integer(REFRESH_INTERVAL, "Refresh Interval",
                     "Minimum time in seconds between API requests to GCP (default is 30)", false, "30"))
             .property(PropertyUtil.string(FILTER_PARAMS, "Filter Params", "GCP GCE filters", false, null))

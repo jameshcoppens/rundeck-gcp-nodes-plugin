@@ -60,9 +60,9 @@ import java.util.concurrent.Future;
  */
 public class GCPResourceModelSource implements ResourceModelSource {
     static Logger logger = Logger.getLogger(GCPResourceModelSource.class);
-    private String clientId;
-    private String clientSecret;
-    private String projectId;
+    //private String clientId;
+    //private String clientSecret;
+    //private String projectId;
     long refreshInterval = 30000;
     long lastRefresh = 0;
     String filterParams;
@@ -153,11 +153,11 @@ public class GCPResourceModelSource implements ResourceModelSource {
     }
 
     public GCPResourceModelSource(final Properties configuration) {
-        this.clientId = configuration.getProperty(GCPResourceModelSourceFactory.CLIENT_ID);
-        this.clientSecret = configuration.getProperty(GCPResourceModelSourceFactory.CLIENT_SECRET);
+        //this.clientId = configuration.getProperty(GCPResourceModelSourceFactory.CLIENT_ID);
+        //this.clientSecret = configuration.getProperty(GCPResourceModelSourceFactory.CLIENT_SECRET);
         //this.endpoint = configuration.getProperty(EC2ResourceModelSourceFactory.ENDPOINT);
         //this.httpProxyHost = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_HOST);
-        this.projectId = configuration.getProperty(GCPResourceModelSourceFactory.PROJECT_ID);
+        //this.projectId = configuration.getProperty(GCPResourceModelSourceFactory.PROJECT_ID);
         int proxyPort = 80;
         
         //final String proxyPortStr = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_PORT);
@@ -309,9 +309,9 @@ public class GCPResourceModelSource implements ResourceModelSource {
     }
 
     public void validate() throws ConfigurationException {
-        if (null != clientId && null == clientSecret) {
+        /*if (null != clientId && null == clientSecret) {
             throw new ConfigurationException("clientSecret is required for use with clientID");
-        }
+        }*/
 
     }
 }
