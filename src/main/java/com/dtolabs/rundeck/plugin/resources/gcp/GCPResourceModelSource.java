@@ -62,7 +62,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
     static Logger logger = Logger.getLogger(GCPResourceModelSource.class);
     //private String clientId;
     //private String clientSecret;
-    //private String projectId;
+    private String projectId;
     long refreshInterval = 30000;
     long lastRefresh = 0;
     String filterParams;
@@ -81,19 +81,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
 
     /** Directory to store user credentials. */
     private static final java.io.File DATA_STORE_DIR =
-            new java.io.File(System.getProperty("user.home"), ".store/compute_engine_sample");
-
-    /**
-     * Global instance of the {@link DataStoreFactory}. The best practice is to make it a single
-     * globally shared instance across your application.
-     */
-    private static FileDataStoreFactory dataStoreFactory;
-
-    /** Global instance of the HTTP transport. */
-    private static HttpTransport httpTransport;
-
-    /** Global instance of the JSON factory. */
-    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+            new java.io.File(System.getProperty("user.home"), ".store/rundeck-gcp-nodes-plugin");
 
     GoogleCredential credential;
 
@@ -157,7 +145,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
         //this.clientSecret = configuration.getProperty(GCPResourceModelSourceFactory.CLIENT_SECRET);
         //this.endpoint = configuration.getProperty(EC2ResourceModelSourceFactory.ENDPOINT);
         //this.httpProxyHost = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_HOST);
-        //this.projectId = configuration.getProperty(GCPResourceModelSourceFactory.PROJECT_ID);
+        this.projectId = configuration.getProperty(GCPResourceModelSourceFactory.PROJECT_ID);
         int proxyPort = 80;
         
         //final String proxyPortStr = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_PORT);
@@ -198,8 +186,6 @@ public class GCPResourceModelSource implements ResourceModelSource {
         }
         //if (null != clientId && null != clientSecret) {
             try {
-                httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-                dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
                 GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/etc/rundeck/rundeck-gcp-nodes-plugin.json"))
                         .createScoped(Collections.singleton(ComputeScopes.COMPUTE_READONLY));
             } catch  (IOException e) {

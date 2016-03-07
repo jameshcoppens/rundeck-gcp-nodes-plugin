@@ -60,7 +60,7 @@ public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory
     public static final String RUNNING_ONLY = "runningOnly";
     //public static final String CLIENT_ID = "clientId";
     //public static final String CLIENT_SECRET = "clientSecret";
-    //public static final String PROJECT_ID = "projectId";
+    public static final String PROJECT_ID = "projectId";
     public static final String MAPPING_FILE = "mappingFile";
     public static final String REFRESH_INTERVAL = "refreshInterval";
     public static final String USE_DEFAULT_MAPPING = "useDefaultMapping";
@@ -83,7 +83,7 @@ public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory
             .name(PROVIDER_NAME)
             .title("GCP GCE Resources")
             .description("Produces nodes from GCP GCE")
-            //.property(PropertyUtil.string(PROJECT_ID, "Project ID", "Project ID", false, null))
+            .property(PropertyUtil.string(PROJECT_ID, "Project ID", "Project ID", false, null))
             //.property(PropertyUtil.string(CLIENT_ID, "Client ID", "Client ID", false, null))
             /*.property(
                     PropertyUtil.string(
