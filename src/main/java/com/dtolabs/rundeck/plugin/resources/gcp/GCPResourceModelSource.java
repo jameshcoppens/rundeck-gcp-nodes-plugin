@@ -24,12 +24,9 @@
 package com.dtolabs.rundeck.plugin.resources.gcp;
 
 
-
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential.Builder;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -38,9 +35,6 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.compute.Compute;
 import com.google.api.services.compute.ComputeScopes;
 import com.google.api.services.compute.model.Instance;
-import com.google.api.services.compute.model.InstanceList;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 
 import com.dtolabs.rundeck.core.common.*;
 import com.dtolabs.rundeck.core.plugins.configuration.ConfigurationException;
@@ -101,10 +95,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
     /** Global instance of the JSON factory. */
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
-    /** OAuth 2.0 scopes */
-    private static final List<String> SCOPES = Arrays.asList(ComputeScopes.COMPUTE_READONLY);
-
-    Credential credential;
+    GoogleCredential credential;
 
     INodeSet iNodeSet;
     static final Properties defaultMapping = new Properties();
@@ -209,7 +200,8 @@ public class GCPResourceModelSource implements ResourceModelSource {
             try {
                 httpTransport = GoogleNetHttpTransport.newTrustedTransport();
                 dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
-                credential = authorize();
+                GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/Users/jameshcoppens/Documents/YellowHammer/google-api-java-client-samples/compute-engine-cmdline-sample/target/classes/rundeck-gcp-nodes-plugin.json"))
+                        .createScoped(Collections.singleton(ComputeScopes.COMPUTE_READONLY));
             } catch  (IOException e) {
                 System.err.println(e.getMessage());
             } catch (Throwable t) {
@@ -225,16 +217,6 @@ public class GCPResourceModelSource implements ResourceModelSource {
         }*/
         
         initialize();
-    }
-
-    /** Authorizes the installed application to access user's protected data. */
-    private Credential authorize() throws Exception {
-        // set up authorization code flow
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                httpTransport, JSON_FACTORY, clientId, clientSecret, SCOPES).setDataStoreFactory(dataStoreFactory)
-                .build();
-        // authorize
-        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 
     private void initialize() {
