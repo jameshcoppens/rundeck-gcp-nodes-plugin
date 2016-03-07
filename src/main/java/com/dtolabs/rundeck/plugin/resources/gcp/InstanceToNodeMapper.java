@@ -24,6 +24,7 @@
 package com.dtolabs.rundeck.plugin.resources.gcp;
 
 import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -37,6 +38,8 @@ import com.google.api.services.compute.ComputeScopes;
 
 import com.google.api.services.compute.model.Instance;
 import com.google.api.services.compute.model.InstanceList;
+import com.google.api.services.compute.model.InstanceAggregatedList;
+import com.google.api.services.compute.model.InstancesScopedList;
 
 import com.dtolabs.rundeck.core.common.INodeEntry;
 import com.dtolabs.rundeck.core.common.INodeSet;
@@ -45,6 +48,8 @@ import com.dtolabs.rundeck.core.common.NodeSetImpl;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 
+
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
@@ -62,22 +67,38 @@ import java.util.regex.Pattern;
  */
 class InstanceToNodeMapper {
     static final Logger logger = Logger.getLogger(InstanceToNodeMapper.class);
-    final Credential credential;
-    //final AWSCredentials credentials;
-    //private ClientConfiguration clientConfiguration;
+    final GoogleCredential credential;
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
     private ArrayList<String> filterParams;
     private String endpoint;
+    private String projectId;
     private boolean runningStateOnly = true;
     private Properties mapping;
 
     /**
+     * Be sure to specify the name of your application. If the application name is {@code null} or
+     * blank, the application will log a warning. Suggested format is "MyCompany-ProductName/1.0".
+     */
+    private static final String APPLICATION_NAME = "rundeck-gcp-nodes-plugin";
+
+    /**
+     * Global instance of the {@link DataStoreFactory}. The best practice is to make it a single
+     * globally shared instance across your application.
+     */
+    private static FileDataStoreFactory dataStoreFactory;
+
+    /** Global instance of the HTTP transport. */
+    private static HttpTransport httpTransport;
+
+    /** Global instance of the JSON factory. */
+    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+
+    /**
      * Create with the credentials and mapping definition
      */
-    InstanceToNodeMapper(final Credential credential ,final Properties mapping/*, final ClientConfiguration clientConfiguration*/) {
+    InstanceToNodeMapper(final GoogleCredential credential ,final Properties mapping) {
         this.credential = credential;
         this.mapping = mapping;
-        //this.clientConfiguration = clientConfiguration;
     }
 
     /**
@@ -86,22 +107,20 @@ class InstanceToNodeMapper {
      */
     public INodeSet performQuery() {
         final NodeSetImpl nodeSet = new NodeSetImpl();
-        
-        /*final AmazonEC2Client ec2 ;
-        if(null!=credentials) {
-            ec2 = new AmazonEC2Client(credentials, clientConfiguration);
-        } else{
-            ec2 = new AmazonEC2Client(clientConfiguration);
+
+        final Compute compute;
+        if(null!=credential) {
+             compute = new Compute.Builder(
+                    httpTransport, JSON_FACTORY, null).setApplicationName(APPLICATION_NAME)
+                    .setHttpRequestInitializer(credential).build();
+
+            final Set<Instance> instances = query(compute, projectId);
+
+
+            //mapInstances(nodeSet, instances);
         }
-        if (null != getEndpoint()) {
-            ec2.setEndpoint(getEndpoint());
-        }
-        final ArrayList<Filter> filters = buildFilters();*/
+        //final ArrayList<Filter> filters = buildFilters();
         //final Set<Instance> instances = query(ec2, new DescribeInstancesRequest().withFilters(filters));
-        //final Set<Instance> instances = query();
-
-
-        //mapInstances(nodeSet, instances);
         return nodeSet;
     }
 
@@ -165,24 +184,38 @@ class InstanceToNodeMapper {
         };
     }
 
-    //private Set<Instance> query(/*final AmazonEC2Client ec2, final DescribeInstancesRequest request*/) {
+    private Set<Instance> query(Compute compute, String projectId) {
         //create "running" filter
 
-        //final DescribeInstancesResult describeInstancesRequest = ec2.describeInstances(request);
-
-        //return examineResult(describeInstancesRequest);
-
-    //}
-
-    /*private Set<Instance> examineResult(DescribeInstancesResult describeInstancesRequest) {
-        final List<Reservation> reservations = describeInstancesRequest.getReservations();
+        //final List<Reservation> reservations = describeInstancesRequest.getReservations();
         final Set<Instance> instances = new HashSet<Instance>();
+        try {
+                Compute.Instances.AggregatedList instancesAggregatedList = compute.instances().aggregatedList(projectId);
+                InstanceAggregatedList list = instancesAggregatedList.execute();
 
-        for (final Reservation reservation : reservations) {
-            //instances.addAll(reservation.getInstances());
+                if (list.getItems() == null) {
+                    System.out.println("No instances found. Sign in to the Google APIs Console and create "
+                            + "an instance at: code.google.com/apis/console");
+                } else {
+                    java.util.Map<String, InstancesScopedList> aggregated_list = list.getItems();
+
+                    for (java.util.Map.Entry<String, InstancesScopedList> entry : aggregated_list.entrySet()) {
+                        if (entry.getValue().getInstances() != null) {
+                            //System.out.println(entry.getValue().getInstances());
+                            logger.info("Successfully pulling in node information " + entry.getValue().getInstances());
+                        }
+                    }
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
+        //for (final Reservation reservation : reservations) {
+            //instances.addAll(reservation.getInstances());
+        //}
         return instances;
-    }*/
+    }
 
     /*private ArrayList<Filter> buildFilters() {
         final ArrayList<Filter> filters = new ArrayList<Filter>();
@@ -430,6 +463,13 @@ class InstanceToNodeMapper {
     /**
      * Return the endpoint
      */
+    public String getProjectId() {
+        return projectId;
+    }
+
+    /**
+     * Return the endpoint
+     */
     public String getEndpoint() {
         return endpoint;
     }
@@ -460,6 +500,10 @@ class InstanceToNodeMapper {
      */
     public void setEndpoint(final String endpoint) {
         this.endpoint = endpoint;
+    }
+
+    public void setProjectId(final String projectId) {
+        this.projectId = projectId;
     }
 
     public Properties getMapping() {
