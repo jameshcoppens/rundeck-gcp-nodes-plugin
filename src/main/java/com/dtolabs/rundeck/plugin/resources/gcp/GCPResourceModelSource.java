@@ -200,7 +200,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
             try {
                 httpTransport = GoogleNetHttpTransport.newTrustedTransport();
                 dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
-                GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/Users/jameshcoppens/Documents/YellowHammer/google-api-java-client-samples/compute-engine-cmdline-sample/target/classes/rundeck-gcp-nodes-plugin.json"))
+                GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/etc/rundeck/rundeck-gcp-nodes-plugin.json"))
                         .createScoped(Collections.singleton(ComputeScopes.COMPUTE_READONLY));
             } catch  (IOException e) {
                 System.err.println(e.getMessage());
