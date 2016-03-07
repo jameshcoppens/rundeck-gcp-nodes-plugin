@@ -196,7 +196,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
             runningOnly = Boolean.parseBoolean(configuration.getProperty(
                 GCPResourceModelSourceFactory.RUNNING_ONLY));
         }
-        if (null != clientId && null != clientSecret) {
+        //if (null != clientId && null != clientSecret) {
             try {
                 httpTransport = GoogleNetHttpTransport.newTrustedTransport();
                 dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
@@ -207,8 +207,8 @@ public class GCPResourceModelSource implements ResourceModelSource {
             } catch (Throwable t) {
                 t.printStackTrace();
             }
-        }
-        
+        //}
+
         /*if (null != httpProxyHost && !"".equals(httpProxyHost)) {
             clientConfiguration.setProxyHost(httpProxyHost);
             clientConfiguration.setProxyPort(httpProxyPort);
