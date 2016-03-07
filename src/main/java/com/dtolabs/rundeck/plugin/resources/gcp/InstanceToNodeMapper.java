@@ -189,12 +189,12 @@ class InstanceToNodeMapper {
 
         //final List<Reservation> reservations = describeInstancesRequest.getReservations();
         final Set<Instance> instances = new HashSet<Instance>();
-        try {
+        /*try {
                 Compute.Instances.AggregatedList instancesAggregatedList = compute.instances().aggregatedList(projectId);
                 InstanceAggregatedList list = instancesAggregatedList.execute();
 
                 if (list.getItems() == null) {
-                    System.out.println("No instances found. Sign in to the Google APIs Console and create "
+                    logger.info("No instances found. Sign in to the Google APIs Console and create "
                             + "an instance at: code.google.com/apis/console");
                 } else {
                     java.util.Map<String, InstancesScopedList> aggregated_list = list.getItems();
@@ -210,7 +210,7 @@ class InstanceToNodeMapper {
             System.err.println(e.getMessage());
         } catch (Throwable t) {
             t.printStackTrace();
-        }
+        }*/
         //for (final Reservation reservation : reservations) {
             //instances.addAll(reservation.getInstances());
         //}
