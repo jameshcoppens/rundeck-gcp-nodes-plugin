@@ -114,7 +114,7 @@ class InstanceToNodeMapper {
                     httpTransport, JSON_FACTORY, null).setApplicationName(APPLICATION_NAME)
                     .setHttpRequestInitializer(credential).build();
 
-            final Set<Instance> instances = query(compute, projectId);
+            //final Set<Instance> instances = query(compute, projectId);
 
 
             //mapInstances(nodeSet, instances);
