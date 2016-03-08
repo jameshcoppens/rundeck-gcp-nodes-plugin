@@ -110,9 +110,9 @@ class InstanceToNodeMapper {
 
         final Compute compute;
         if(null!=credential) {
-             compute = new Compute.Builder(
+             /*compute = new Compute.Builder(
                     httpTransport, JSON_FACTORY, null).setApplicationName(APPLICATION_NAME)
-                    .setHttpRequestInitializer(credential).build();
+                    .setHttpRequestInitializer(credential).build();*/
 
             //final Set<Instance> instances = query(compute, projectId);
 
