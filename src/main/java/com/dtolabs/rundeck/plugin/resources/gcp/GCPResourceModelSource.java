@@ -79,10 +79,6 @@ public class GCPResourceModelSource implements ResourceModelSource {
     Future<INodeSet> futureResult = null;
     final Properties mapping = new Properties();
 
-    /** Directory to store user credentials. */
-    private static final java.io.File DATA_STORE_DIR =
-            new java.io.File(System.getProperty("user.home"), ".store/rundeck-gcp-nodes-plugin");
-
     GoogleCredential credential;
 
     INodeSet iNodeSet;
@@ -186,9 +182,11 @@ public class GCPResourceModelSource implements ResourceModelSource {
         }
         //if (null != clientId && null != clientSecret) {
             try {
-                GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/etc/rundeck/rundeck-gcp-nodes-plugin.json"))
+                credential = GoogleCredential.fromStream(new FileInputStream("/Users/jameshcoppens/Documents/YellowHammer/rundeck/etc/rundeck-gcp-nodes-plugin.json"))
                         .createScoped(Collections.singleton(ComputeScopes.COMPUTE_READONLY));
-            } catch  (IOException e) {
+                logger.error("Google Crendential created successfully");
+            } catch  (FileNotFoundException e) {
+                logger.error("Google Crendential failed creation");
                 System.err.println(e.getMessage());
             } catch (Throwable t) {
                 t.printStackTrace();
@@ -212,6 +210,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
         }
         loadMapping();
         mapper = new InstanceToNodeMapper(credential, mapping);
+        mapper.setProjectId(projectId);
         mapper.setFilterParams(params);
         mapper.setEndpoint(endpoint);
         mapper.setRunningStateOnly(runningOnly);
