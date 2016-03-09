@@ -81,12 +81,6 @@ class InstanceToNodeMapper {
      */
     private static final String APPLICATION_NAME = "rundeck-gcp-nodes-plugin";
 
-    /**
-     * Global instance of the {@link DataStoreFactory}. The best practice is to make it a single
-     * globally shared instance across your application.
-     */
-    private static FileDataStoreFactory dataStoreFactory;
-
     /** Global instance of the HTTP transport. */
     private static HttpTransport httpTransport;
 
@@ -107,18 +101,26 @@ class InstanceToNodeMapper {
      */
     public INodeSet performQuery() {
         final NodeSetImpl nodeSet = new NodeSetImpl();
-
+        logger.error("Google Crendential performQuery(), this is credential " + credential);
         final Compute compute;
-        if(null!=credential) {
-             /*compute = new Compute.Builder(
+        //if(null!=credential) {
+        try {
+             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+             compute = new Compute.Builder(
                     httpTransport, JSON_FACTORY, null).setApplicationName(APPLICATION_NAME)
-                    .setHttpRequestInitializer(credential).build();*/
+                    .setHttpRequestInitializer(credential).build();
 
-            //final Set<Instance> instances = query(compute, projectId);
+            final Set<Instance> instances = query(compute, projectId);
 
+            logger.error("Google Crendential query() completed");
 
-            //mapInstances(nodeSet, instances);
+            mapInstances(nodeSet, instances);
+        } catch (IOException e) {
+        System.err.println(e.getMessage());
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
+        logger.error("Google Crendential perfomquery() completed");
         //final ArrayList<Filter> filters = buildFilters();
         //final Set<Instance> instances = query(ec2, new DescribeInstancesRequest().withFilters(filters));
         return nodeSet;
@@ -189,20 +191,23 @@ class InstanceToNodeMapper {
 
         //final List<Reservation> reservations = describeInstancesRequest.getReservations();
         final Set<Instance> instances = new HashSet<Instance>();
-        /*try {
+        try {
+            logger.error("begin query function, with this projectId " + projectId);
                 Compute.Instances.AggregatedList instancesAggregatedList = compute.instances().aggregatedList(projectId);
                 InstanceAggregatedList list = instancesAggregatedList.execute();
 
                 if (list.getItems() == null) {
-                    logger.info("No instances found. Sign in to the Google APIs Console and create "
+                    logger.error("No instances found. Sign in to the Google APIs Console and create "
                             + "an instance at: code.google.com/apis/console");
                 } else {
                     java.util.Map<String, InstancesScopedList> aggregated_list = list.getItems();
 
                     for (java.util.Map.Entry<String, InstancesScopedList> entry : aggregated_list.entrySet()) {
+                        logger.error("getinstances performing");
                         if (entry.getValue().getInstances() != null) {
                             //System.out.println(entry.getValue().getInstances());
-                            logger.info("Successfully pulling in node information " + entry.getValue().getInstances());
+                            instances.addAll(entry.getValue().getInstances());
+                            logger.error("Successfully pulling in node information " + entry.getValue().getInstances());
                         }
                     }
             }
@@ -210,7 +215,7 @@ class InstanceToNodeMapper {
             System.err.println(e.getMessage());
         } catch (Throwable t) {
             t.printStackTrace();
-        }*/
+        }
         //for (final Reservation reservation : reservations) {
             //instances.addAll(reservation.getInstances());
         //}
@@ -235,19 +240,20 @@ class InstanceToNodeMapper {
         return filters;
     }*/
 
-    /*private void mapInstances(final NodeSetImpl nodeSet, final Set<Instance> instances) {
+    private void mapInstances(final NodeSetImpl nodeSet, final Set<Instance> instances) {
         for (final Instance inst : instances) {
             final INodeEntry iNodeEntry;
-            try {
+            /*try {
                 iNodeEntry = InstanceToNodeMapper.instanceToNode(inst, mapping);
                 if (null != iNodeEntry) {
                     nodeSet.putNode(iNodeEntry);
                 }
             } catch (GeneratorException e) {
                 logger.error(e);
-            }
+            }*/
+            logger.error("Instances within the Set "+ inst);
         }
-    }*/
+    }
 
     /**
      * Convert an GCP GCE Instance to a RunDeck INodeEntry based on the mapping input
