@@ -15,10 +15,10 @@
  */
 
 /*
-* NodeGenerator.java
+* InstanceToNodeMapper.java
 * 
-* User: Greg Schueler <a href="mailto:greg@dtosolutions.com">greg@dtosolutions.com</a>
-* Created: Oct 18, 2010 7:03:37 PM
+* User: James Coppens <a href="mailto:jameshcoppens@gmail.com">jameshcoppens@gmail.com</a>
+* Created: March 01 2016
 * 
 */
 package com.dtolabs.rundeck.plugin.resources.gcp;
@@ -40,6 +40,7 @@ import com.google.api.services.compute.model.Instance;
 import com.google.api.services.compute.model.InstanceList;
 import com.google.api.services.compute.model.InstanceAggregatedList;
 import com.google.api.services.compute.model.InstancesScopedList;
+import com.google.api.services.compute.model.Tags;
 
 import com.dtolabs.rundeck.core.common.INodeEntry;
 import com.dtolabs.rundeck.core.common.INodeSet;
@@ -205,7 +206,6 @@ class InstanceToNodeMapper {
                     for (java.util.Map.Entry<String, InstancesScopedList> entry : aggregated_list.entrySet()) {
                         logger.error("getinstances performing");
                         if (entry.getValue().getInstances() != null) {
-                            //System.out.println(entry.getValue().getInstances());
                             instances.addAll(entry.getValue().getInstances());
                             logger.error("Successfully pulling in node information " + entry.getValue().getInstances());
                         }
@@ -243,14 +243,14 @@ class InstanceToNodeMapper {
     private void mapInstances(final NodeSetImpl nodeSet, final Set<Instance> instances) {
         for (final Instance inst : instances) {
             final INodeEntry iNodeEntry;
-            /*try {
+            try {
                 iNodeEntry = InstanceToNodeMapper.instanceToNode(inst, mapping);
                 if (null != iNodeEntry) {
                     nodeSet.putNode(iNodeEntry);
                 }
             } catch (GeneratorException e) {
                 logger.error(e);
-            }*/
+            }
             logger.error("Instances within the Set "+ inst);
         }
     }
@@ -259,18 +259,18 @@ class InstanceToNodeMapper {
      * Convert an GCP GCE Instance to a RunDeck INodeEntry based on the mapping input
      */
     @SuppressWarnings("unchecked")
-/*    static INodeEntry instanceToNode(final Instance inst, final Properties mapping) throws GeneratorException {
+    static INodeEntry instanceToNode(final Instance inst, final Properties mapping) throws GeneratorException {
         final NodeEntryImpl node = new NodeEntryImpl();
 
         //evaluate single settings.selector=tags/* mapping
         if ("tags/*".equals(mapping.getProperty("attributes.selector"))) {
             //iterate through instance tags and generate settings
-            for (final Tag tag : inst.getTags()) {
+            /*for (final String tag : inst.getTags().getItems()) {
                 if (null == node.getAttributes()) {
-                    node.setAttributes(new HashMap<String, String>());
+                    node.setAttribute(new HashMap<String, String>());
                 }
-                node.getAttributes().put(tag.getKey(), tag.getValue());
-            }
+                node.getAttribute().put(tag.getKey(), tag.getValue());
+            }*/
         }
         if (null != mapping.getProperty("tags.selector")) {
             final String selector = mapping.getProperty("tags.selector");
@@ -361,18 +361,21 @@ class InstanceToNodeMapper {
                 }
             }
         }
-//        String hostSel = mapping.getProperty("hostname.selector");
-//        String host = applySelector(inst, hostSel, mapping.getProperty("hostname.default"));
-//        if (null == node.getHostname()) {
-//            System.err.println("Unable to determine hostname for instance: " + inst.getInstanceId());
-//            return null;
-//        }
+        String hostSel = mapping.getProperty("hostname.selector");
+        logger.error("This is the hostSel variable " + hostSel);
+        String host = applySelector(inst, hostSel, mapping.getProperty("hostname.default"));
+        logger.error("This is the host variable " + host);
+        logger.error("This is the hostname.default mapping param " + mapping.getProperty("hostname.default"));
+        if (null == node.getHostname()) {
+            System.err.println("Unable to determine hostname for instance: " + inst.getId());
+            return null;
+        }
         String name = node.getNodename();
         if (null == name || "".equals(name)) {
             name = node.getHostname();
         }
         if (null == name || "".equals(name)) {
-            //name = inst.getInstanceId();
+            //name = inst.getnceId();
         }
         node.setNodename(name);
 
@@ -383,16 +386,16 @@ class InstanceToNodeMapper {
         }
 
         return node;
-    }*/
+    }
 
     /**
      * Return the result of the selector applied to the instance, otherwise return the defaultValue. The selector can be
      * a comma-separated list of selectors
      */
-   /* public static String applySelector(final Instance inst, final String selector, final String defaultValue) throws
+    public static String applySelector(final Instance inst, final String selector, final String defaultValue) throws
         GeneratorException {
         return applySelector(inst, selector, defaultValue, false);
-    }*/
+    }
 
     /**
      * Return the result of the selector applied to the instance, otherwise return the defaultValue. The selector can be
@@ -402,7 +405,7 @@ class InstanceToNodeMapper {
      * @param defaultValue a default value to return if there is no result from the selector
      * @param tagMerge if true, allow | separator to merge multiple values
      */
-    /*
+
     public static String applySelector(final Instance inst, final String selector, final String defaultValue,
                                        final boolean tagMerge) throws
         GeneratorException {
@@ -433,21 +436,23 @@ class InstanceToNodeMapper {
         }
         return defaultValue;
     }
-    */
-/*
+
+
     private static String applySingleSelector(final Instance inst, final String selector) throws
         GeneratorException {
-        if (null != selector && !"".equals(selector) && selector.startsWith("tags/")) {
+        /*if (null != selector && !"".equals(selector) && selector.startsWith("tags/")) {
             final String tag = selector.substring("tags/".length());
-            /*final List<Tag> tags = inst.getTags();
+            final List<Tag> tags = inst.getTags();
             for (final Tag tag1 : tags) {
                 if (tag.equals(tag1.getKey())) {
                     return tag1.getValue();
                 }
             }
-        } else if (null != selector && !"".equals(selector)) {
+        } else*/ if (null != selector && !"".equals(selector)) {
             try {
+                logger.error("This is the selector " + selector);
                 final String value = BeanUtils.getProperty(inst, selector);
+                logger.error("This is the value " + value);
                 if (null != value) {
                     return value;
                 }
@@ -458,7 +463,7 @@ class InstanceToNodeMapper {
 
         return null;
     }
-*/
+
     /**
      * Return the list of "filter=value" filters
      */
