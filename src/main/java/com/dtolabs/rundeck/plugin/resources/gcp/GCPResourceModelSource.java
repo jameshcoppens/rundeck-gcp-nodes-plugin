@@ -15,9 +15,9 @@
  */
 
 /*
-* EC2ResourceModelSource.java
+* GCPResourceModelSource.java
 * 
-* User: Greg Schueler <a href="mailto:greg@dtosolutions.com">greg@dtosolutions.com</a>
+* User: James Coppens <a href="mailto:jameshcoppens@gmail.com">jameshcoppens@gmail.com</a>
 * Created: 9/1/11 4:34 PM
 * 
 */
@@ -60,8 +60,6 @@ import java.util.concurrent.Future;
  */
 public class GCPResourceModelSource implements ResourceModelSource {
     static Logger logger = Logger.getLogger(GCPResourceModelSource.class);
-    //private String clientId;
-    //private String clientSecret;
     private String projectId;
     long refreshInterval = 30000;
     long lastRefresh = 0;
@@ -86,11 +84,11 @@ public class GCPResourceModelSource implements ResourceModelSource {
     InstanceToNodeMapper mapper;
 
     static {
-        final String mapping = "nodename.selector=tags/Name,instanceId\n"
-                               + "hostname.selector=publicDnsName\n"
+        final String mapping = "nodename.selector=name,id\n"
+                               + "hostname.selector=name\n"
                                + "sshport.default=22\n"
                                + "sshport.selector=tags/ssh_config_Port\n"
-                               + "description.default=EC2 node instance\n"
+                               + "description.default=GCE node instance\n"
                                + "osArch.selector=architecture\n"
                                + "osFamily.selector=platform\n"
                                + "osFamily.default=unix\n"
@@ -98,19 +96,19 @@ public class GCPResourceModelSource implements ResourceModelSource {
                                + "osName.default=Linux\n"
                                + "username.selector=tags/Rundeck-User\n"
                                + "username.default=ec2-user\n"
-                               + "editUrl.default=https://console.aws.amazon.com/ec2/home#Instances:search=${node.instanceId}\n"
+                               + "editUrl.default=https://console.cloud.google.com/compute/instances?project=${node.projectId}\n"
                                + "privateIpAddress.selector=privateIpAddress\n"
                                + "privateDnsName.selector=privateDnsName\n"
                                + "tags.selector=tags/Rundeck-Tags\n"
                                + "instanceId.selector=instanceId\n"
-                               + "tag.running.selector=state.name=running\n"
-                               + "tag.stopped.selector=state.name=stopped\n"
-                               + "tag.stopping.selector=state.name=stopping\n"
-                               + "tag.shutting-down.selector=state.name=shutting-down\n"
-                               + "tag.terminated.selector=state.name=terminated\n"
-                               + "tag.pending.selector=state.name=pending\n"
-                               + "state.selector=state.name\n"
-                               + "tags.default=ec2\n";
+                               + "tag.running.selector=status=running\n"
+                               + "tag.stopped.selector=status=stopped\n"
+                               + "tag.stopping.selector=status=stopping\n"
+                               + "tag.shutting-down.selector=status=shutting-down\n"
+                               + "tag.terminated.selector=status=terminated\n"
+                               + "tag.pending.selector=status=pending\n"
+                               + "state.selector=status\n"
+                               + "tags.default=gce\n";
         try {
 
             final InputStream resourceAsStream = GCPResourceModelSource.class.getClassLoader().getResourceAsStream(
