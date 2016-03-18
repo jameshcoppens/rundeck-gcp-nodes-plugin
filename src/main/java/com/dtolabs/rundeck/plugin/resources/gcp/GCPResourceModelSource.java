@@ -97,7 +97,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
                                + "username.selector=tags/Rundeck-User\n"
                                + "username.default=ec2-user\n"
                                + "editUrl.default=https://console.cloud.google.com/compute/instances?project=${node.projectId}\n"
-                               + "privateIpAddress.selector=privateIpAddress\n"
+                               + "privateIpAddress.selector=networkInterfaces\n"
                                + "privateDnsName.selector=privateDnsName\n"
                                + "tags.selector=tags/Rundeck-Tags\n"
                                + "instanceId.selector=instanceId\n"
@@ -180,7 +180,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
         }
         //if (null != clientId && null != clientSecret) {
             try {
-                credential = GoogleCredential.fromStream(new FileInputStream("/etc/rundeck/rundeck-gcp-nodes-plugin.json"))
+                credential = GoogleCredential.fromStream(new FileInputStream("/Users/jameshcoppens/Documents/YellowHammer/rundeck/etc/rundeck-gcp-nodes-plugin.json"))
                         .createScoped(Collections.singleton(ComputeScopes.COMPUTE_READONLY));
                 logger.error("Google Crendential created successfully");
             } catch  (FileNotFoundException e) {

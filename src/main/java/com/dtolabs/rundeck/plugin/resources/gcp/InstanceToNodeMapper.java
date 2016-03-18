@@ -41,6 +41,7 @@ import com.google.api.services.compute.model.InstanceList;
 import com.google.api.services.compute.model.InstanceAggregatedList;
 import com.google.api.services.compute.model.InstancesScopedList;
 import com.google.api.services.compute.model.Tags;
+import com.google.api.services.compute.model.NetworkInterface;
 
 import com.dtolabs.rundeck.core.common.INodeEntry;
 import com.dtolabs.rundeck.core.common.INodeSet;
@@ -51,6 +52,7 @@ import org.apache.log4j.Logger;
 
 
 import java.io.IOException;
+//import java.net.NetworkInterface;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
@@ -375,7 +377,7 @@ class InstanceToNodeMapper {
             name = node.getHostname();
         }
         if (null == name || "".equals(name)) {
-            //name = inst.getnceId();
+            name = inst.getId().toString();
         }
         node.setNodename(name);
 
@@ -451,7 +453,15 @@ class InstanceToNodeMapper {
         } else*/ if (null != selector && !"".equals(selector)) {
             try {
                 logger.error("This is the selector " + selector);
-                final String value = BeanUtils.getProperty(inst, selector);
+                String value = null;
+                if ("networkInterfaces".equals(selector)) {
+                    for (NetworkInterface netint : inst.getNetworkInterfaces()) {
+                         value = netint.getNetworkIP();
+                    }
+                }
+                else {
+                    value = BeanUtils.getProperty(inst, selector);
+                }
                 logger.error("This is the value " + value);
                 if (null != value) {
                     return value;
