@@ -134,7 +134,7 @@ class InstanceToNodeMapper {
      *
      */
     public Future<INodeSet> performQueryAsync() {
-        
+        logger.error("PerformQueryAsync start");
         //final AmazonEC2AsyncClient ec2;
         /*if(null!=credentials){
             ec2= new AmazonEC2AsyncClient(credentials, clientConfiguration, executorService);
