@@ -135,6 +135,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
     }
 
     public GCPResourceModelSource(final Properties configuration) {
+        logger.error("GCPResourceModelSource Constructor");
         //this.clientId = configuration.getProperty(GCPResourceModelSourceFactory.CLIENT_ID);
         //this.clientSecret = configuration.getProperty(GCPResourceModelSourceFactory.CLIENT_SECRET);
         //this.endpoint = configuration.getProperty(EC2ResourceModelSourceFactory.ENDPOINT);
@@ -202,6 +203,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
     }
 
     private void initialize() {
+        logger.error("initialize call");
         final ArrayList<String> params = new ArrayList<String>();
         if (null != filterParams) {
             Collections.addAll(params, filterParams.split(";"));
@@ -216,6 +218,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
 
 
     public synchronized INodeSet getNodes() throws ResourceModelSourceException {
+        logger.error("getNodes call");
         checkFuture();
         if (!needsRefresh()) {
             if (null != iNodeSet) {
@@ -241,6 +244,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
      * if any future results are pending, check if they are done and retrieve the results
      */
     private void checkFuture() {
+        logger.error("checkFuture call");
         if (null != futureResult && futureResult.isDone()) {
             try {
                 iNodeSet = futureResult.get();
@@ -257,10 +261,12 @@ public class GCPResourceModelSource implements ResourceModelSource {
      * Returns true if the last refresh time was longer ago than the refresh interval
      */
     private boolean needsRefresh() {
+        logger.error("needsRefresh call");
         return refreshInterval < 0 || (System.currentTimeMillis() - lastRefresh > refreshInterval);
     }
 
     private void loadMapping() {
+        logger.error("loadMapping call");
         if (useDefaultMapping) {
             mapping.putAll(defaultMapping);
         }
@@ -292,6 +298,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
     }
 
     public void validate() throws ConfigurationException {
+        logger.error("validate call");
         /*if (null != clientId && null == clientSecret) {
             throw new ConfigurationException("clientSecret is required for use with clientID");
         }*/

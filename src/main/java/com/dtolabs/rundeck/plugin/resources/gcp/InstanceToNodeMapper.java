@@ -77,6 +77,7 @@ class InstanceToNodeMapper {
     private String projectId;
     private boolean runningStateOnly = true;
     private Properties mapping;
+    private Compute compute;
 
     /**
      * Be sure to specify the name of your application. If the application name is {@code null} or
@@ -94,6 +95,7 @@ class InstanceToNodeMapper {
      * Create with the credentials and mapping definition
      */
     InstanceToNodeMapper(final GoogleCredential credential ,final Properties mapping) {
+        logger.error("InstancetoNodeMapper Object");
         this.credential = credential;
         this.mapping = mapping;
     }
@@ -105,7 +107,6 @@ class InstanceToNodeMapper {
     public INodeSet performQuery() {
         final NodeSetImpl nodeSet = new NodeSetImpl();
         logger.error("Google Crendential performQuery(), this is credential " + credential);
-        final Compute compute;
         //if(null!=credential) {
         try {
              httpTransport = GoogleNetHttpTransport.newTrustedTransport();
@@ -171,8 +172,9 @@ class InstanceToNodeMapper {
 
                 final NodeSetImpl nodeSet = new NodeSetImpl();
                 //final Set<Instance> instances = examineResult(describeInstancesResult);
+                final Set<Instance> instances = query(compute, projectId);
 
-                //mapInstances(nodeSet, instances);
+                mapInstances(nodeSet, instances);
                 return nodeSet;
             }
 
@@ -181,9 +183,10 @@ class InstanceToNodeMapper {
                 //DescribeInstancesResult describeInstancesResult = describeInstancesRequest.get(l, timeUnit);
 
                 final NodeSetImpl nodeSet = new NodeSetImpl();
+                final Set<Instance> instances = query(compute, projectId);
                 //final Set<Instance> instances = examineResult(describeInstancesResult);
 
-                //mapInstances(nodeSet, instances);
+                mapInstances(nodeSet, instances);
                 return nodeSet;
             }
         };
@@ -243,6 +246,7 @@ class InstanceToNodeMapper {
     }*/
 
     private void mapInstances(final NodeSetImpl nodeSet, final Set<Instance> instances) {
+        logger.error("mapInstances call");
         for (final Instance inst : instances) {
             final INodeEntry iNodeEntry;
             try {
@@ -263,7 +267,7 @@ class InstanceToNodeMapper {
     @SuppressWarnings("unchecked")
     static INodeEntry instanceToNode(final Instance inst, final Properties mapping) throws GeneratorException {
         final NodeEntryImpl node = new NodeEntryImpl();
-
+        logger.error("instancetoNode call");
         //evaluate single settings.selector=tags/* mapping
         if ("tags/*".equals(mapping.getProperty("attributes.selector"))) {
             //iterate through instance tags and generate settings
@@ -364,10 +368,10 @@ class InstanceToNodeMapper {
             }
         }
         String hostSel = mapping.getProperty("hostname.selector");
-        logger.error("This is the hostSel variable " + hostSel);
+        //logger.error("This is the hostSel variable " + hostSel);
         String host = applySelector(inst, hostSel, mapping.getProperty("hostname.default"));
-        logger.error("This is the host variable " + host);
-        logger.error("This is the hostname.default mapping param " + mapping.getProperty("hostname.default"));
+        //logger.error("This is the host variable " + host);
+        //logger.error("This is the hostname.default mapping param " + mapping.getProperty("hostname.default"));
         if (null == node.getHostname()) {
             System.err.println("Unable to determine hostname for instance: " + inst.getId());
             return null;
@@ -462,7 +466,7 @@ class InstanceToNodeMapper {
                 else {
                     value = BeanUtils.getProperty(inst, selector);
                 }
-                logger.error("This is the value " + value);
+                //logger.error("This is the value " + value);
                 if (null != value) {
                     return value;
                 }
