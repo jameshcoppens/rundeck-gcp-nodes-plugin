@@ -95,7 +95,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
                                + "osName.selector=platform\n"
                                + "osName.default=Linux\n"
                                + "username.selector=tags/Rundeck-User\n"
-                               + "username.default=ec2-user\n"
+                               + "username.default=rundeck\n"
                                + "editUrl.default=https://console.cloud.google.com/compute/instances?project=${node.projectId}\n"
                                + "privateIpAddress.selector=networkInterfaces\n"
                                + "privateDnsName.selector=privateDnsName\n"
