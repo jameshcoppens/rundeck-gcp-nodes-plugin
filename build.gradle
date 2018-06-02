@@ -14,7 +14,7 @@ apply plugin: 'idea'
 apply plugin: 'pl.allegro.tech.build.axion-release'
 sourceCompatibility = 1.8
 defaultTasks 'clean', 'build'
-ext.rundeckPluginVersion = '0.2.0'
+ext.rundeckPluginVersion = '0.1.6'
 scmVersion {
     tag {
         prefix = 'v'
