@@ -91,7 +91,6 @@ public class GCPResourceModelSource implements ResourceModelSource {
                                + "sshport.default=22\n"
                                + "sshport.selector=tags/ssh_config_Port\n"
                                + "description.default=GCE node instance\n"
-                               + "osArch.selector=architecture\n"
                                + "osFamily.selector=labels.osfamily\n"
                                + "osFamily.default=unix\n"
                                + "osName.selector=labels.osname\n"
@@ -109,6 +108,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
                                + "tag.terminated.selector=status=terminated\n"
                                + "tag.pending.selector=status=pending\n"
                                + "state.selector=status\n"
+                               + "license.selector=disks.licenses\n"
                                + "tags.default=gce\n";
         try {
 
