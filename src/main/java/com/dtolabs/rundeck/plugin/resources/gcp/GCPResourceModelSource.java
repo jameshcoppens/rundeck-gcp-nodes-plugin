@@ -57,6 +57,11 @@ import java.util.concurrent.Future;
  * subsequent requests may return the data when it's available.
  *
  * @author James Coppens <a href="mailto:jameshcoppens@gmail.com">jameshcoppens@gmail.com</a>
+ *
+ * <p/>
+ * Modified, optimized, broken features fixed
+ * <p/>
+ * @author Glen Yu <a href="mailto:glen.yu@gmail.com">glen.yu@gmail.com</a>
  */
 public class GCPResourceModelSource implements ResourceModelSource {
     static Logger logger = Logger.getLogger(GCPResourceModelSource.class);
@@ -86,7 +91,6 @@ public class GCPResourceModelSource implements ResourceModelSource {
     static {
         final String mapping = "nodename.selector=name,id\n"
                                + "hostname.selector=name\n"
-                               + "selfLink.selector=selfLink\n"
                                + "environment.default=test\n"
                                + "environment.selector=labels.environment\n"
                                + "sshport.default=22\n"
