@@ -19,6 +19,8 @@
 * 
 * User: James Coppens <a href="mailto:jameshcoppens@gmail.com">jameshcoppens@gmail.com</a>
 * Created: 9/1/11 4:34 PM
+* User: Glen Yu <a href="mailto:glen.yu@gmail.com">glen.yu@gmail.com</a>
+* Modified: 2018-06-02
 * 
 */
 package com.dtolabs.rundeck.plugin.resources.gcp;
@@ -103,9 +105,9 @@ public class GCPResourceModelSource implements ResourceModelSource {
                                + "username.selector=tags/Rundeck-User\n"
                                + "username.default=rundeck\n"
                                + "privateIpAddress.selector=networkInterfaces\n"
-                               + "privateDnsName.selector=privateDnsName\n"
                                + "tags.selector=tags/Rundeck-Tags\n"
                                + "instanceId.selector=instanceId\n"
+                               + "selfLink.selector=selfLink\n"
                                + "tag.running.selector=status=running\n"
                                + "tag.stopped.selector=status=stopped\n"
                                + "tag.stopping.selector=status=stopping\n"
@@ -143,7 +145,6 @@ public class GCPResourceModelSource implements ResourceModelSource {
         logger.error("GCPResourceModelSource Constructor");
         //this.clientId = configuration.getProperty(GCPResourceModelSourceFactory.CLIENT_ID);
         //this.clientSecret = configuration.getProperty(GCPResourceModelSourceFactory.CLIENT_SECRET);
-        //this.endpoint = configuration.getProperty(EC2ResourceModelSourceFactory.ENDPOINT);
         //this.httpProxyHost = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_HOST);
         this.projectId = configuration.getProperty(GCPResourceModelSourceFactory.PROJECT_ID);
         int proxyPort = 80;
