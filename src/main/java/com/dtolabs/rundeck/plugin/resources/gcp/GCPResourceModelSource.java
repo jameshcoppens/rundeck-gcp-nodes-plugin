@@ -86,6 +86,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
     static {
         final String mapping = "nodename.selector=name,id\n"
                                + "hostname.selector=name\n"
+                               + "selfLink.selector=selfLink\n"
                                + "environment.default=test\n"
                                + "environment.selector=labels.environment\n"
                                + "sshport.default=22\n"
@@ -108,7 +109,6 @@ public class GCPResourceModelSource implements ResourceModelSource {
                                + "tag.terminated.selector=status=terminated\n"
                                + "tag.pending.selector=status=pending\n"
                                + "state.selector=status\n"
-                               + "license.selector=disks.licenses\n"
                                + "tags.default=gce\n";
         try {
 

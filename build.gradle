@@ -14,7 +14,7 @@ apply plugin: 'idea'
 apply plugin: 'pl.allegro.tech.build.axion-release'
 sourceCompatibility = 1.8
 defaultTasks 'clean', 'build'
-ext.rundeckPluginVersion = '1.1'
+ext.rundeckPluginVersion = '0.1.2'
 scmVersion {
     tag {
         prefix = 'v'
@@ -80,7 +80,7 @@ jar {
         //create space-separated list of pluginLibs
         def libList = configurations.pluginLibs.collect{'lib/'+it.name}.join(' ')
         attributes 'Rundeck-Plugin-Classnames': 'com.dtolabs.rundeck.plugin.resources.gcp.GCPResourceModelSourceFactory', 'Rundeck-Plugin-Libs': "${libList}"
-        attributes 'Rundeck-Plugin-URL': 'https://github.com/Neutrollized/rundeck-gcp-nodes-plugin', 'Rundeck-Plugin-Date': '2018-06-02'
+        attributes 'Rundeck-Plugin-Author': 'Glen Yu', 'Rundeck-Plugin-URL': 'https://github.com/Neutrollized/rundeck-gcp-nodes-plugin', 'Rundeck-Plugin-Date': '2018-06-02'
         attributes 'Rundeck-Plugin-File-Version': rundeckPluginVersion
     }
 }
