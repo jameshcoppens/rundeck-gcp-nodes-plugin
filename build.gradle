@@ -1,3 +1,15 @@
+version = 0.1.3
+jar {
+    manifest {
+        attributes 'Rundeck-Plugin-Version': version,
+        attributes 'Rundeck-Plugin-Archive': true,
+        attributes 'Rundeck-Plugin-Classnames': GCPResourceModelSource.class,GCPResourceModelSourceFactory.class,InstanceToNodeMapper.class,
+        attributes 'Rundeck-Plugin-URL': 'https://github.com/Neutrollized/rundeck-gcp-nodes-plugin',
+        attributes 'Rundeck-Plugin-Date': '2018-06-02',
+        attributes 'Rundeck-Plugin-File-Version': version
+    }
+}
+
 buildscript {
    repositories {
       mavenCentral()
@@ -14,7 +26,7 @@ apply plugin: 'idea'
 apply plugin: 'pl.allegro.tech.build.axion-release'
 sourceCompatibility = 1.8
 defaultTasks 'clean', 'build'
-ext.rundeckPluginVersion = '1.2'
+ext.rundeckPluginVersion = '1.1'
 scmVersion {
     tag {
         prefix = 'v'
@@ -53,7 +65,7 @@ repositories {
     }
 }
 dependencies {
-    compile group: 'org.rundeck', name: 'rundeck-core', version: '2.2.2'
+    compile group: 'org.rundeck', name: 'rundeck-core', version: '2.7.1'
 
     pluginLibs group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
     pluginLibs group: 'dom4j', name: 'dom4j', version: '1.6.1'
