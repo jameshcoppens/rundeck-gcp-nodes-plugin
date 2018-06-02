@@ -126,7 +126,6 @@ class InstanceToNodeMapper {
         }
         logger.error("Google Crendential perfomquery() completed");
         //final ArrayList<Filter> filters = buildFilters();
-        //final Set<Instance> instances = query(ec2, new DescribeInstancesRequest().withFilters(filters));
         return nodeSet;
     }
 
@@ -136,19 +135,6 @@ class InstanceToNodeMapper {
      */
     public Future<INodeSet> performQueryAsync() {
         logger.error("PerformQueryAsync start");
-        //final AmazonEC2AsyncClient ec2;
-        /*if(null!=credentials){
-            ec2= new AmazonEC2AsyncClient(credentials, clientConfiguration, executorService);
-        } else{
-            ec2 = new AmazonEC2AsyncClient(new DefaultAWSCredentialsProviderChain(), clientConfiguration, executorService);
-        }
-        if (null != getEndpoint()) {
-            ec2.setEndpoint(getEndpoint());
-        }*/
-        //final ArrayList<Filter> filters = buildFilters();
-
-        //final Future<DescribeInstancesResult> describeInstancesRequest = ec2.describeInstancesAsync(
-        //    new DescribeInstancesRequest().withFilters(filters));
 
         return new Future<INodeSet>() {
 
