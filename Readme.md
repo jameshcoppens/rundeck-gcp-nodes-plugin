@@ -1,9 +1,9 @@
 Rundeck GCP Nodes Plugin
 ========================
 
-Version: 0.1.1-BETA
+Version: 0.1.2
 
-This is a Resource Model Source plugin for [RunDeck][] 2.2+ that provides
+This is a Resource Model Source plugin for [RunDeck][] 2.7.1+ that provides
 Google Cloud Platform GCE Instances as nodes for the RunDeck server.
 
 [RunDeck]: http://rundeck.org
@@ -16,7 +16,7 @@ Installation
 
 Download from the [releases page](https://github.com/jameshcoppens/rundeck-gcp-nodes-plugin/releases).
 
-Put the `rundeck-gcp-nodes-plugin-0.1.1-BETA.jar` into your `$RDECK_BASE/libext` dir.
+Put the `rundeck-gcp-nodes-plugin-0.1.2.jar` into your `$RDECK_BASE/libext` dir.
 
 You must also authenticate the rundeck-gcp-nodes-plugin to your google cloud platform
 project.
@@ -26,8 +26,3 @@ project.
                 drop down select New Service Account. Name the service account
                 rundeck-gcp-nodes-plugin.  Make sure the key type is JSON
         * rename the JSON file to rundeck-gcp-nodes-plugin.json and place it in /etc/rundeck/
-
-I am currently running my rundeck server in a private subnet, which can not utilize user
-authentication within oauth to allow for API access.  In subsuquent versions in which
-users are leveraging rundeck in a public subnet that can allow for url callback, I will
-account for that.
