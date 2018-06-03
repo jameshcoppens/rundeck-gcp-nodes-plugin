@@ -36,10 +36,6 @@ import java.util.*;
 
 /**
  * GCPResourceModelSourceFactory is the factory that can create a {@link ResourceModelSource} based on a configuration.
- * <p/>
- * The configuration properties are: <ul> <li>endpoint: the GCP endpoint to use, or blank for the default</li>
- * <li>filter: A set of ";" separated query filters ("filter=value") for the GCP GCE API, see <a
- * href="http://docs.amazonwebservices.com/AWSEC2/latest/APIReference/ApiReference-query-DescribeInstances.html">DescribeInstances</a></li>
  * <li>mappingParams: A set of ";" separated mapping entries</li> <li>runningOnly: if "true", automatically filter the
  * instances by "instance-state-name=running"</li> <li>accessKey: API AccessKey value</li> <li>secretKey: API SecretKey
  * value</li> <li>mappingFile: Path to a java properties-formatted mapping definition file.</li> <li>refreshInterval:
@@ -53,7 +49,6 @@ public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory
     public static final String PROVIDER_NAME = "gcp-gce";
     private Framework framework;
 
-//    public static final String ENDPOINT = "endpoint";
     public static final String FILTER_PARAMS = "filter";
     public static final String MAPPING_PARAMS = "mappingParams";
     public static final String RUNNING_ONLY = "runningOnly";
@@ -80,7 +75,6 @@ public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory
             .property(PropertyUtil.integer(REFRESH_INTERVAL, "Refresh Interval",
                     "Minimum time in seconds between API requests to GCP (default is 30)", false, "30"))
             .property(PropertyUtil.string(FILTER_PARAMS, "Filter Params", "GCP GCE filters", false, null))
-//            .property(PropertyUtil.string(ENDPOINT, "Endpoint", "GCP GCE Endpoint, or blank for default", false, null))
             .property(PropertyUtil.string(MAPPING_PARAMS, "Mapping Params",
                     "Property mapping definitions. Specify multiple mappings in the form " +
                             "\"attributeName.selector=selector\" or \"attributeName.default=value\", " +
