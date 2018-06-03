@@ -73,7 +73,7 @@ class InstanceToNodeMapper {
     final GoogleCredential credential;
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
     private ArrayList<String> filterParams;
-    private String endpoint;
+//    private String endpoint;
     private String projectId;
     private boolean runningStateOnly = true;
     private Properties mapping;
@@ -472,7 +472,7 @@ class InstanceToNodeMapper {
     }
 
     /**
-     * Return the endpoint
+     * Return the projectId
      */
     public String getProjectId() {
         return projectId;
@@ -481,9 +481,9 @@ class InstanceToNodeMapper {
     /**
      * Return the endpoint
      */
-    public String getEndpoint() {
-        return endpoint;
-    }
+//    public String getEndpoint() {
+//        return endpoint;
+//    }
 
     /**
      * Return true if runningStateOnly
@@ -509,9 +509,9 @@ class InstanceToNodeMapper {
     /**
      * Set the region endpoint to use.
      */
-    public void setEndpoint(final String endpoint) {
-        this.endpoint = endpoint;
-    }
+//    public void setEndpoint(final String endpoint) {
+//        this.endpoint = endpoint;
+//    }
 
     public void setProjectId(final String projectId) {
         this.projectId = projectId;
