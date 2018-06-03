@@ -1,4 +1,4 @@
-#Rundeck GCP Nodes Plugin
+Rundeck GCP Nodes Plugin
 ========================
 
 Version: 0.1.2
@@ -11,7 +11,7 @@ Google Cloud Platform GCE Instances as nodes for the RunDeck server.
 The plugin is currently in BETA, if you have any issues please create an issue so that I
 can resolve it quickly.
 
-##Installation
+Installation
 --------------
 
 Download from the [releases page](https://github.com/jameshcoppens/rundeck-gcp-nodes-plugin/releases).
@@ -27,8 +27,18 @@ project.
                 rundeck-gcp-nodes-plugin.  Make sure the key type is JSON
         * rename the JSON file to rundeck-gcp-nodes-plugin.json and place it in /etc/rundeck/
 
-##Disclaimer
-------------
+Disclaimer
+----------
 My work is built off of the work done by [jameshcoppens](https://github.com/jameshcoppens/rundeck-gcp-nodes-plugin) and I've only branched it off to updated/maintain it seeing as there are typos in the Readme that has gone unaddressed and hasn't been updated for ~3 years.  There were some functionality/features I wanted to add for my own use (and at work) so here we are... :)
 
-#!!! PRs welcome as I'm still new at this !!!
+
+What I've done so far...
+------------------------
+* cleaned up the code to remove any AWS references in the code as well as plugins that aren't used (as it was initially modified off of [Rundeck's EC2 nodes plugin](https://github.com/rundeck-plugins/rundeck-ec2-nodes-plugin)
+* bumped up the rundeck-core to 2.7.1
+* updated rundeckPluginVersion to 1.2
+* updated the google-api-servies-compute plugin to the latest (v1-rev183-1.23.0)
+* reduced the .jar file size from ~8MB to ~5.5MB
+
+
+#!!! PRs welcome as I'm still new at this (my Java sucks)!!!
