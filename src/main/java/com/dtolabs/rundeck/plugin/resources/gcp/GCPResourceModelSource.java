@@ -71,7 +71,6 @@ public class GCPResourceModelSource implements ResourceModelSource {
     long refreshInterval = 30000;
     long lastRefresh = 0;
     String filterParams;
-//    String endpoint;
     String httpProxyHost;
     int httpProxyPort = 80;
     String httpProxyUser;
@@ -104,7 +103,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
                                + "osName.default=Linux\n"
                                + "username.selector=tags/Rundeck-User\n"
                                + "username.default=rundeck\n"
-                               + "privateIpAddress.selector=networkInterfaces\n"
+                               + "internalIp.selector=networkInterfaces\n"
                                + "tags.selector=tags/Rundeck-Tags\n"
                                + "instanceId.selector=instanceId\n"
                                + "selfLink.selector=selfLink\n"
@@ -216,7 +215,6 @@ public class GCPResourceModelSource implements ResourceModelSource {
         mapper = new InstanceToNodeMapper(credential, mapping);
         mapper.setProjectId(projectId);
         mapper.setFilterParams(params);
-//        mapper.setEndpoint(endpoint);
         mapper.setRunningStateOnly(runningOnly);
     }
 
