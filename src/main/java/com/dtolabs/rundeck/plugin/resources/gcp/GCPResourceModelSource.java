@@ -71,7 +71,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
     long refreshInterval = 30000;
     long lastRefresh = 0;
     String filterParams;
-    String endpoint;
+//    String endpoint;
     String httpProxyHost;
     int httpProxyPort = 80;
     String httpProxyUser;
@@ -216,7 +216,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
         mapper = new InstanceToNodeMapper(credential, mapping);
         mapper.setProjectId(projectId);
         mapper.setFilterParams(params);
-        mapper.setEndpoint(endpoint);
+//        mapper.setEndpoint(endpoint);
         mapper.setRunningStateOnly(runningOnly);
     }
 

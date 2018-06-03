@@ -53,7 +53,7 @@ public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory
     public static final String PROVIDER_NAME = "gcp-gce";
     private Framework framework;
 
-    public static final String ENDPOINT = "endpoint";
+//    public static final String ENDPOINT = "endpoint";
     public static final String FILTER_PARAMS = "filter";
     public static final String MAPPING_PARAMS = "mappingParams";
     public static final String RUNNING_ONLY = "runningOnly";
@@ -80,7 +80,7 @@ public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory
             .property(PropertyUtil.integer(REFRESH_INTERVAL, "Refresh Interval",
                     "Minimum time in seconds between API requests to GCP (default is 30)", false, "30"))
             .property(PropertyUtil.string(FILTER_PARAMS, "Filter Params", "GCP GCE filters", false, null))
-            .property(PropertyUtil.string(ENDPOINT, "Endpoint", "GCP GCE Endpoint, or blank for default", false, null))
+//            .property(PropertyUtil.string(ENDPOINT, "Endpoint", "GCP GCE Endpoint, or blank for default", false, null))
             .property(PropertyUtil.string(MAPPING_PARAMS, "Mapping Params",
                     "Property mapping definitions. Specify multiple mappings in the form " +
                             "\"attributeName.selector=selector\" or \"attributeName.default=value\", " +
