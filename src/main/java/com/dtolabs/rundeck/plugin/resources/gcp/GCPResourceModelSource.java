@@ -117,7 +117,6 @@ public class GCPResourceModelSource implements ResourceModelSource {
                                + "state.selector=status\n"
                                + "tags.default=gce\n";
         try {
-
             final InputStream resourceAsStream = GCPResourceModelSource.class.getClassLoader().getResourceAsStream(
                 "defaultMapping.properties");
             if (null != resourceAsStream) {
@@ -135,7 +134,6 @@ public class GCPResourceModelSource implements ResourceModelSource {
                     stringReader.close();
                 }
             }
-
         } catch (IOException e) {
             e.printStackTrace(System.err);
         }
@@ -221,7 +219,6 @@ public class GCPResourceModelSource implements ResourceModelSource {
         mapper.setEndpoint(endpoint);
         mapper.setRunningStateOnly(runningOnly);
     }
-
 
     public synchronized INodeSet getNodes() throws ResourceModelSourceException {
         logger.error("getNodes call");

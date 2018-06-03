@@ -23,7 +23,6 @@
 */
 package com.dtolabs.rundeck.plugin.resources.gcp;
 
-
 import com.dtolabs.rundeck.core.common.Framework;
 import com.dtolabs.rundeck.core.plugins.Plugin;
 import com.dtolabs.rundeck.core.plugins.configuration.*;
