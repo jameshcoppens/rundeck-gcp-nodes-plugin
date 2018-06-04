@@ -38,7 +38,7 @@ You will need/want to add the following labels to your GCP VMs if you want more 
 
 Disclaimer
 ----------
-My work is built off of the work done by [jameshcoppens](https://github.com/jameshcoppens/rundeck-gcp-nodes-plugin) and I've only branched it off to updated/maintain it seeing as there are typos in the Readme that has gone unaddressed and hasn't been updated for ~3 years.  There were some functionality/features I wanted to add for my own use (and at work) so here we are... :)
+My work is built off of the work done by [jameshcoppens](https://github.com/jameshcoppens/rundeck-gcp-nodes-plugin) and I've only branched it off to updated/maintain it seeing as there are typos in the Readme that has gone unaddressed and hasn't been updated for ~2+ years.  There were some functionality/features I wanted to add for my own use (and at work) so here we are... :)
 
 
 What I've done so far...
