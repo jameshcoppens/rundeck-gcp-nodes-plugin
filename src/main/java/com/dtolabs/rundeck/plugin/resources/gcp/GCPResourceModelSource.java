@@ -94,8 +94,6 @@ public class GCPResourceModelSource implements ResourceModelSource {
                                + "hostname.selector=name\n"
                                + "environment.default=test\n"
                                + "environment.selector=labels.environment\n"
-                               + "sshport.default=22\n"
-                               + "sshport.selector=tags/ssh_config_Port\n"
                                + "description.default=GCE node instance\n"
                                + "osFamily.selector=labels.osfamily\n"
                                + "osFamily.default=unix\n"
