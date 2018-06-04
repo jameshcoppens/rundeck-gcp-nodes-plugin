@@ -14,7 +14,6 @@ can resolve it quickly.
 
 Installation
 --------------
-
 Download from the [releases page](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases).
 
 Put the `rundeck-gcp-nodes-plugin-0.1.2.jar` into your `$RDECK_BASE/libext` dir.
@@ -27,6 +26,14 @@ project.
                 drop down select New Service Account. Name the service account
                 rundeck-gcp-nodes-plugin.  Make sure the key type is JSON
         * rename the JSON file to rundeck-gcp-nodes-plugin.json and place it in /etc/rundeck/
+
+
+Requirements
+------------
+You will need/want to add the following labels to your GCP VMs if you want more accurate/meaning full values for the OS (because unfortunately, there currently isn't hat data in a standalone field/value taht describues that for your VM -- just look at the output of `gcloud compute instances describe`):
+* environment (defaults to: test; example value: prod)
+* osfamily (defaults to: linux; example value: windows)
+* osname (defaults to: unix; example value: rhel7)
 
 
 Disclaimer
@@ -42,6 +49,7 @@ What I've done so far...
 * updated rundeckPluginVersion to 1.2
 * updated the google-api-servies-compute plugin to the latest (v1-rev183-1.23.0)
 * reduced the .jar file size from ~8MB to ~5.5MB
+* changed the fields that get populated when you expand a node in Rundeck as some in the original plugin just wasn't working or was putting in wrong values
 
 
 TODO
