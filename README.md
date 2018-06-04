@@ -1,7 +1,7 @@
 Rundeck GCP Nodes Plugin
 ========================
 
-Version: 0.1.2
+Version: 0.1.3
 
 This is a Resource Model Source plugin for [RunDeck][] 2.7.1+ that provides
 Google Cloud Platform GCE Instances as nodes for the RunDeck server.
@@ -16,7 +16,7 @@ Installation
 --------------
 Download from the [releases page](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases).
 
-Put the `rundeck-gcp-nodes-plugin-0.1.2.jar` into your `$RDECK_BASE/libext` dir.
+Put the `rundeck-gcp-nodes-plugin-0.1.3.jar` into your `$RDECK_BASE/libext` dir.
 
 You must also authenticate the rundeck-gcp-nodes-plugin to your google cloud platform
 project.
@@ -33,7 +33,7 @@ Requirements
 You will need/want to add the following labels to your GCP VMs if you want more accurate/meaning full values for the OS (because unfortunately, there currently isn't hat data in a standalone field/value taht describues that for your VM -- just look at the output of `gcloud compute instances describe`):
 * environment (defaults to: test; example value: prod)
 * osfamily (defaults to: linux; example value: windows)
-* osname (defaults to: unix; example value: rhel7)
+* osname (defaults to: unknown; example value: rhel7)
 
 
 Disclaimer
@@ -54,7 +54,7 @@ What I've done so far...
 
 TODO
 ----
-...lots
+...lots...I have great plans for this plugin
 
 
 #!!! PRs welcome as I'm still new at this (my Java sucks)!!!
