@@ -28,9 +28,9 @@ project.
 Requirements
 ------------
 You will need/want to add the following labels to your GCP VMs if you want more accurate/meaning full values for the OS (because unfortunately, there currently isn't that data in a standalone field/value that describes that for your VM -- just look at the output of `gcloud compute instances describe`):
-* environment (defaults to: test; example value: prod)
-* osfamily (defaults to: linux; example value: windows)
-* osname (defaults to: unknown; example value: rhel7)
+* `environment` (defaults to: test; example value: prod)
+* `osfamily` (defaults to: linux; example value: windows)
+* `osname` (defaults to: unknown; example value: rhel7)
 
 
 Disclaimer
@@ -42,9 +42,9 @@ What I've done so far...
 ------------------------
 * fixed the documentation for installing the plugin
 * cleaned up the code to remove any AWS references in the code as well as plugins that aren't used (as it was initially modified off of [Rundeck's EC2 nodes plugin](https://github.com/rundeck-plugins/rundeck-ec2-nodes-plugin))
-* bumped up the rundeck-core to 2.7.1
-* updated rundeckPluginVersion to 1.2
-* updated the google-api-servies-compute plugin to the latest (v1-rev183-1.23.0)
+* bumped up the `rundeck-core` to `2.7.1`
+* updated `rundeckPluginVersion` to `1.2`
+* updated the `google-api-servies-compute` plugin to `v1-rev183-1.23.0`
 * reduced the .jar file size from ~8MB to ~5.5MB
 * changed the fields that get populated when you expand a node in Rundeck as some in the original plugin just wasn't working or was putting in wrong values
 
