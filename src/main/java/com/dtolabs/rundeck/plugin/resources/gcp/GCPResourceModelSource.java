@@ -102,7 +102,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
                                + "username.selector=tags/Rundeck-User\n"
                                + "username.default=rundeck\n"
                                + "internalIp.selector=networkInterfaces\n"
-                               + "tags.selector=labels.environment\n"
+                               + "tags.selector=labels.environment|labels.osname\n"
                                + "instanceId.selector=instanceId\n"
                                + "selfLink.selector=selfLink\n"
                                + "tag.running.selector=status=running\n"
