@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.1.4] - COMING SOON(ish)
+### Changed
+- change the default tag from a static `gce` to the `labels.environment` (...but looking for a way to have both...hmm...)
+
 ## [0.1.3] - 2018-06-03
 ### Added
 - a lot more documentation to README.md :)
