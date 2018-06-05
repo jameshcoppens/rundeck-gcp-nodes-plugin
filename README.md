@@ -8,9 +8,6 @@ Google Cloud Platform GCE Instances as nodes for the RunDeck server.
 
 [RunDeck]: http://rundeck.org
 
-The plugin is currently in BETA, if you have any issues please create an issue so that I
-can resolve it quickly.
-
 
 Installation
 --------------
