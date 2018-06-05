@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.1.4] - COMING SOON(ish)
 ### Changed
-- change the default tag from a static `gce` to the `labels.environment` (...but looking for a way to have both...hmm...)
+- change the default tag from a static `gce` to the `labels.environment` and `labels.osname`
 
 ## [0.1.3] - 2018-06-03
 ### Added
