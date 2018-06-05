@@ -12,24 +12,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - a lot more documentation to README.md :)
 ### Removed
-- fields: sshport (as well as Java code relating to this)
+- fields: `sshport` (as well as Java code relating to this)
 - deleted more Java code which refernced AWS and its resources (endpoints in particular)
 
 ## [0.1.2] - 2018-06-02
 ### Changed
-- bump axion-release plugin to 1.9.1
-- bump sourceCompatibility to 1.8
-- bump rundeckPluginVersion to 1.2
-- bump rundeck-core to 2.7.1
-- bump commons-beanutils plugin to 1.9.3
-- bump google-api-services-compute plugin to v1-rev183-1.23.0
-- bump gradleVersion to 4.7
-- renamed privateIpAddress to internalIp
+- bump `axion-release plugin` to `1.9.1`
+- bump `sourceCompatibility` to `1.8`
+- bump `rundeckPluginVersion` to `1.2`
+- bump `rundeck-core` to `2.7.1`
+- bump `commons-beanutils` plugin to `1.9.3`
+- bump `google-api-services-compute` plugin to `v1-rev183-1.23.0`
+- bump `gradleVersion` to `4.7`
+- renamed `privateIpAddress` to `internalIp` to match GCP naming
 ### Added
-- fields: environment, selfLink
+- fields: `environment`, `selfLink`
 ### Removed
-- aws-java-sdk-ec2 plugin
-- fields: editUrl, osArch, privateDnsName
+- `aws-java-sdk-ec2` plugin
+- fields: `editUrl`, `osArch`, `privateDnsName`
 - deleted some Java code which referenced AWS and its resources
 
 ## [0.1.1-BETA] - 2016-03-20
