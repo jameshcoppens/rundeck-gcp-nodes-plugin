@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [0.1.4] - COMING SOON(ish)
+## [0.1.4] - 2018-06-06
 ### Changed
 - change the default tag from a static `gce` to the `labels.environment`, `labels.osname` and `projectId`
 - removed a lot of the error-level logging that was in the code (presumably for debug purposes) and set most of them to info-level (except for actual errors, of course)
