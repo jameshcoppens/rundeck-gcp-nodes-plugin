@@ -95,10 +95,11 @@ class InstanceToNodeMapper {
     /**
      * Create with the credentials and mapping definition
      */
-    InstanceToNodeMapper(final GoogleCredential credential ,final Properties mapping) {
-        logger.error("InstancetoNodeMapper Object");
+    InstanceToNodeMapper(final GoogleCredential credential ,final Properties mapping, String projectId) {
+        logger.info("InstancetoNodeMapper Object");
         this.credential = credential;
         this.mapping = mapping;
+        this.projectId = projectId;
     }
 
     /**
@@ -107,7 +108,7 @@ class InstanceToNodeMapper {
      */
     public INodeSet performQuery() {
         final NodeSetImpl nodeSet = new NodeSetImpl();
-        logger.error("Google Crendential performQuery(), this is credential " + credential);
+        logger.info("Google Credential performQuery(), this is credential " + credential);
         //if(null!=credential) {
         try {
              httpTransport = GoogleNetHttpTransport.newTrustedTransport();
@@ -117,7 +118,7 @@ class InstanceToNodeMapper {
 
             final Set<Instance> instances = query(compute, projectId);
 
-            logger.error("Google Crendential query() completed");
+            logger.info("Google Crendential query() completed");
 
             mapInstances(nodeSet, instances);
         } catch (IOException e) {
@@ -125,7 +126,7 @@ class InstanceToNodeMapper {
         } catch (Throwable t) {
             t.printStackTrace();
         }
-        logger.error("Google Crendential perfomquery() completed");
+        logger.info("Google Crendential perfomquery() completed");
         //final ArrayList<Filter> filters = buildFilters();
         return nodeSet;
     }
@@ -135,7 +136,7 @@ class InstanceToNodeMapper {
      *
      */
     public Future<INodeSet> performQueryAsync() {
-        logger.error("PerformQueryAsync start");
+        logger.info("PerformQueryAsync start");
 
         return new Future<INodeSet>() {
 
@@ -185,7 +186,7 @@ class InstanceToNodeMapper {
         //final List<Reservation> reservations = describeInstancesRequest.getReservations();
         final Set<Instance> instances = new HashSet<Instance>();
         try {
-            logger.error("begin query function, with this projectId " + projectId);
+                logger.info("begin query function, with this projectId " + projectId);
                 Compute.Instances.AggregatedList instancesAggregatedList = compute.instances().aggregatedList(projectId);
                 InstanceAggregatedList list = instancesAggregatedList.execute();
 
@@ -196,10 +197,10 @@ class InstanceToNodeMapper {
                     java.util.Map<String, InstancesScopedList> aggregated_list = list.getItems();
 
                     for (java.util.Map.Entry<String, InstancesScopedList> entry : aggregated_list.entrySet()) {
-                        logger.error("getinstances performing");
+                        logger.info("getinstances performing");
                         if (entry.getValue().getInstances() != null) {
                             instances.addAll(entry.getValue().getInstances());
-                            logger.error("Successfully pulling in node information " + entry.getValue().getInstances());
+                            logger.info("Successfully pulling in node information " + entry.getValue().getInstances());
                         }
                     }
             }
@@ -233,18 +234,18 @@ class InstanceToNodeMapper {
     }*/
 
     private void mapInstances(final NodeSetImpl nodeSet, final Set<Instance> instances) {
-        logger.error("mapInstances call");
+        logger.info("mapInstances call");
         for (final Instance inst : instances) {
             final INodeEntry iNodeEntry;
             try {
-                iNodeEntry = InstanceToNodeMapper.instanceToNode(inst, mapping);
+                iNodeEntry = InstanceToNodeMapper.instanceToNode(inst, mapping, projectId);
                 if (null != iNodeEntry) {
                     nodeSet.putNode(iNodeEntry);
                 }
             } catch (GeneratorException e) {
                 logger.error(e);
             }
-            logger.error("Instances within the Set "+ inst);
+            //logger.error("Instances within the Set "+ inst);
         }
     }
 
@@ -252,9 +253,9 @@ class InstanceToNodeMapper {
      * Convert an GCP GCE Instance to a RunDeck INodeEntry based on the mapping input
      */
     @SuppressWarnings("unchecked")
-    static INodeEntry instanceToNode(final Instance inst, final Properties mapping) throws GeneratorException {
+    static INodeEntry instanceToNode(final Instance inst, final Properties mapping, String projectId) throws GeneratorException {
         final NodeEntryImpl node = new NodeEntryImpl();
-        logger.error("instancetoNode call");
+        logger.info("instancetoNode call");
         //evaluate single settings.selector=tags/* mapping
         if ("tags/*".equals(mapping.getProperty("attributes.selector"))) {
             //iterate through instance tags and generate settings
@@ -274,6 +275,8 @@ class InstanceToNodeMapper {
                 for (final String s : values) {
                     tagset.add(s.trim());
                 }
+                //add in projectId as a tag
+                tagset.add(projectId.trim());
                 if (null == node.getTags()) {
                     node.setTags(tagset);
                 } else {
@@ -329,6 +332,8 @@ class InstanceToNodeMapper {
                 if (null != value) {
                     node.getAttributes().put(attrName, value);
                 }
+                //add in an extra node attribute called projectId
+                node.getAttributes().put("projectId", projectId);
             }
         }
 
@@ -370,6 +375,7 @@ class InstanceToNodeMapper {
         if (null == name || "".equals(name)) {
             name = inst.getId().toString();
         }
+        //logger.error("projectId ---> " + projectId);
         node.setNodename(name);
 
         return node;
@@ -437,7 +443,7 @@ class InstanceToNodeMapper {
             }
         } else*/ if (null != selector && !"".equals(selector)) {
             try {
-                logger.error("This is the selector " + selector);
+                //logger.error("This is the selector " + selector);
                 String value = null;
                 if ("networkInterfaces".equals(selector)) {
                     for (NetworkInterface netint : inst.getNetworkInterfaces()) {

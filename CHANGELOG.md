@@ -6,7 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.1.4] - COMING SOON(ish)
 ### Changed
-- change the default tag from a static `gce` to the `labels.environment` and `labels.osname`
+- change the default tag from a static `gce` to the `labels.environment`, `labels.osname` and `projectId`
+- removed a lot of the error-level logging that was in the code (presumably for debug purposes) and set most of them to info-level (except for actual errors, of course)
+### Added
+- fields: `projectId`
 
 ## [0.1.3] - 2018-06-03
 ### Added
