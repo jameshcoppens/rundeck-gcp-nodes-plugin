@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.1.5] - 2018-06-18
+### Changed
+- bump `google-api-services-compute` plugin to `v1-rev186-1.23.0`
+### Removed
+- further clean up of Java code
+
 ## [0.1.4] - 2018-06-06
 ### Changed
 - change the default tag from a static `gce` to the `labels.environment`, `labels.osname` and `projectId`

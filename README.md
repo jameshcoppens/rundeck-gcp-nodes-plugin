@@ -42,16 +42,11 @@ What I've done so far...
 ------------------------
 * fixed the documentation for installing the plugin
 * cleaned up the code to remove any AWS references in the code as well as plugins that aren't used (as it was initially modified off of [Rundeck's EC2 nodes plugin](https://github.com/rundeck-plugins/rundeck-ec2-nodes-plugin))
-* bumped up the `rundeck-core` to `2.7.1`
+* updated `rundeck-core` to `2.7.1`
 * updated `rundeckPluginVersion` to `1.2`
-* updated the `google-api-servies-compute` plugin to `v1-rev183-1.23.0`
+* updated `google-api-servies-compute` plugin
 * reduced the .jar file size from ~8MB to ~5.5MB
 * changed the fields that get populated when you expand a node in Rundeck as some in the original plugin just wasn't working or was putting in wrong values
-
-
-TODO
-----
-...lots...I have great plans for this plugin
 
 
 #!!! PRs welcome as I'm still new at this (my Java sucks)!!!

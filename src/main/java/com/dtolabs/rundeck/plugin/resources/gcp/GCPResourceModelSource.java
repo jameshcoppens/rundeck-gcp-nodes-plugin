@@ -113,8 +113,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
                                + "state.selector=status\n"
                                + "tags.default=gce\n";
         try {
-            final InputStream resourceAsStream = GCPResourceModelSource.class.getClassLoader().getResourceAsStream(
-                "defaultMapping.properties");
+            final InputStream resourceAsStream = GCPResourceModelSource.class.getClassLoader().getResourceAsStream("defaultMapping.properties");
             if (null != resourceAsStream) {
                 try {
                     defaultMapping.load(resourceAsStream);
@@ -137,9 +136,6 @@ public class GCPResourceModelSource implements ResourceModelSource {
 
     public GCPResourceModelSource(final Properties configuration) {
         logger.info("GCPResourceModelSource Constructor");
-        //this.clientId = configuration.getProperty(GCPResourceModelSourceFactory.CLIENT_ID);
-        //this.clientSecret = configuration.getProperty(GCPResourceModelSourceFactory.CLIENT_SECRET);
-        //this.httpProxyHost = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_HOST);
         this.projectId = configuration.getProperty(GCPResourceModelSourceFactory.PROJECT_ID);
         int proxyPort = 80;
         
@@ -297,9 +293,5 @@ public class GCPResourceModelSource implements ResourceModelSource {
 
     public void validate() throws ConfigurationException {
         logger.info("validate call");
-        /*if (null != clientId && null == clientSecret) {
-            throw new ConfigurationException("clientSecret is required for use with clientID");
-        }*/
-
     }
 }
