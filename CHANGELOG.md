@@ -4,11 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [0.1.6] - 2018-06-27
+## [0.2.0] - 2018-06-27
 ### Changed
 - bump `google-api-services-compute` plugin to `v1-rev188-1.23.0`
-### Fixed
-- some MANIFEST data where I didn't bump the version
+- I used [BFG Repo-Cleaner](https://rtyley.github.io/bfg-repo-cleaner/) to try to clean up the repo but in doing so I messed up all the tagging, so I'm going to bump the minor version up to `0.2.0` instead to start fresh
+
 
 ## [0.1.5] - 2018-06-18
 ### Changed
