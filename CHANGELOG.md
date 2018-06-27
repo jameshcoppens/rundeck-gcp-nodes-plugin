@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.1.6] - 2018-06-27
+### Changed
+- bump `google-api-services-compute` plugin to `v1-rev188-1.23.0`
+### Fixed
+- some MANIFEST data where I didn't bump the version
+
 ## [0.1.5] - 2018-06-18
 ### Changed
 - bump `google-api-services-compute` plugin to `v1-rev186-1.23.0`
