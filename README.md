@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-pluging.svg?branch=master)](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin)
+[![Build Status](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin.svg?branch=master)](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin)
 
 Rundeck GCP Nodes Plugin
 ========================
