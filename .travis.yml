@@ -1,0 +1,11 @@
+language: java
+
+os: linux
+
+branches:
+  only:
+    - master
+
+script:
+  - ./gradlew clean
+  - ./gradlew build
