@@ -437,16 +437,16 @@ class InstanceToNodeMapper {
     /**
      * Return the list of "filter=value" filters
      */
-    public ArrayList<String> getFilterParams() {
-        return filterParams;
-    }
+    //public ArrayList<String> getFilterParams() {
+    //    return filterParams;
+    //}
 
     /**
      * Return the projectId
      */
-    public String getProjectId() {
-        return projectId;
-    }
+    //public String getProjectId() {
+    //    return projectId;
+    //}
 
     /**
      * Return true if runningStateOnly
@@ -473,9 +473,9 @@ class InstanceToNodeMapper {
         this.projectId = projectId;
     }
 
-    public Properties getMapping() {
-        return mapping;
-    }
+    //public Properties getMapping() {
+    //    return mapping;
+    //}
 
     public void setMapping(Properties mapping) {
         this.mapping = mapping;
