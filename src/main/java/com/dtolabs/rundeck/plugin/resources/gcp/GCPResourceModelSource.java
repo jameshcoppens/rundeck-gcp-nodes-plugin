@@ -205,7 +205,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
             Collections.addAll(params, filterParams.split(";"));
         }
         loadMapping();
-        mapper = new InstanceToNodeMapper(credential, mapping, projectId);
+        mapper = new InstanceToNodeMapper(credential, mapping);
         mapper.setProjectId(projectId);
         mapper.setFilterParams(params);
         mapper.setRunningStateOnly(runningOnly);

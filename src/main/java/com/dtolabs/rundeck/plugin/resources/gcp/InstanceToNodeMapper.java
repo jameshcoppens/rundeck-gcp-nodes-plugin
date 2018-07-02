@@ -54,7 +54,6 @@ import org.apache.log4j.Logger;
 
 
 import java.io.IOException;
-//import java.net.NetworkInterface;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
@@ -95,11 +94,10 @@ class InstanceToNodeMapper {
     /**
      * Create with the credentials and mapping definition
      */
-    InstanceToNodeMapper(final GoogleCredential credential ,final Properties mapping, String projectId) {
+    InstanceToNodeMapper(final GoogleCredential credential, final Properties mapping) {
         logger.info("InstancetoNodeMapper Object");
         this.credential = credential;
         this.mapping = mapping;
-        this.projectId = projectId;
     }
 
     /**
@@ -181,8 +179,6 @@ class InstanceToNodeMapper {
     }
 
     private Set<Instance> query(Compute compute, String projectId) {
-        //create "running" filter
-
         //final List<Reservation> reservations = describeInstancesRequest.getReservations();
         final Set<Instance> instances = new HashSet<Instance>();
         try {
@@ -209,29 +205,10 @@ class InstanceToNodeMapper {
         } catch (Throwable t) {
             t.printStackTrace();
         }
-        //for (final Reservation reservation : reservations) {
-            //instances.addAll(reservation.getInstances());
-        //}
+
         return instances;
     }
 
-    /*private ArrayList<Filter> buildFilters() {
-        final ArrayList<Filter> filters = new ArrayList<Filter>();
-        if (isRunningStateOnly()) {
-            final Filter filter = new Filter("instance-state-name").withValues(InstanceStateName.Running.toString());
-            filters.add(filter);
-        }
-
-        if (null != getFilterParams()) {
-            for (final String filterParam : getFilterParams()) {
-                final String[] x = filterParam.split("=", 2);
-                if (!"".equals(x[0]) && !"".equals(x[1])) {
-                    filters.add(new Filter(x[0]).withValues(x[1]));
-                }
-            }
-        }
-        return filters;
-    }*/
 
     private void mapInstances(final NodeSetImpl nodeSet, final Set<Instance> instances) {
         logger.info("mapInstances call");
@@ -256,8 +233,8 @@ class InstanceToNodeMapper {
     static INodeEntry instanceToNode(final Instance inst, final Properties mapping, String projectId) throws GeneratorException {
         final NodeEntryImpl node = new NodeEntryImpl();
         logger.info("instancetoNode call");
-        //evaluate single settings.selector=tags/* mapping
-        if ("tags/*".equals(mapping.getProperty("attributes.selector"))) {
+//**new**        //evaluate single settings.selector=tags/* mapping
+//*        if ("tags/*".equals(mapping.getProperty("attributes.selector"))) {
             //iterate through instance tags and generate settings
             /*for (final String tag : inst.getTags().getItems()) {
                 if (null == node.getAttributes()) {
@@ -265,7 +242,7 @@ class InstanceToNodeMapper {
                 }
                 node.getAttribute().put(tag.getKey(), tag.getValue());
             }*/
-        }
+//**new**        }
         if (null != mapping.getProperty("tags.selector")) {
             final String selector = mapping.getProperty("tags.selector");
             final String value = applySelector(inst, selector, mapping.getProperty("tags.default"), true);
@@ -433,15 +410,7 @@ class InstanceToNodeMapper {
 
     private static String applySingleSelector(final Instance inst, final String selector) throws
         GeneratorException {
-        /*if (null != selector && !"".equals(selector) && selector.startsWith("tags/")) {
-            final String tag = selector.substring("tags/".length());
-            final List<Tag> tags = inst.getTags();
-            for (final Tag tag1 : tags) {
-                if (tag.equals(tag1.getKey())) {
-                    return tag1.getValue();
-                }
-            }
-        } else*/ if (null != selector && !"".equals(selector)) {
+        if (null != selector && !"".equals(selector)) {
             try {
                 //logger.error("This is the selector " + selector);
                 String value = null;
