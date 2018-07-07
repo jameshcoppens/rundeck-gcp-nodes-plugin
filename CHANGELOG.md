@@ -4,9 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [0.2.2] - 2018-07-02
+## [0.2.2] - 2018-07-07
 ### Changed
-- bump `google-api-services-compute` plugin to `v1-rev189-1.23.0`
+- bump `google-api-services-compute` plugin to `v1-rev190-1.23.0`
 ### Added
 - Code Climate badge to README.md
 ### Removed
