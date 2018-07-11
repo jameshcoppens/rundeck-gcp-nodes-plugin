@@ -4,9 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [0.2.2] - 2018-07-07
+## [0.2.2] - 2018-07-11
 ### Changed
-- bump `google-api-services-compute` plugin to `v1-rev190-1.23.0`
+- updated `google-api-services-compute` plugin to `v1-rev190-1.23.0`
+- updated `axion-release plugin` to `1.9.2`
 ### Added
 - Code Climate badge to README.md
 ### Removed
@@ -16,7 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.2.1] - 2018-06-27
 ### Changed
-- bump `google-api-services-compute` plugin to `v1-rev188-1.23.0`
+- updated `google-api-services-compute` plugin to `v1-rev188-1.23.0`
 - I used [BFG Repo-Cleaner](https://rtyley.github.io/bfg-repo-cleaner/) to try to clean up the repo but in doing so I messed up all the tagging, so I'm going to bump the minor version up to `v0.2.1` instead (couldn't get gradlew to tag the release at `v0.2.0` so I'm not going to fight it -- did I mention I'm sorta new at this?)
 ### Added
 - `.travis.yml` + "build" badge to README.md
@@ -24,7 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.1.5] - 2018-06-18
 ### Changed
-- bump `google-api-services-compute` plugin to `v1-rev186-1.23.0`
+- updated `google-api-services-compute` plugin to `v1-rev186-1.23.0`
 ### Removed
 - further clean up of Java code
 
@@ -44,13 +45,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.1.2] - 2018-06-02
 ### Changed
-- bump `axion-release plugin` to `1.9.1`
-- bump `sourceCompatibility` to `1.8`
-- bump `rundeckPluginVersion` to `1.2`
-- bump `rundeck-core` to `2.7.1`
-- bump `commons-beanutils` plugin to `1.9.3`
-- bump `google-api-services-compute` plugin to `v1-rev183-1.23.0`
-- bump `gradleVersion` to `4.7`
+- updated `axion-release plugin` to `1.9.1`
+- updated `sourceCompatibility` to `1.8`
+- updated `rundeckPluginVersion` to `1.2`
+- updated `rundeck-core` to `2.7.1`
+- updated `commons-beanutils` plugin to `1.9.3`
+- updated `google-api-services-compute` plugin to `v1-rev183-1.23.0`
+- updated `gradleVersion` to `4.7`
 - renamed `privateIpAddress` to `internalIp` to match GCP naming
 ### Added
 - fields: `environment`, `selfLink`
