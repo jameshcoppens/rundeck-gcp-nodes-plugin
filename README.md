@@ -3,7 +3,8 @@
 
 # Rundeck GCP Nodes Plugin
 [![GitHub release](https://img.shields.io/badge/release-v0.2.2-blue.svg)](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases)
-[CHANGELOG](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/blob/master/CHANGELOG.md)
+
+### [CHANGELOG](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/blob/master/CHANGELOG.md)
 
 This is a Resource Model Source plugin for [RunDeck][] 2.7.1+ that provides
 Google Cloud Platform GCE Instances as nodes for the RunDeck server.
