@@ -6,8 +6,8 @@
 
 ### [CHANGELOG](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/blob/master/CHANGELOG.md)
 
-This is a Resource Model Source plugin for [RunDeck][] 2.7.1+ that provides
-Google Cloud Platform GCE Instances as nodes for the RunDeck server.
+This is a Resource Model Source plugin for [Rundeck][] 2.7.1+ that provides
+Google Cloud Platform GCE Instances as nodes for the Rundeck server.
 
 [RunDeck]: http://rundeck.org
 
@@ -51,4 +51,4 @@ My work is built off of the work done by [jameshcoppens](https://github.com/jame
 * increased overall maintainability grade from [D to C](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin/progress/maintainability)
 
 
-# !!! PRs welcome as I'm still new at this (my Java sucks)!!!
+## !!! PRs welcome as I'm still new at this (my Java sucks)!!!
