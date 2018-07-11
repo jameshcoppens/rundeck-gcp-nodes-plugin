@@ -20,7 +20,7 @@
 * User: James Coppens <a href="mailto:jameshcoppens@gmail.com">jameshcoppens@gmail.com</a>
 * Created: 9/1/11 4:34 PM
 * User: Glen Yu <a href="mailto:glen.yu@gmail.com">glen.yu@gmail.com</a>
-* Modified: 2018-06-02
+* Modified: 2018-07-11
 * 
 */
 package com.dtolabs.rundeck.plugin.resources.gcp;
@@ -67,14 +67,15 @@ import java.util.concurrent.Future;
  */
 public class GCPResourceModelSource implements ResourceModelSource {
     static Logger logger = Logger.getLogger(GCPResourceModelSource.class);
-    private String projectId;
+    //v0.2.3 private String projectId;
+    final String projectId;
     long refreshInterval = 30000;
     long lastRefresh = 0;
     String filterParams;
-    String httpProxyHost;
+/**    String httpProxyHost;
     int httpProxyPort = 80;
     String httpProxyUser;
-    String httpProxyPass;
+    String httpProxyPass; */ //v0.2.3
     String mappingParams;
     File mappingFile;
     boolean useDefaultMapping = true;
@@ -137,7 +138,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
     public GCPResourceModelSource(final Properties configuration) {
         logger.info("GCPResourceModelSource Constructor");
         this.projectId = configuration.getProperty(GCPResourceModelSourceFactory.PROJECT_ID);
-        int proxyPort = 80;
+        //v0.2.3 int proxyPort = 80;
         
         //final String proxyPortStr = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_PORT);
         /*if (null != proxyPortStr && !"".equals(proxyPortStr)) {

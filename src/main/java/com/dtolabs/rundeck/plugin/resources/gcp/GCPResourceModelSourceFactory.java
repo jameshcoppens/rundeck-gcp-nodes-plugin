@@ -20,7 +20,7 @@
 * User: James Coppens <a href="mailto:jameshcoppens@gmail.com">jameshcoppens@gmail.com</a>
 * Created: 9/1/11 4:27 PM
 * User: Glen <a href="mailto:glen.yu@gmail.com">glen.yu@gmail.com</a>
-* Modified: 2018-06-05
+* Modified: 2018-07-11
 * 
 */
 package com.dtolabs.rundeck.plugin.resources.gcp;
@@ -49,7 +49,8 @@ import java.util.*;
 @Plugin(name = "gcp-gce", service = "ResourceModelSource")
 public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory, Describable {
     public static final String PROVIDER_NAME = "gcp-gce";
-    private Framework framework;
+    //v0.2.3 private Framework framework;
+    final Framework framework;
 
     public static final String FILTER_PARAMS = "filter";
     public static final String MAPPING_PARAMS = "mappingParams";

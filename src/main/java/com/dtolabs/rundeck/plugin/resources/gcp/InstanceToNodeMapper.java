@@ -20,7 +20,7 @@
 * User: James Coppens <a href="mailto:jameshcoppens@gmail.com">jameshcoppens@gmail.com</a>
 * Created: March 01 2016
 * User: Glen Yu <a href="mailto:glen.yu@gmail.com">glen.yu@gmail.com</a>
-* Modified: 2018-06-04
+* Modified: 2018-07-11
 * 
 */
 package com.dtolabs.rundeck.plugin.resources.gcp;
@@ -72,7 +72,7 @@ import java.util.regex.Pattern;
 class InstanceToNodeMapper {
     static final Logger logger = Logger.getLogger(InstanceToNodeMapper.class);
     final GoogleCredential credential;
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
+    //v0.2.3 private ExecutorService executorService = Executors.newSingleThreadExecutor();
     private ArrayList<String> filterParams;
     private String projectId;
     private boolean runningStateOnly = true;
@@ -322,10 +322,10 @@ class InstanceToNodeMapper {
             final Matcher m = attribPat.matcher(key);
             if (m.matches()) {
                 final String attrName = m.group(1);
-                if(attrName.equals("tags")){
+/**                if(attrName.equals("tags")){
                     //already handled
                     continue;
-                }
+                } */ //v0.2.3
                 if (null == node.getAttributes()) {
                     node.setAttributes(new HashMap<String, String>());
                 }
@@ -336,9 +336,9 @@ class InstanceToNodeMapper {
                 }
             }
         }
-        String hostSel = mapping.getProperty("hostname.selector");
+        //v0.2.3 String hostSel = mapping.getProperty("hostname.selector");
         //logger.error("This is the hostSel variable " + hostSel);
-        String host = applySelector(inst, hostSel, mapping.getProperty("hostname.default"));
+        //v0.2.3 String host = applySelector(inst, hostSel, mapping.getProperty("hostname.default"));
         //logger.error("This is the host variable " + host);
         //logger.error("This is the hostname.default mapping param " + mapping.getProperty("hostname.default"));
         if (null == node.getHostname()) {
@@ -482,8 +482,8 @@ class InstanceToNodeMapper {
     }
 
     public static class GeneratorException extends Exception {
-        public GeneratorException() {
-        }
+//v0.2.3        public GeneratorException() {
+//        }
 
         public GeneratorException(final String message) {
             super(message);
