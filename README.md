@@ -1,6 +1,8 @@
-# Rundeck GCP Nodes Plugin
 [![Build Status](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin.svg?branch=master)](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin)
 [![Code Climate](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin.png)](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin)
+
+# Rundeck GCP Nodes Plugin
+[![GitHub release](https://img.shields.io/badge/release-v0.2.2-blue.svg)](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases)
 
 Version: 0.2.2 [CHANGELOG](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/blob/master/CHANGELOG.md)
 
