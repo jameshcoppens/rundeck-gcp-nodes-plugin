@@ -8,5 +8,4 @@ branches:
 
 script:
   - ./gradlew clean
-  - ./gradlew createRelease
   - ./gradlew build
