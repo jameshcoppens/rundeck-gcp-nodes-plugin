@@ -48,8 +48,9 @@ My work is built off of the work done by [jameshcoppens](https://github.com/jame
 * updated `rundeck-core` to `2.7.1`
 * updated `rundeckPluginVersion` to `1.2`
 * updated `google-api-servies-compute` plugin
-* reduced the .jar file size from ~8MB to ~5.5MB
 * changed the fields that get populated when you expand a node in Rundeck as some in the original plugin just wasn't working or was putting in wrong values
+* reduced the .jar file size from ~8MB to ~5.5MB
+* increased overall maintainability grade from [D to C](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin/progress/maintainability)
 
 
 # !!! PRs welcome as I'm still new at this (my Java sucks)!!!
