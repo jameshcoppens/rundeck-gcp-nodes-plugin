@@ -52,7 +52,6 @@ import com.dtolabs.rundeck.core.common.NodeSetImpl;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 
-
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.Executors;
@@ -166,27 +165,28 @@ class InstanceToNodeMapper {
     }
 
     private Set<Instance> query(Compute compute, String projectId) {
-        //final List<Reservation> reservations = describeInstancesRequest.getReservations();
         final Set<Instance> instances = new HashSet<Instance>();
         try {
                 //logger.info("begin query function, with this projectId " + projectId);
                 Compute.Instances.AggregatedList instancesAggregatedList = compute.instances().aggregatedList(projectId);
                 InstanceAggregatedList list = instancesAggregatedList.execute();
 
-                if (list.getItems() == null) {
+/*                if (list.getItems() == null) {
                     logger.error("No instances found. Sign in to the Google APIs Console and create "
                             + "an instance at: code.google.com/apis/console");
-                } else {
-                    java.util.Map<String, InstancesScopedList> aggregated_list = list.getItems();
+                } else { */ //v0.2.3
+                assert list.getItems() != null;
 
-                    for (java.util.Map.Entry<String, InstancesScopedList> entry : aggregated_list.entrySet()) {
-                        //logger.info("getinstances performing");
-                        if (entry.getValue().getInstances() != null) {
-                            instances.addAll(entry.getValue().getInstances());
-                            //logger.info("Successfully pulling in node information " + entry.getValue().getInstances());
-                        }
+                java.util.Map<String, InstancesScopedList> aggregated_list = list.getItems();
+
+                for (java.util.Map.Entry<String, InstancesScopedList> entry : aggregated_list.entrySet()) {
+                    //logger.info("getinstances performing");
+                    if (entry.getValue().getInstances() != null) {
+                        instances.addAll(entry.getValue().getInstances());
+                        //logger.info("Successfully pulling in node information " + entry.getValue().getInstances());
                     }
-            }
+                }
+//v0.2.3            }
         } catch (IOException e) {
             System.err.println(e.getMessage());
         } catch (Throwable t) {
@@ -298,7 +298,8 @@ class InstanceToNodeMapper {
             final Matcher m = attribPat.matcher(key);
             if (m.matches()) {
                 final String attrName = m.group(1);
-                if(attrName.equals("tags")){
+                //if (attrName.equals("tags")){
+                if ("tags".equals(attrName)){
                     //already handled
                     continue;
                 }
@@ -314,10 +315,13 @@ class InstanceToNodeMapper {
         }
         //v0.2.3 String hostSel = mapping.getProperty("hostname.selector");
         //v0.2.3 String host = applySelector(inst, hostSel, mapping.getProperty("hostname.default"));
-        if (null == node.getHostname()) {
+
+/*        if (null == node.getHostname()) {
             System.err.println("Unable to determine hostname for instance: " + inst.getId());
             return null;
-        }
+        } */ //v0.2.3
+        assert node.getHostname() != null;
+
         String name = node.getNodename();
         if (null == name || "".equals(name)) {
             name = node.getHostname();
@@ -347,7 +351,6 @@ class InstanceToNodeMapper {
      * @param defaultValue a default value to return if there is no result from the selector
      * @param tagMerge if true, allow | separator to merge multiple values
      */
-
     public static String applySelector(final Instance inst, final String selector, final String defaultValue,
                                        final boolean tagMerge) throws
         GeneratorException {

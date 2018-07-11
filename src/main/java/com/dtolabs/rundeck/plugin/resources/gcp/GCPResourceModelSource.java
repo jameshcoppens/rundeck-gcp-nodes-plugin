@@ -193,9 +193,9 @@ public class GCPResourceModelSource implements ResourceModelSource {
         //logger.info("getNodes call");
         checkFuture();
         if (!needsRefresh()) {
-            if (null != iNodeSet) {
-                logger.info("Returning " + iNodeSet.getNodeNames().size() + " cached nodes from GCP");
-            }
+//            if (null != iNodeSet) {
+//                logger.info("Returning " + iNodeSet.getNodeNames().size() + " cached nodes from GCP");
+//            }
             return iNodeSet;
         }
         if (lastRefresh > 0 && queryAsync && null == futureResult) {
@@ -206,9 +206,9 @@ public class GCPResourceModelSource implements ResourceModelSource {
             iNodeSet = mapper.performQuery();
             lastRefresh = System.currentTimeMillis();
         }
-        if (null != iNodeSet) {
-            logger.info("Read " + iNodeSet.getNodeNames().size() + " nodes from GCP");
-        }
+//        if (null != iNodeSet) {
+//            logger.info("Read " + iNodeSet.getNodeNames().size() + " nodes from GCP");
+//        }
         return iNodeSet;
     }
 
