@@ -72,7 +72,7 @@ import java.util.regex.Pattern;
 class InstanceToNodeMapper {
     static final Logger logger = Logger.getLogger(InstanceToNodeMapper.class);
     final GoogleCredential credential;
-    //v0.2.3 private ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
     private ArrayList<String> filterParams;
     private String projectId;
     private boolean runningStateOnly = true;
@@ -95,7 +95,7 @@ class InstanceToNodeMapper {
      * Create with the credentials and mapping definition
      */
     InstanceToNodeMapper(final GoogleCredential credential, final Properties mapping) {
-        logger.info("InstancetoNodeMapper Object");
+        //logger.info("InstancetoNodeMapper Object");
         this.credential = credential;
         this.mapping = mapping;
     }
@@ -106,26 +106,22 @@ class InstanceToNodeMapper {
      */
     public INodeSet performQuery() {
         final NodeSetImpl nodeSet = new NodeSetImpl();
-        logger.info("Google Credential performQuery(), this is credential " + credential);
+        //logger.info("Google Credential performQuery(), this is credential " + credential);
         //if(null!=credential) {
         try {
              httpTransport = GoogleNetHttpTransport.newTrustedTransport();
              compute = new Compute.Builder(
                     httpTransport, JSON_FACTORY, null).setApplicationName(APPLICATION_NAME)
                     .setHttpRequestInitializer(credential).build();
-
             final Set<Instance> instances = query(compute, projectId);
-
-            logger.info("Google Crendential query() completed");
-
+            //logger.info("Google Crendential query() completed");
             mapInstances(nodeSet, instances);
         } catch (IOException e) {
-        System.err.println(e.getMessage());
+            System.err.println(e.getMessage());
         } catch (Throwable t) {
             t.printStackTrace();
         }
-        logger.info("Google Crendential perfomquery() completed");
-        //final ArrayList<Filter> filters = buildFilters();
+        //logger.info("Google Crendential perfomquery() completed");
         return nodeSet;
     }
 
@@ -134,30 +130,23 @@ class InstanceToNodeMapper {
      *
      */
     public Future<INodeSet> performQueryAsync() {
-        logger.info("PerformQueryAsync start");
-
+        //logger.info("PerformQueryAsync start");
         return new Future<INodeSet>() {
 
             public boolean cancel(boolean b) {
                 return true;
-                //return describeInstancesRequest.cancel(b);
             }
 
             public boolean isCancelled() {
                 return true;
-                //return describeInstancesRequest.isCancelled();
             }
 
             public boolean isDone() {
                 return true;
-                //return describeInstancesRequest.isDone();
             }
 
             public INodeSet get() throws InterruptedException, ExecutionException {
-                //DescribeInstancesResult describeInstancesResult = describeInstancesRequest.get();
-
                 final NodeSetImpl nodeSet = new NodeSetImpl();
-                //final Set<Instance> instances = examineResult(describeInstancesResult);
                 final Set<Instance> instances = query(compute, projectId);
 
                 mapInstances(nodeSet, instances);
@@ -166,11 +155,9 @@ class InstanceToNodeMapper {
 
             public INodeSet get(final long l, final TimeUnit timeUnit) throws InterruptedException, ExecutionException,
                 TimeoutException {
-                //DescribeInstancesResult describeInstancesResult = describeInstancesRequest.get(l, timeUnit);
 
                 final NodeSetImpl nodeSet = new NodeSetImpl();
                 final Set<Instance> instances = query(compute, projectId);
-                //final Set<Instance> instances = examineResult(describeInstancesResult);
 
                 mapInstances(nodeSet, instances);
                 return nodeSet;
@@ -182,7 +169,7 @@ class InstanceToNodeMapper {
         //final List<Reservation> reservations = describeInstancesRequest.getReservations();
         final Set<Instance> instances = new HashSet<Instance>();
         try {
-                logger.info("begin query function, with this projectId " + projectId);
+                //logger.info("begin query function, with this projectId " + projectId);
                 Compute.Instances.AggregatedList instancesAggregatedList = compute.instances().aggregatedList(projectId);
                 InstanceAggregatedList list = instancesAggregatedList.execute();
 
@@ -193,10 +180,10 @@ class InstanceToNodeMapper {
                     java.util.Map<String, InstancesScopedList> aggregated_list = list.getItems();
 
                     for (java.util.Map.Entry<String, InstancesScopedList> entry : aggregated_list.entrySet()) {
-                        logger.info("getinstances performing");
+                        //logger.info("getinstances performing");
                         if (entry.getValue().getInstances() != null) {
                             instances.addAll(entry.getValue().getInstances());
-                            logger.info("Successfully pulling in node information " + entry.getValue().getInstances());
+                            //logger.info("Successfully pulling in node information " + entry.getValue().getInstances());
                         }
                     }
             }
@@ -211,7 +198,7 @@ class InstanceToNodeMapper {
 
 
     private void mapInstances(final NodeSetImpl nodeSet, final Set<Instance> instances) {
-        logger.info("mapInstances call");
+        //logger.info("mapInstances call");
         for (final Instance inst : instances) {
             final INodeEntry iNodeEntry;
             try {
@@ -222,7 +209,6 @@ class InstanceToNodeMapper {
             } catch (GeneratorException e) {
                 logger.error(e);
             }
-            //logger.error("Instances within the Set "+ inst);
         }
     }
 
@@ -232,17 +218,7 @@ class InstanceToNodeMapper {
     @SuppressWarnings("unchecked")
     static INodeEntry instanceToNode(final Instance inst, final Properties mapping, String projectId) throws GeneratorException {
         final NodeEntryImpl node = new NodeEntryImpl();
-        logger.info("instancetoNode call");
-//**new**        //evaluate single settings.selector=tags/* mapping
-//*        if ("tags/*".equals(mapping.getProperty("attributes.selector"))) {
-            //iterate through instance tags and generate settings
-            /*for (final String tag : inst.getTags().getItems()) {
-                if (null == node.getAttributes()) {
-                    node.setAttribute(new HashMap<String, String>());
-                }
-                node.getAttribute().put(tag.getKey(), tag.getValue());
-            }*/
-//**new**        }
+        //logger.info("instancetoNode call");
         if (null != mapping.getProperty("tags.selector")) {
             final String selector = mapping.getProperty("tags.selector");
             final String value = applySelector(inst, selector, mapping.getProperty("tags.default"), true);
@@ -322,10 +298,10 @@ class InstanceToNodeMapper {
             final Matcher m = attribPat.matcher(key);
             if (m.matches()) {
                 final String attrName = m.group(1);
-/**                if(attrName.equals("tags")){
+                if(attrName.equals("tags")){
                     //already handled
                     continue;
-                } */ //v0.2.3
+                }
                 if (null == node.getAttributes()) {
                     node.setAttributes(new HashMap<String, String>());
                 }
@@ -337,10 +313,7 @@ class InstanceToNodeMapper {
             }
         }
         //v0.2.3 String hostSel = mapping.getProperty("hostname.selector");
-        //logger.error("This is the hostSel variable " + hostSel);
         //v0.2.3 String host = applySelector(inst, hostSel, mapping.getProperty("hostname.default"));
-        //logger.error("This is the host variable " + host);
-        //logger.error("This is the hostname.default mapping param " + mapping.getProperty("hostname.default"));
         if (null == node.getHostname()) {
             System.err.println("Unable to determine hostname for instance: " + inst.getId());
             return null;
@@ -352,7 +325,6 @@ class InstanceToNodeMapper {
         if (null == name || "".equals(name)) {
             name = inst.getId().toString();
         }
-        //logger.error("projectId ---> " + projectId);
         node.setNodename(name);
 
         return node;
@@ -412,7 +384,6 @@ class InstanceToNodeMapper {
         GeneratorException {
         if (null != selector && !"".equals(selector)) {
             try {
-                //logger.error("This is the selector " + selector);
                 String value = null;
                 if ("networkInterfaces".equals(selector)) {
                     for (NetworkInterface netint : inst.getNetworkInterfaces()) {
@@ -422,7 +393,6 @@ class InstanceToNodeMapper {
                 else {
                     value = BeanUtils.getProperty(inst, selector);
                 }
-                //logger.error("This is the value " + value);
                 if (null != value) {
                     return value;
                 }
@@ -434,19 +404,6 @@ class InstanceToNodeMapper {
         return null;
     }
 
-    /**
-     * Return the list of "filter=value" filters
-     */
-    //public ArrayList<String> getFilterParams() {
-    //    return filterParams;
-    //}
-
-    /**
-     * Return the projectId
-     */
-    //public String getProjectId() {
-    //    return projectId;
-    //}
 
     /**
      * Return true if runningStateOnly
@@ -473,17 +430,13 @@ class InstanceToNodeMapper {
         this.projectId = projectId;
     }
 
-    //public Properties getMapping() {
-    //    return mapping;
-    //}
-
     public void setMapping(Properties mapping) {
         this.mapping = mapping;
     }
 
     public static class GeneratorException extends Exception {
-//v0.2.3        public GeneratorException() {
-//        }
+        public GeneratorException() {
+        }
 
         public GeneratorException(final String message) {
             super(message);

@@ -25,7 +25,6 @@
 */
 package com.dtolabs.rundeck.plugin.resources.gcp;
 
-
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential.Builder;
@@ -67,8 +66,7 @@ import java.util.concurrent.Future;
  */
 public class GCPResourceModelSource implements ResourceModelSource {
     static Logger logger = Logger.getLogger(GCPResourceModelSource.class);
-    //v0.2.3 private String projectId;
-    final String projectId;
+    private String projectId;
     long refreshInterval = 30000;
     long lastRefresh = 0;
     String filterParams;
@@ -136,22 +134,9 @@ public class GCPResourceModelSource implements ResourceModelSource {
     }
 
     public GCPResourceModelSource(final Properties configuration) {
-        logger.info("GCPResourceModelSource Constructor");
+        //logger.info("GCPResourceModelSource Constructor");
         this.projectId = configuration.getProperty(GCPResourceModelSourceFactory.PROJECT_ID);
         //v0.2.3 int proxyPort = 80;
-        
-        //final String proxyPortStr = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_PORT);
-        /*if (null != proxyPortStr && !"".equals(proxyPortStr)) {
-            try {
-                proxyPort = Integer.parseInt(proxyPortStr);
-            } catch (NumberFormatException e) {
-                logger.warn(GCPResourceModelSourceFactory.HTTP_PROXY_PORT + " value is not valid: " + proxyPortStr);
-            }
-        }
-        this.httpProxyPort = proxyPort;
-        this.httpProxyUser = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_USER);
-        this.httpProxyPass = configuration.getProperty(GCPResourceModelSourceFactory.HTTP_PROXY_PASS);
-        */
         this.filterParams = configuration.getProperty(GCPResourceModelSourceFactory.FILTER_PARAMS);
         this.mappingParams = configuration.getProperty(GCPResourceModelSourceFactory.MAPPING_PARAMS);
         final String mappingFilePath = configuration.getProperty(GCPResourceModelSourceFactory.MAPPING_FILE);
@@ -176,31 +161,23 @@ public class GCPResourceModelSource implements ResourceModelSource {
             runningOnly = Boolean.parseBoolean(configuration.getProperty(
                 GCPResourceModelSourceFactory.RUNNING_ONLY));
         }
-        //if (null != clientId && null != clientSecret) {
-            try {
-                credential = GoogleCredential.fromStream(new FileInputStream("/etc/rundeck/rundeck-gcp-nodes-plugin.json"))
-                        .createScoped(Collections.singleton(ComputeScopes.COMPUTE_READONLY));
-                logger.info("Google Crendential created successfully");
-            } catch  (FileNotFoundException e) {
-                logger.error("Google Crendential failed creation");
-                System.err.println(e.getMessage());
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
-        //}
 
-        /*if (null != httpProxyHost && !"".equals(httpProxyHost)) {
-            clientConfiguration.setProxyHost(httpProxyHost);
-            clientConfiguration.setProxyPort(httpProxyPort);
-            clientConfiguration.setProxyUsername(httpProxyUser);
-            clientConfiguration.setProxyPassword(httpProxyPass);
-        }*/
-        
+        try {
+            credential = GoogleCredential.fromStream(new FileInputStream("/etc/rundeck/rundeck-gcp-nodes-plugin.json"))
+                    .createScoped(Collections.singleton(ComputeScopes.COMPUTE_READONLY));
+            //logger.info("Google Crendential created successfully");
+        } catch  (FileNotFoundException e) {
+            logger.error("Google Crendential failed creation");
+            System.err.println(e.getMessage());
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
         initialize();
     }
 
     private void initialize() {
-        logger.info("initialize call");
+        //logger.info("initialize call");
         final ArrayList<String> params = new ArrayList<String>();
         if (null != filterParams) {
             Collections.addAll(params, filterParams.split(";"));
@@ -213,7 +190,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
     }
 
     public synchronized INodeSet getNodes() throws ResourceModelSourceException {
-        logger.info("getNodes call");
+        //logger.info("getNodes call");
         checkFuture();
         if (!needsRefresh()) {
             if (null != iNodeSet) {
@@ -239,7 +216,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
      * if any future results are pending, check if they are done and retrieve the results
      */
     private void checkFuture() {
-        logger.info("checkFuture call");
+        //logger.info("checkFuture call");
         if (null != futureResult && futureResult.isDone()) {
             try {
                 iNodeSet = futureResult.get();
@@ -261,7 +238,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
     }
 
     private void loadMapping() {
-        logger.info("loadMapping call");
+        //logger.info("loadMapping call");
         if (useDefaultMapping) {
             mapping.putAll(defaultMapping);
         }

@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Removed
 - chipping away at the code complexity and improving code maintainability
 - unused variables
+- deleted some previously commented out code
+- various `logger.info` throughout the code to reduce the noise
 
 ## [0.2.2] - 2018-07-11
 ### Changed
