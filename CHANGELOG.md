@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.2.3] - 2018-??-??
 ### Changed
-- some null test if-statements that only return an error with `assert` to improve readability
+- some null test if-statements that only return an error msg with `assert` to improve readability
+- converted nested if-statements into if-statements with multiple conditions to improve readability
 ### Removed
 - chipping away at the code complexity and improving code maintainability
 - unused variables

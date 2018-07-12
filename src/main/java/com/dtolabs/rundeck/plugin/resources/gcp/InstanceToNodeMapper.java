@@ -106,7 +106,6 @@ class InstanceToNodeMapper {
     public INodeSet performQuery() {
         final NodeSetImpl nodeSet = new NodeSetImpl();
         //logger.info("Google Credential performQuery(), this is credential " + credential);
-        //if(null!=credential) {
         try {
              httpTransport = GoogleNetHttpTransport.newTrustedTransport();
              compute = new Compute.Builder(
@@ -167,7 +166,6 @@ class InstanceToNodeMapper {
     private Set<Instance> query(Compute compute, String projectId) {
         final Set<Instance> instances = new HashSet<Instance>();
         try {
-                //logger.info("begin query function, with this projectId " + projectId);
                 Compute.Instances.AggregatedList instancesAggregatedList = compute.instances().aggregatedList(projectId);
                 InstanceAggregatedList list = instancesAggregatedList.execute();
 
@@ -213,7 +211,7 @@ class InstanceToNodeMapper {
     }
 
     /**
-     * Convert an GCP GCE Instance to a RunDeck INodeEntry based on the mapping input
+     * Convert an GCP GCE Instance to a Rundeck INodeEntry based on the mapping input
      */
     @SuppressWarnings("unchecked")
     static INodeEntry instanceToNode(final Instance inst, final Properties mapping, String projectId) throws GeneratorException {
@@ -298,8 +296,8 @@ class InstanceToNodeMapper {
             final Matcher m = attribPat.matcher(key);
             if (m.matches()) {
                 final String attrName = m.group(1);
-                //if (attrName.equals("tags")){
-                if ("tags".equals(attrName)){
+//v0.2.3                if (attrName.equals("tags")){
+                if ("tags".equals(attrName)) {
                     //already handled
                     continue;
                 }
@@ -361,10 +359,16 @@ class InstanceToNodeMapper {
                     final StringBuilder sb = new StringBuilder();
                     for (final String subPart : selPart.split(Pattern.quote("|"))) {
                         final String val = applySingleSelector(inst, subPart);
-                        if (null != val) {
+/*                        if (null != val) {
                             if (sb.length() > 0) {
                                 sb.append(",");
                             }
+                            sb.append(val);
+                        } */ //v0.2.3
+                        if (null != val && sb.length() > 0) {
+                            sb.append(",");
+                            sb.append(val);
+                        } else if (null != val) {
                             sb.append(val);
                         }
                     }
