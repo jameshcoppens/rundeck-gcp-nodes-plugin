@@ -350,9 +350,7 @@ class InstanceToNodeMapper {
      * @param tagMerge if true, allow | separator to merge multiple values
      */
     public static String applySelector(final Instance inst, final String selector, final String defaultValue,
-                                       final boolean tagMerge) throws
-        GeneratorException {
-
+                                       final boolean tagMerge) throws GeneratorException {
         if (null != selector) {
             for (final String selPart : selector.split(",")) {
                 if (tagMerge) {

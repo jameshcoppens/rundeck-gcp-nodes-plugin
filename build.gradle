@@ -61,7 +61,7 @@ dependencies {
     pluginLibs group: 'stax', name: 'stax', version: '1.2.0'
     pluginLibs group: 'stax-api', name: 'stax-api', version: '1.0.1'
 
-    pluginLibs group: 'com.google.apis', name:'google-api-services-compute', version: 'v1-rev189-1.23.0'
+    pluginLibs group: 'com.google.apis', name:'google-api-services-compute', version: 'v1-rev190-1.23.0'
 
 }
 
