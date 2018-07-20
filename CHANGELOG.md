@@ -4,8 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [0.2.3] - 2018-??-??
+## [0.2.3] - 2018-07-20
 ### Changed
+- updated `google-api-services-compute` plugin to `v1-rev193-1.23.0`
 - some null test if-statements that only return an error msg with `assert` to improve readability
 - converted nested if-statements into if-statements with multiple conditions to improve readability
 ### Removed

@@ -2,7 +2,7 @@
 [![Code Climate](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin.png)](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin)
 
 # Rundeck GCP Nodes Plugin
-[![GitHub release](https://img.shields.io/badge/release-v0.2.2-blue.svg)](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases)
+[![GitHub release](https://img.shields.io/badge/release-v0.2.3-blue.svg)](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases)
 
 ### [CHANGELOG](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/blob/master/CHANGELOG.md)
 
@@ -16,7 +16,7 @@ Google Cloud Platform GCE Instances as nodes for the Rundeck server.
 
 Download from the [releases page](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases).
 
-Put the `rundeck-gcp-nodes-plugin-0.2.2.jar` into your `$RDECK_BASE/libext` dir.
+Put the `rundeck-gcp-nodes-plugin-0.2.3.jar` into your `$RDECK_BASE/libext` dir.
 
 You must also authenticate the rundeck-gcp-nodes-plugin to your google cloud platform
 project.
