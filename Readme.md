@@ -25,7 +25,7 @@ project.
         * Then go to Create Credentials, Service account key.  Under the service account 
                 drop down select New Service Account. Name the service account
                 rundeck-gcp-nodes-plugin.  Make sure the key type is JSON
-        * rename the JSON file to rundeck-gcp-plugin.json and place it in /etc/rundeck/
+        * rename the JSON file to rundeck-gcp-node-plugin.json and place it in /etc/rundeck/
 
 I am currently running my rundeck server in a private subnet, which can not utilize user
 authentication within oauth to allow for API access.  In subsuquent versions in which
