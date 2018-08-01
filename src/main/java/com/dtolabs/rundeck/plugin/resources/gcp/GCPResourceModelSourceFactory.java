@@ -49,7 +49,6 @@ import java.util.*;
 @Plugin(name = "gcp-gce", service = "ResourceModelSource")
 public class GCPResourceModelSourceFactory implements ResourceModelSourceFactory, Describable {
     public static final String PROVIDER_NAME = "gcp-gce";
-    //v0.2.3 private Framework framework;
     final Framework framework;
 
     public static final String FILTER_PARAMS = "filter";
