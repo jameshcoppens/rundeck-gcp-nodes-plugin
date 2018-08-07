@@ -48,7 +48,7 @@ My work is built off of the work done by [jameshcoppens](https://github.com/jame
 * updated `rundeck-core` to `2.7.1`, `rundeckPluginVersion` to `1.2` and `google-api-servies-compute` plugins
 * cleaned up the code to remove any AWS references in the code as well as plugins that aren't used (as it was initially modified off of [Rundeck's EC2 nodes plugin](https://github.com/rundeck-plugins/rundeck-ec2-nodes-plugin))
 * reduced the .jar file size from ~8MB to ~5.5MB
-* increased overall maintainability grade from [D to C](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin/progress/maintainability)
+* increased overall maintainability grade from [D to C](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin)
 
 
 ## !!! PRs welcome as I'm still new at this (my Java sucks)!!!
