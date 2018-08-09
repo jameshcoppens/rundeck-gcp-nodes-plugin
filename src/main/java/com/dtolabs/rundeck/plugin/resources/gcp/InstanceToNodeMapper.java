@@ -16,12 +16,12 @@
 
 /*
 * InstanceToNodeMapper.java
-* 
+*
 * User: James Coppens <a href="mailto:jameshcoppens@gmail.com">jameshcoppens@gmail.com</a>
 * Created: March 01 2016
 * User: Glen Yu <a href="mailto:glen.yu@gmail.com">glen.yu@gmail.com</a>
 * Modified: 2018-07-11
-* 
+*
 */
 package com.dtolabs.rundeck.plugin.resources.gcp;
 
@@ -44,6 +44,7 @@ import com.google.api.services.compute.model.InstanceAggregatedList;
 import com.google.api.services.compute.model.InstancesScopedList;
 import com.google.api.services.compute.model.Tags;
 import com.google.api.services.compute.model.NetworkInterface;
+import com.google.api.services.compute.model.AccessConfig;
 
 import com.dtolabs.rundeck.core.common.INodeEntry;
 import com.dtolabs.rundeck.core.common.INodeSet;
@@ -394,8 +395,13 @@ class InstanceToNodeMapper {
                     for (NetworkInterface netint : inst.getNetworkInterfaces()) {
                          value = netint.getNetworkIP();
                     }
-                }
-                else {
+                } else if ("accessConfigs".equals(selector)) {
+                    for (NetworkInterface netint : inst.getNetworkInterfaces()) {
+                         for (AccessConfig accconf : netint.getAccessConfigs()) {
+                             value = accconf.getNatIP();
+                          }
+                    }
+                } else {
                     value = BeanUtils.getProperty(inst, selector);
                 }
                 if (null != value) {
