@@ -22,6 +22,9 @@
 * User: Glen Yu <a href="mailto:glen.yu@gmail.com">glen.yu@gmail.com</a>
 * Modified: 2018-07-11
 *
+* Contributors:
+* biff2005 (https://github.com/biff2005) for natIP PR
+*
 */
 package com.dtolabs.rundeck.plugin.resources.gcp;
 
@@ -68,6 +71,8 @@ import java.util.regex.Pattern;
  * InstanceToNodeMapper produces Rundeck node definitions from GCP Instances
  *
  * @author James Coppens <a href="mailto:jameshcoppens@gmail.com">jameshcoppens@gmail.com</a>
+ * @maintainer Glen Yu <a href="mailto:glen.yu@gmail.com">glen.yu@gmail.com</a>
+ * 
  */
 class InstanceToNodeMapper {
     static final Logger logger = Logger.getLogger(InstanceToNodeMapper.class);
@@ -95,7 +100,6 @@ class InstanceToNodeMapper {
      * Create with the credentials and mapping definition
      */
     InstanceToNodeMapper(final GoogleCredential credential, final Properties mapping) {
-        //logger.info("InstancetoNodeMapper Object");
         this.credential = credential;
         this.mapping = mapping;
     }
@@ -106,21 +110,18 @@ class InstanceToNodeMapper {
      */
     public INodeSet performQuery() {
         final NodeSetImpl nodeSet = new NodeSetImpl();
-        //logger.info("Google Credential performQuery(), this is credential " + credential);
         try {
              httpTransport = GoogleNetHttpTransport.newTrustedTransport();
              compute = new Compute.Builder(
                     httpTransport, JSON_FACTORY, null).setApplicationName(APPLICATION_NAME)
                     .setHttpRequestInitializer(credential).build();
             final Set<Instance> instances = query(compute, projectId);
-            //logger.info("Google Crendential query() completed");
             mapInstances(nodeSet, instances);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         } catch (Throwable t) {
             t.printStackTrace();
         }
-        //logger.info("Google Crendential perfomquery() completed");
         return nodeSet;
     }
 
@@ -129,7 +130,6 @@ class InstanceToNodeMapper {
      *
      */
     public Future<INodeSet> performQueryAsync() {
-        //logger.info("PerformQueryAsync start");
         return new Future<INodeSet>() {
 
             public boolean cancel(boolean b) {
@@ -170,22 +170,15 @@ class InstanceToNodeMapper {
                 Compute.Instances.AggregatedList instancesAggregatedList = compute.instances().aggregatedList(projectId);
                 InstanceAggregatedList list = instancesAggregatedList.execute();
 
-/*                if (list.getItems() == null) {
-                    logger.error("No instances found. Sign in to the Google APIs Console and create "
-                            + "an instance at: code.google.com/apis/console");
-                } else { */ //v0.2.3
                 assert list.getItems() != null;
 
                 java.util.Map<String, InstancesScopedList> aggregated_list = list.getItems();
 
                 for (java.util.Map.Entry<String, InstancesScopedList> entry : aggregated_list.entrySet()) {
-                    //logger.info("getinstances performing");
                     if (entry.getValue().getInstances() != null) {
                         instances.addAll(entry.getValue().getInstances());
-                        //logger.info("Successfully pulling in node information " + entry.getValue().getInstances());
                     }
                 }
-//v0.2.3            }
         } catch (IOException e) {
             System.err.println(e.getMessage());
         } catch (Throwable t) {
@@ -197,7 +190,6 @@ class InstanceToNodeMapper {
 
 
     private void mapInstances(final NodeSetImpl nodeSet, final Set<Instance> instances) {
-        //logger.info("mapInstances call");
         for (final Instance inst : instances) {
             final INodeEntry iNodeEntry;
             try {
@@ -217,7 +209,6 @@ class InstanceToNodeMapper {
     @SuppressWarnings("unchecked")
     static INodeEntry instanceToNode(final Instance inst, final Properties mapping, String projectId) throws GeneratorException {
         final NodeEntryImpl node = new NodeEntryImpl();
-        //logger.info("instancetoNode call");
         if (null != mapping.getProperty("tags.selector")) {
             final String selector = mapping.getProperty("tags.selector");
             final String value = applySelector(inst, selector, mapping.getProperty("tags.default"), true);
@@ -297,7 +288,6 @@ class InstanceToNodeMapper {
             final Matcher m = attribPat.matcher(key);
             if (m.matches()) {
                 final String attrName = m.group(1);
-//v0.2.3                if (attrName.equals("tags")){
                 if ("tags".equals(attrName)) {
                     //already handled
                     continue;
@@ -312,13 +302,7 @@ class InstanceToNodeMapper {
                 }
             }
         }
-        //v0.2.3 String hostSel = mapping.getProperty("hostname.selector");
-        //v0.2.3 String host = applySelector(inst, hostSel, mapping.getProperty("hostname.default"));
 
-/*        if (null == node.getHostname()) {
-            System.err.println("Unable to determine hostname for instance: " + inst.getId());
-            return null;
-        } */ //v0.2.3
         assert node.getHostname() != null;
 
         String name = node.getNodename();
@@ -358,12 +342,6 @@ class InstanceToNodeMapper {
                     final StringBuilder sb = new StringBuilder();
                     for (final String subPart : selPart.split(Pattern.quote("|"))) {
                         final String val = applySingleSelector(inst, subPart);
-/*                        if (null != val) {
-                            if (sb.length() > 0) {
-                                sb.append(",");
-                            }
-                            sb.append(val);
-                        } */ //v0.2.3
                         if (null != val && sb.length() > 0) {
                             sb.append(",");
                             sb.append(val);
@@ -399,7 +377,7 @@ class InstanceToNodeMapper {
                     for (NetworkInterface netint : inst.getNetworkInterfaces()) {
                          for (AccessConfig accconf : netint.getAccessConfigs()) {
                              value = accconf.getNatIP();
-                          }
+                         }
                     }
                 } else {
                     value = BeanUtils.getProperty(inst, selector);

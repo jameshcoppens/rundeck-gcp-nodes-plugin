@@ -9,6 +9,8 @@
 This is a Resource Model Source plugin for [Rundeck][] 2.7.1+ that provides
 Google Cloud Platform GCE Instances as nodes for the Rundeck server.
 
+Confirmed to work for Rundeck 3.0...for the most part anyway.  It doesn't seem to honor `hostname.selector=networkInterfaces` if you want it to show the IP instead of hostname for `Host` in the `User @ Host` column (this is also your connection string)
+
 [Rundeck]: http://rundeck.org
 
 
@@ -20,21 +22,20 @@ Put the `rundeck-gcp-nodes-plugin-0.2.3.jar` into your `$RDECK_BASE/libext` dir.
 
 You must also authenticate the rundeck-gcp-nodes-plugin to your google cloud platform
 project.
-        * Log into your Google Cloud Platform console, go to the API-Manager, then go to
-                credentials
-        * Then go to Create Credentials, Service account key.  Under the service account 
-                drop down select New Service Account. Name the service account
-                rundeck-gcp-nodes-plugin.  Make sure the key type is JSON
-        * rename the JSON file to rundeck-gcp-nodes-plugin.json and place it in /etc/rundeck/
+* Log into your Google Cloud Platform console, go to the API-Manager, then go to credentials
+* Then go to Create Credentials, Service account key.  Under the service account drop down select New Service Account. Name the service account rundeck-gcp-nodes-plugin.  Make sure the key type is JSON
+* IAM roles required: Project `Browser` & Compute Engine `Compute Viewer`  
+* rename the JSON file to rundeck-gcp-nodes-plugin.json and place it in /etc/rundeck/
 
 
 ## Requirements
 
-You will need/want to add the following labels to your GCP VMs if you want more accurate/meaning full values for the OS (because unfortunately, there currently isn't that data in a standalone field/value that describes that for your VM -- just look at the output of `gcloud compute instances describe`):
-* `environment` (defaults to: test; example value: prod)
-* `osfamily` (defaults to: linux; example value: windows)
-* `osname` (defaults to: unknown; example value: rhel7)
+You will need to add the following labels to your GCP VMs if you want more accurate/meaning full values for the OS (because unfortunately, there currently isn't that data in a standalone field/value that describes that for your VM -- just look at the output of `gcloud compute instances describe`).  You can easily add these labels into your Terraform blueprint and probably:
+* `environment` (example value: prod)
+* `osfamily` (example value: linux)
+* `osname` (example value: rhel7)
 
+NOTE: My intention was for these labels to be optional with a default value provided, however that part doesn't seem to be working and if you don't have said labels, you will have no tags :( I'll look to fix that soon.
 
 ### Disclaimer
 
@@ -48,7 +49,7 @@ My work is built off of the work done by [jameshcoppens](https://github.com/jame
 * updated `rundeck-core` to `2.7.1`, `rundeckPluginVersion` to `1.2` and `google-api-servies-compute` plugins
 * cleaned up the code to remove any AWS references in the code as well as plugins that aren't used (as it was initially modified off of [Rundeck's EC2 nodes plugin](https://github.com/rundeck-plugins/rundeck-ec2-nodes-plugin))
 * reduced the .jar file size from ~8MB to ~5.5MB
-* increased overall maintainability grade from [D to C](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin/progress/maintainability)
+* increased overall maintainability grade from [D to C](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin)
 
 
 ## !!! PRs welcome as I'm still new at this (my Java sucks)!!!
