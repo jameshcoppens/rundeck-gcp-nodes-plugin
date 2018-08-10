@@ -37,6 +37,10 @@ You will need to add the following labels to your GCP VMs if you want more accur
 
 NOTE: My intention was for these labels to be optional with a default value provided, however that part doesn't seem to be working and if you don't have said labels, you will have no tags :( I'll look to fix that soon.
 
+## Notes
+
+By default, your conection string (denoted by the `User @ Host` column in your project nodes page) is `rundeck@hostname`, but if you want it to show IP instead you can set the `hostname.selector` attribute to `networkInterfaces` or `accessConfigs` for internal and external(NAT) IPs respectively
+
 ### Disclaimer
 
 My work is built off of the work done by [jameshcoppens](https://github.com/jameshcoppens/rundeck-gcp-nodes-plugin) and I've only branched it off to updated/maintain it seeing as there are typos in the README that has gone unaddressed and hasn't been updated for ~2+ years.  There were some functionality/features I wanted to add for my own use (and at work) so here we are... :)
@@ -49,7 +53,7 @@ My work is built off of the work done by [jameshcoppens](https://github.com/jame
 * updated `rundeck-core` to `2.7.1`, `rundeckPluginVersion` to `1.2` and `google-api-servies-compute` plugins
 * cleaned up the code to remove any AWS references in the code as well as plugins that aren't used (as it was initially modified off of [Rundeck's EC2 nodes plugin](https://github.com/rundeck-plugins/rundeck-ec2-nodes-plugin))
 * reduced the .jar file size from ~8MB to ~5.5MB
-* increased overall maintainability grade from [D to C](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin)
+* improved maintainability and readability
 
 
 ## !!! PRs welcome as I'm still new at this (my Java sucks)!!!
