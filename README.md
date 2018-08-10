@@ -9,7 +9,7 @@
 This is a Resource Model Source plugin for [Rundeck][] 2.7.1+ that provides
 Google Cloud Platform GCE Instances as nodes for the Rundeck server.
 
-Confirmed to work for Rundeck 3.0!!
+Confirmed to work for Rundeck 3.0...for the most part anyway.  It doesn't seem to honor `hostname.selector=networkInterfaces` if you want it to show the IP instead of hostname for `Host` in the `User @ Host` column (this is also your connection string)
 
 [Rundeck]: http://rundeck.org
 
