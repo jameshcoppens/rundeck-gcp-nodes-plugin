@@ -30,11 +30,12 @@ project.
 
 ## Requirements
 
-You will need/want to add the following labels to your GCP VMs if you want more accurate/meaning full values for the OS (because unfortunately, there currently isn't that data in a standalone field/value that describes that for your VM -- just look at the output of `gcloud compute instances describe`):
-* `environment` (defaults to: test; example value: prod)
-* `osfamily` (defaults to: linux; example value: windows)
-* `osname` (defaults to: unknown; example value: rhel7)
+You will need to add the following labels to your GCP VMs if you want more accurate/meaning full values for the OS (because unfortunately, there currently isn't that data in a standalone field/value that describes that for your VM -- just look at the output of `gcloud compute instances describe`).  You can easily add these labels into your Terraform blueprint and probably:
+* `environment` (example value: prod)
+* `osfamily` (example value: linux)
+* `osname` (example value: rhel7)
 
+NOTE: My intention was for these labels to be optional with a default value provided, however that part doesn't seem to be working and if you don't have said labels, you will have no tags :( I'll look to fix that soon.
 
 ### Disclaimer
 
