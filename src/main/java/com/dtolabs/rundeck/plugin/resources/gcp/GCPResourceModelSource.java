@@ -16,12 +16,12 @@
 
 /*
 * GCPResourceModelSource.java
-* 
+*
 * User: James Coppens <a href="mailto:jameshcoppens@gmail.com">jameshcoppens@gmail.com</a>
 * Created: 9/1/11 4:34 PM
 * User: Glen Yu <a href="mailto:glen.yu@gmail.com">glen.yu@gmail.com</a>
 * Modified: 2018-07-11
-* 
+*
 */
 package com.dtolabs.rundeck.plugin.resources.gcp;
 
@@ -97,6 +97,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
                                + "username.selector=tags/Rundeck-User\n"
                                + "username.default=rundeck\n"
                                + "internalIp.selector=networkInterfaces\n"
+                               + "natIp.selector=accessConfigs\n"
                                + "tags.selector=labels.environment|labels.osname\n"
                                + "instanceId.selector=id\n"
                                + "selfLink.selector=selfLink\n"
