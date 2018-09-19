@@ -20,7 +20,7 @@ scmVersion {
         prefix = 'v'
         versionSeparator = ''
         def origDeserialize=deserialize
-        //apend .0 to satisfy semver if the tag version is only X.Y
+        // apend .0 to satisfy semver if the tag version is only X.Y
         deserialize = { config, position, tagName ->
             def orig = origDeserialize(config, position, tagName)
             if (orig.split('\\.').length < 3) {
@@ -33,10 +33,10 @@ scmVersion {
 project.version = scmVersion.version
 
 configurations{
-    //declare custom pluginLibs configuration to include only libs for this plugin
+    // declare custom pluginLibs configuration to include only libs for this plugin
     pluginLibs
 
-    //declare compile to extend from pluginLibs so it inherits the dependencies
+    // declare compile to extend from pluginLibs so it inherits the dependencies
     compile{
         extendsFrom pluginLibs
     }
@@ -53,6 +53,7 @@ repositories {
     }
 }
 dependencies {
+    // https://mvnrepository.com/artifact/org.rundeck/rundeck-core
     compile group: 'org.rundeck', name: 'rundeck-core', version: '2.7.1'
 
     pluginLibs group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
@@ -73,11 +74,11 @@ task copyToLib(type: Copy) {
 
 
 jar {
-    //include contents of output dir
+    // include contents of output dir
     from "$buildDir/output"
     manifest {
         attributes 'Rundeck-Plugin-Version': rundeckPluginVersion, 'Rundeck-Plugin-Archive': 'true', 'Rundeck-Plugin-Libs-Load-First':'false'
-        //create space-separated list of pluginLibs
+        // create space-separated list of pluginLibs
         def libList = configurations.pluginLibs.collect{'lib/'+it.name}.join(' ')
         attributes 'Rundeck-Plugin-Classnames': 'com.dtolabs.rundeck.plugin.resources.gcp.GCPResourceModelSourceFactory', 'Rundeck-Plugin-Libs': "${libList}"
         attributes 'Rundeck-Plugin-Author': 'Glen Yu', 'Rundeck-Plugin-URL': 'https://github.com/Neutrollized/rundeck-gcp-nodes-plugin', 'Rundeck-Plugin-Date': '2018-08-10'
@@ -85,7 +86,7 @@ jar {
     }
 }
 
-//set jar task to depend on copyToLib
+// set jar task to depend on copyToLib
 jar.dependsOn(copyToLib)
 
 task wrapper(type: Wrapper) {
