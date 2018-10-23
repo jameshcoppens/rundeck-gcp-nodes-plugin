@@ -20,12 +20,13 @@ Put the `rundeck-gcp-nodes-plugin-0.1.0-BETA.jar` into your `$RDECK_BASE/libext`
 
 You must also authenticate the rundeck-gcp-nodes-plugin to your google cloud platform
 project.
-        * Log into your Google Cloud Platform console, go to the API-Manager, then go to
-                credentials
-        * Then go to Create Credentials, Service account key.  Under the service account 
-                drop down select New Service Account. Name the service account
-                rundeck-gcp-nodes-plugin.  Make sure the key type is JSON
-        * rename the JSON file to rundeck-gcp-plugin.json and place it in /etc/rundeck/
+
+* Log into your Google Cloud Platform console, go to the API-Manager, then go to
+credentials
+* Then go to Create Credentials, Service account key. Under the service account
+drop down select New Service Account. Name the service account rundeck-gcp-nodes-plugin.
+Make sure the key type is JSON.
+* Rename the JSON file to `rundeck-gcp-nodes-plugin.json` and place it in /etc/rundeck/
 
 I am currently running my rundeck server in a private subnet, which can not utilize user
 authentication within oauth to allow for API access.  In subsuquent versions in which
