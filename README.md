@@ -28,7 +28,7 @@ project.
 * Log into your Google Cloud Platform console, go to the API-Manager, then go to credentials
 * Then go to Create Credentials, Service account key.  Under the service account drop down select New Service Account. Name the service account rundeck-gcp-nodes-plugin.  Make sure the key type is JSON
 * IAM roles required: Project `Browser` & Compute Engine `Compute Viewer`  
-* rename the JSON file to `rundeck-gcp-nodes-plugin.json` and place it in /etc/rundeck/
+* Rename the JSON file to `rundeck-gcp-nodes-plugin-PROJECTID.json` and place it in /etc/rundeck/ (replace `PROJECTID` with your GCP project id)
 
 
 ## Requirements
