@@ -6,15 +6,12 @@
 
 ### [CHANGELOG](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/blob/master/CHANGELOG.md)
 
+** I will not be making further changes to this branch and will be making a new branch/updating master with the plugin using a newer rundeck-core and will also take this opportunity to redo the versioning scheme :) **
+
 This is a Resource Model Source plugin for [Rundeck][] 2.7.1+ that provides
 Google Cloud Platform GCE Instances as nodes for the Rundeck server.
 
-Confirmed to work for Rundeck 3.0.1 ...for the most part anyway.  It doesn't seem to honor `hostname.selector=networkInterfaces` if you want it to show the IP instead of hostname for `Host` in the `User @ Host` column (this is also your connection string)
-
-UPDATE: works for Rundeck 3.0.5-20180828
-
-
-[Rundeck]: http://rundeck.org
+Confirmed to work for Rundeck up to v3.0.9
 
 
 ## Installation
