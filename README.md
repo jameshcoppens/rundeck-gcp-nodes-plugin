@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin.svg?branch=master)](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin)
+[![Build Status](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin.svg?branch=rundeck-2.7.1)](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin)
 [![Code Climate](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin.png)](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin)
 
 # Rundeck GCP Nodes Plugin
