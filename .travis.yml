@@ -6,6 +6,7 @@ branches:
   only:
   - master
   - rundeck-2.7.1
+  - /.*/
 
 script:
 - ./gradlew clean
