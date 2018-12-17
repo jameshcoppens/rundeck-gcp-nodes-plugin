@@ -1,27 +1,24 @@
-[![Build Status](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin.svg?branch=master)](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin)
+[![Build Status](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin.svg?branch=rundeck-2.7.1)](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin)
 [![Code Climate](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin.png)](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin)
 
 # Rundeck GCP Nodes Plugin
-[![GitHub release](https://img.shields.io/badge/release-v0.3.0-blue.svg)](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases)
+[![GitHub release](https://img.shields.io/badge/release-v2.7.1--1-blue.svg)](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases)
 
 ### [CHANGELOG](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/blob/master/CHANGELOG.md)
 
-This is a Resource Model Source plugin for [Rundeck][] 2.7.1+ that provides
+** I will not be making further changes to this branch (other than bug fixes) after this release for Rundeck v2.x.  I will also be making a new branch/updating master with the plugin using a newer rundeck-core and will also take this opportunity to redo the versioning scheme :) **
+
+This is a Resource Model Source plugin for [Rundeck](https://www.rundeck.org) 2.7.1+ that provides
 Google Cloud Platform GCE Instances as nodes for the Rundeck server.
 
-Confirmed to work for Rundeck 3.0.1 ...for the most part anyway.  It doesn't seem to honor `hostname.selector=networkInterfaces` if you want it to show the IP instead of hostname for `Host` in the `User @ Host` column (this is also your connection string)
-
-UPDATE: works for Rundeck 3.0.5-20180828
-
-
-[Rundeck]: http://rundeck.org
+Confirmed to work for Rundeck up to current latest (v3.0.9)
 
 
 ## Installation
 
 Download from the [releases page](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases).
 
-Put the `rundeck-gcp-nodes-plugin-0.3.0.jar` into your `$RDECK_BASE/libext` dir.
+Put the `rundeck-gcp-nodes-plugin-2.7.1.jar` into your `$RDECK_BASE/libext` dir.
 
 You must also authenticate the rundeck-gcp-nodes-plugin to your google cloud platform
 project.

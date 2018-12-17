@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.7.1-1] - 2018-12-17
+### Added
+- Adds a GCP project Id to the configuration filename which allows the user to add additional `GCP GCE Resources` as Node Sources to see the inventory of multiple projects.  Thanks to [ogerbron](https://github.com/ogerbron) for this [PR](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/pull/2)!
+### Changed
+- Versioning!  This will be the last release built with a rundeck-core of v2.x (except for bug fixes); future releases will be using rundeck-core of the v3.x variety.
+
 ## [0.3.0] - 2018-08-10
 ### Added
 - External IP `natIP` for connection purposes as not everyone connects via `internalIP`.  Shoutout to [biff2005](https://github.com/biff2005) for the [PR](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/pull/1)!
@@ -29,14 +35,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - further clean up of Java code based on report from [Code Climate](https://codeclimate.com) that I'm trying out to see where I can improve on in terms of code quality
 - 3 unused methods in `InstanceToNodeMapper.java`: `getFilterParams()`, `getProjectId()` and `getMapping()`
 
-
 ## [0.2.1] - 2018-06-27
 ### Changed
 - updated `google-api-services-compute` plugin to `v1-rev188-1.23.0`
 - I used [BFG Repo-Cleaner](https://rtyley.github.io/bfg-repo-cleaner/) to try to clean up the repo but in doing so I messed up all the tagging, so I'm going to bump the minor version up to `v0.2.1` instead (couldn't get gradlew to tag the release at `v0.2.0` so I'm not going to fight it -- did I mention I'm sorta new at this?)
 ### Added
 - `.travis.yml` + "build" badge to README.md
-
 
 ## [0.1.5] - 2018-06-18
 ### Changed
