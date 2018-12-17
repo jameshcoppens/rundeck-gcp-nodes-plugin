@@ -158,7 +158,7 @@ public class GCPResourceModelSource implements ResourceModelSource {
         }
 
         try {
-            credential = GoogleCredential.fromStream(new FileInputStream("/etc/rundeck/rundeck-gcp-nodes-plugin.json"))
+            credential = GoogleCredential.fromStream(new FileInputStream("/etc/rundeck/rundeck-gcp-nodes-plugin-" + this.projectId + ".json"))
                     .createScoped(Collections.singleton(ComputeScopes.COMPUTE_READONLY));
         } catch  (FileNotFoundException e) {
             logger.error("Google Crendential failed creation");
