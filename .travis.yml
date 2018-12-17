@@ -4,8 +4,9 @@ os: linux
 
 branches:
   only:
-    - master
+  - master
+  - /^rundeck-.*$/
 
 script:
-  - ./gradlew clean
-  - ./gradlew build
+- ./gradlew clean
+- ./gradlew build
