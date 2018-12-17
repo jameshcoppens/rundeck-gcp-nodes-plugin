@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.7.1-1] - 2018-12-17
+### Added
+- Adds a GCP project Id to the configuration filename which allows the user to add additional `GCP GCE Resources` as Node Sources to see the inventory of multiple projects.  Thanks to [ogerbron](https://github.com/ogerbron) for this [PR](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/pull/2)!
+### Changed
+- Versioning!  This will be the last release built with a rundeck-core of v2.x (except for bug fixes); future releases will be using rundeck-core of the v3.x variety.
+
 ## [0.3.0] - 2018-08-10
 ### Added
 - External IP `natIP` for connection purposes as not everyone connects via `internalIP`.  Shoutout to [biff2005](https://github.com/biff2005) for the [PR](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/pull/1)!
