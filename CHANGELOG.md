@@ -35,14 +35,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - further clean up of Java code based on report from [Code Climate](https://codeclimate.com) that I'm trying out to see where I can improve on in terms of code quality
 - 3 unused methods in `InstanceToNodeMapper.java`: `getFilterParams()`, `getProjectId()` and `getMapping()`
 
-
 ## [0.2.1] - 2018-06-27
 ### Changed
 - updated `google-api-services-compute` plugin to `v1-rev188-1.23.0`
 - I used [BFG Repo-Cleaner](https://rtyley.github.io/bfg-repo-cleaner/) to try to clean up the repo but in doing so I messed up all the tagging, so I'm going to bump the minor version up to `v0.2.1` instead (couldn't get gradlew to tag the release at `v0.2.0` so I'm not going to fight it -- did I mention I'm sorta new at this?)
 ### Added
 - `.travis.yml` + "build" badge to README.md
-
 
 ## [0.1.5] - 2018-06-18
 ### Changed
