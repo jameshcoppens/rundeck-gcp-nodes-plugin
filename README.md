@@ -1,24 +1,19 @@
-[![Build Status](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin.svg?branch=rundeck-2.7.1)](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin)
+[![Build Status](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin.svg?branch=rundeck-3.0.9)](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin)
 [![Code Climate](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin.png)](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin)
 
 # Rundeck GCP Nodes Plugin
-[![GitHub release](https://img.shields.io/badge/release-v2.7.1--1-blue.svg)](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases)
+[![GitHub release](https://img.shields.io/badge/release-v3.0.9--1-blue.svg)](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases)
 
 ### [CHANGELOG](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/blob/master/CHANGELOG.md)
 
-** I will not be making further changes to this branch (other than bug fixes) after this release for Rundeck v2.x.  I will also be making a new branch/updating master with the plugin using a newer rundeck-core and will also take this opportunity to redo the versioning scheme :) **
-
-This is a Resource Model Source plugin for [Rundeck](https://www.rundeck.org) 2.7.1+ that provides
-Google Cloud Platform GCE Instances as nodes for the Rundeck server.
-
-Confirmed to work for Rundeck up to current latest (v3.0.9)
+This is a Resource Model Source plugin for [Rundeck](https://www.rundeck.org) 3.0.9+ that provides Google Cloud Platform GCE Instances as nodes for the Rundeck Server.
 
 
 ## Installation
 
 Download from the [releases page](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases).
 
-Put the `rundeck-gcp-nodes-plugin-2.7.1.jar` into your `$RDECK_BASE/libext` dir.
+Put the `rundeck-gcp-nodes-plugin-3.0.9-1.jar` into your `$RDECK_BASE/libext` dir.
 
 You must also authenticate the rundeck-gcp-nodes-plugin to your google cloud platform
 project.
@@ -52,16 +47,6 @@ When Rundeck 3.1 gets released sometime down the road, that's when I'll switch d
 ### Disclaimer
 
 My work is built off of the work done by [jameshcoppens](https://github.com/jameshcoppens/rundeck-gcp-nodes-plugin) and I've only branched it off to updated/maintain it seeing as there are typos in the README that has gone unaddressed and hasn't been updated for ~2+ years.  There were some functionality/features I wanted to add for my own use (and at work) so here we are... :)
-
-
-### What I've done so far...
-
-* fixed the documentation for installing the plugin
-* changed the fields that get populated when you expand a node in Rundeck as some in the original plugin just wasn't working or was putting in wrong values
-* updated `rundeck-core` to `2.7.1`, `rundeckPluginVersion` to `1.2` and `google-api-servies-compute` plugins
-* cleaned up the code to remove any AWS references in the code as well as plugins that aren't used (as it was initially modified off of [Rundeck's EC2 nodes plugin](https://github.com/rundeck-plugins/rundeck-ec2-nodes-plugin))
-* reduced the .jar file size from ~8MB to ~5.5MB
-* improved maintainability and readability
 
 
 ## !!! PRs welcome as I'm still new at this (my Java sucks)!!!
