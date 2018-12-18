@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Adds a GCP project Id to the configuration filename which allows the user to add additional `GCP GCE Resources` as Node Sources to see the inventory of multiple projects.  Thanks to [ogerbron](https://github.com/ogerbron) for this [PR](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/pull/2)!
 ### Changed
-- Versioning!  This will be the last release built with a rundeck-core of v2.x (except for bug fixes); future releases will be using rundeck-core of the v3.x variety.
+- Versioning update!  The version number will correspond to the rundeck-core I'm using to build the release.  This way, users can download the latest-and-greatest plugin version to match their Rundeck version.  However, this will be the last release built with a rundeck-core of v2.x (except for bug fixes); future releases will be using rundeck-core of the v3.x variety.
 
 ## [0.3.0] - 2018-08-10
 ### Added
