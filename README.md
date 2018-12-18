@@ -6,8 +6,6 @@
 
 ### [CHANGELOG](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/blob/master/CHANGELOG.md)
 
-** I will not be making further changes to this branch (other than bug fixes) after this release for Rundeck v2.x.  I will also be making a new branch/updating master with the plugin using a newer rundeck-core and will also take this opportunity to redo the versioning scheme :) **
-
 This is a Resource Model Source plugin for [Rundeck](https://www.rundeck.org) 2.7.1+ that provides
 Google Cloud Platform GCE Instances as nodes for the Rundeck server.
 
@@ -18,7 +16,7 @@ Confirmed to work for Rundeck up to current latest (v3.0.9)
 
 Download from the [releases page](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases).
 
-Put the `rundeck-gcp-nodes-plugin-2.7.1.jar` into your `$RDECK_BASE/libext` dir.
+Put the `rundeck-gcp-nodes-plugin-2.7.1-1.jar` into your `$RDECK_BASE/libext` dir.
 
 You must also authenticate the rundeck-gcp-nodes-plugin to your google cloud platform
 project.
