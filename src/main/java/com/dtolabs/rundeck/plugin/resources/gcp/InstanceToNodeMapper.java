@@ -380,7 +380,11 @@ class InstanceToNodeMapper {
                          }
                     }
                 } else {
-                    value = BeanUtils.getProperty(inst, selector);
+                    try {
+                        value = BeanUtils.getProperty(inst, selector);
+                    } catch (org.apache.commons.beanutils.NestedNullException e) {
+                        // Do nothing
+                    }
                 }
                 if (null != value) {
                     return value;
