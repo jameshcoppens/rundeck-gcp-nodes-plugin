@@ -2,7 +2,7 @@
 [![Code Climate](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin.png)](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin)
 
 # Rundeck GCP Nodes Plugin
-[![GitHub release](https://img.shields.io/badge/release-v2.7.1--1-blue.svg)](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases)
+[![GitHub release](https://img.shields.io/badge/release-v2.7.1--2-blue.svg)](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases)
 
 ### [CHANGELOG](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/blob/master/CHANGELOG.md)
 
@@ -16,7 +16,7 @@ Confirmed to work for Rundeck up to current latest (v3.0.9)
 
 Download from the [releases page](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases).
 
-Put the `rundeck-gcp-nodes-plugin-2.7.1-1.jar` into your `$RDECK_BASE/libext` dir.
+Put the `rundeck-gcp-nodes-plugin-2.7.1-2.jar` into your `$RDECK_BASE/libext` dir.
 
 You must also authenticate the rundeck-gcp-nodes-plugin to your google cloud platform
 project.
@@ -32,6 +32,8 @@ You will need to add the following labels to your GCP VMs if you want more accur
 * `environment` (example value: prod)
 * `osfamily` (example value: linux)
 * `osname` (example value: rhel7)
+
+*** No longer a requirement from `v2.7.1-2` onward ***
 
 
 ## Notes

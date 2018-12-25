@@ -81,8 +81,8 @@ jar {
         // create space-separated list of pluginLibs
         def libList = configurations.pluginLibs.collect{'lib/'+it.name}.join(' ')
         attributes 'Rundeck-Plugin-Classnames': 'com.dtolabs.rundeck.plugin.resources.gcp.GCPResourceModelSourceFactory', 'Rundeck-Plugin-Libs': "${libList}"
-        attributes 'Rundeck-Plugin-Author': 'Glen Yu', 'Rundeck-Plugin-URL': 'https://github.com/Neutrollized/rundeck-gcp-nodes-plugin', 'Rundeck-Plugin-Date': '2018-12-17'
-        attributes 'Rundeck-Plugin-File-Version': '2.7.1-1'
+        attributes 'Rundeck-Plugin-Author': 'Glen Yu', 'Rundeck-Plugin-URL': 'https://github.com/Neutrollized/rundeck-gcp-nodes-plugin', 'Rundeck-Plugin-Date': '2018-12-25'
+        attributes 'Rundeck-Plugin-File-Version': '2.7.1-2'
     }
 }
 

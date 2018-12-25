@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.7.1-2] - 2018-12-17
+### Fixed
+- Labels no longer mandatory; thanks for fixing the issue [DoomStar](https://github.com/DoomStar) with your [PR](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/pull/4)
+
 ## [2.7.1-1] - 2018-12-17
 ### Added
 - Adds a GCP project Id to the configuration filename which allows the user to add additional `GCP GCE Resources` as Node Sources to see the inventory of multiple projects.  Thanks to [ogerbron](https://github.com/ogerbron) for this [PR](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/pull/2)!

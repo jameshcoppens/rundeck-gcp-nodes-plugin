@@ -24,6 +24,7 @@
 *
 * Contributors:
 * biff2005 (https://github.com/biff2005) for natIP PR
+* Doomstar (https://github.com/DoomStar) for label exception PR
 *
 */
 package com.dtolabs.rundeck.plugin.resources.gcp;
