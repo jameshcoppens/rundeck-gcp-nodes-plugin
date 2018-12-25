@@ -30,6 +30,8 @@ You will need to add the following labels to your GCP VMs if you want more accur
 * `osfamily` (example value: linux)
 * `osname` (example value: rhel7)
 
+*** No longer a requirement from `v2.7.1-2` onward ***
+
 
 ## Notes
 

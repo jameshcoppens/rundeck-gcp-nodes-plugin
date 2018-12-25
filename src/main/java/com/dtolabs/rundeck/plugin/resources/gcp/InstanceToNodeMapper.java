@@ -24,6 +24,7 @@
 *
 * Contributors:
 * biff2005 (https://github.com/biff2005) for natIP PR
+* Doomstar (https://github.com/DoomStar) for label exception PR
 *
 */
 package com.dtolabs.rundeck.plugin.resources.gcp;
@@ -380,7 +381,11 @@ class InstanceToNodeMapper {
                          }
                     }
                 } else {
-                    value = BeanUtils.getProperty(inst, selector);
+                    try {
+                        value = BeanUtils.getProperty(inst, selector);
+                    } catch (org.apache.commons.beanutils.NestedNullException e) {
+                        // Do nothing
+                    }
                 }
                 if (null != value) {
                     return value;
