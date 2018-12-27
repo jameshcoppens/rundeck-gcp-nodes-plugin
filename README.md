@@ -8,6 +8,8 @@
 
 This is a Resource Model Source plugin for [Rundeck](https://www.rundeck.org) 3.0.9+ that provides Google Cloud Platform GCE Instances as nodes for the Rundeck Server.
 
+If you're still running Rundeck v2.x, please use one of the releases labeled v2.7.1-2 or earlier.
+
 
 ## Installation
 
