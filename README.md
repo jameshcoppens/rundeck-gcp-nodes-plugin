@@ -39,11 +39,10 @@ You will need to add the following labels to your GCP VMs if you want more accur
 
 By default, your connection string (denoted by the `User @ Host` column in your project nodes page) is `rundeck@hostname`, but if you want it to show IP instead you can set the `hostname.selector` attribute to `networkInterfaces` or `accessConfigs` for internal and external(NAT) IPs respectively
 
+
 ### Bugs/TODOs:
 
 `Only Running Instances` in the resource config doesn't work, it will always report the nodes regardless of state.
-
-When Rundeck 3.1 gets released sometime down the road, that's when I'll switch development/bugfixes of this plugin to Rundeck 3.x only while just retaining the older version in the releases section...or I might split them into separate branches instead...haven't decided yet.
 
 
 ### Disclaimer
