@@ -41,8 +41,6 @@ By default, your connection string (denoted by the `User @ Host` column in your 
 
 ### Bugs/TODOs:
 
-My intention was for the labels (see "Requirements" above) to be optional with a default value provided, however that part doesn't seem to be working and if you don't have said labels, you will have no tags :( I'll look to fix that soon.
-
 `Only Running Instances` in the resource config doesn't work, it will always report the nodes regardless of state.
 
 When Rundeck 3.1 gets released sometime down the road, that's when I'll switch development/bugfixes of this plugin to Rundeck 3.x only while just retaining the older version in the releases section...or I might split them into separate branches instead...haven't decided yet.
