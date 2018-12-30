@@ -6,7 +6,7 @@ buildscript {
 }
 
 plugins {
-    id 'pl.allegro.tech.build.axion-release' version '1.9.2'
+    id 'pl.allegro.tech.build.axion-release' version '1.10.0'
 }
 
 apply plugin: 'java'
@@ -54,7 +54,7 @@ repositories {
 }
 dependencies {
     // https://mvnrepository.com/artifact/org.rundeck/rundeck-core
-    compile group: 'org.rundeck', name: 'rundeck-core', version: '2.7.1'
+    compile group: 'org.rundeck', name: 'rundeck-core', version: '3.0.9-20181127'
 
     pluginLibs group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
     pluginLibs group: 'dom4j', name: 'dom4j', version: '1.6.1'
@@ -81,8 +81,8 @@ jar {
         // create space-separated list of pluginLibs
         def libList = configurations.pluginLibs.collect{'lib/'+it.name}.join(' ')
         attributes 'Rundeck-Plugin-Classnames': 'com.dtolabs.rundeck.plugin.resources.gcp.GCPResourceModelSourceFactory', 'Rundeck-Plugin-Libs': "${libList}"
-        attributes 'Rundeck-Plugin-Author': 'Glen Yu', 'Rundeck-Plugin-URL': 'https://github.com/Neutrollized/rundeck-gcp-nodes-plugin', 'Rundeck-Plugin-Date': '2018-12-25'
-        attributes 'Rundeck-Plugin-File-Version': '2.7.1-2'
+        attributes 'Rundeck-Plugin-Author': 'Glen Yu', 'Rundeck-Plugin-URL': 'https://github.com/Neutrollized/rundeck-gcp-nodes-plugin', 'Rundeck-Plugin-Date': '2018-12-30'
+        attributes 'Rundeck-Plugin-File-Version': '3.0.9-1'
     }
 }
 
@@ -90,5 +90,5 @@ jar {
 jar.dependsOn(copyToLib)
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.7'
+    gradleVersion = '4.10.3'
 }
