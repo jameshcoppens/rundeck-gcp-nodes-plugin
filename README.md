@@ -1,12 +1,12 @@
-[![Build Status](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin.svg?branch=rundeck-3.0.9)](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin)
+[![Build Status](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin.svg?branch=rundeck-3.0.22)](https://travis-ci.org/Neutrollized/rundeck-gcp-nodes-plugin)
 [![Code Climate](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin.png)](https://codeclimate.com/github/Neutrollized/rundeck-gcp-nodes-plugin)
 
 # Rundeck GCP Nodes Plugin
-[![GitHub release](https://img.shields.io/badge/release-v3.0.9--1-blue.svg)](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases)
+[![GitHub release](https://img.shields.io/badge/release-v3.0.22--1-blue.svg)](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases)
 
 ### [CHANGELOG](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/blob/master/CHANGELOG.md)
 
-This is a Resource Model Source plugin for [Rundeck](https://www.rundeck.org) 3.0.9+ that provides Google Cloud Platform GCE Instances as nodes for the Rundeck Server.
+This is a Resource Model Source plugin for [Rundeck](https://www.rundeck.org) 3.x that provides Google Cloud Platform GCE Instances as nodes for the Rundeck Server.
 
 If you're still running Rundeck v2.x, please use one of the releases labeled v2.7.1-2 or earlier.
 
@@ -15,7 +15,7 @@ If you're still running Rundeck v2.x, please use one of the releases labeled v2.
 
 Download from the [releases page](https://github.com/Neutrollized/rundeck-gcp-nodes-plugin/releases).
 
-Put the `rundeck-gcp-nodes-plugin-3.0.9-1.jar` into your `$RDECK_BASE/libext` dir.
+Put the `rundeck-gcp-nodes-plugin-3.0.22-1.jar` into your `$RDECK_BASE/libext` dir.
 
 You must also authenticate the rundeck-gcp-nodes-plugin to your google cloud platform
 project.
@@ -48,6 +48,3 @@ By default, your connection string (denoted by the `User @ Host` column in your 
 ### Disclaimer
 
 My work is built off of the work done by [jameshcoppens](https://github.com/jameshcoppens/rundeck-gcp-nodes-plugin) and I've only branched it off to updated/maintain it seeing as there are typos in the README that has gone unaddressed and hasn't been updated for ~2+ years.  There were some functionality/features I wanted to add for my own use (and at work) so here we are... :)
-
-
-## !!! PRs welcome as I'm still new at this (my Java sucks)!!!
